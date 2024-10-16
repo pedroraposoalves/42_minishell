@@ -6,12 +6,12 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/16 11:00:39 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:51:15 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL
-# define MINISHELL
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -44,20 +44,20 @@ char	**tokenize_aux(char *cmd);
 
 typedef struct s_token
 {
-	char            *content;
-	int             id;
-	int             type;
-	int             c_len;
-	struct s_token  *prev;
-	struct s_token  *next;
-} t_token ;
+	char			*content;
+	int				id;
+	int				type;
+	int				c_len;
+	struct s_token	*prev;
+	struct s_token	*next;
+}	t_token;
 
-typedef	struct	s_main
+typedef struct s_main
 {
-	int             token_amount;
-	struct s_token  *tokens;
+	int				token_amount;
+	struct s_token	*tokens;
 	char			**envp;
-} t_main;
+}	t_main;
 
 // typedef struct s_pipe
 // {
