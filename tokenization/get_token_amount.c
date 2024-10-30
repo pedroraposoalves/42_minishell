@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:13:31 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/15 14:55:23 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:24:50 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	special_or_space(char *cmd, int *i, int *amount)
 
 int	is_quote(char *cmd, int *i, int *amount)
 {
-	int	in_quote;
-
-	in_quote = 1;
 	if (cmd[*i] == '"')
 	{
 		(*i)++;
@@ -49,7 +46,6 @@ int	is_quote(char *cmd, int *i, int *amount)
 			(*i)++;
 		if (!cmd[*i])
 			return (1);
-		in_quote = 0;
 		(*amount)++;
 	}
 	else if (cmd[*i] == '\'')
@@ -59,7 +55,6 @@ int	is_quote(char *cmd, int *i, int *amount)
 			(*i)++;
 		if (!cmd[*i])
 			return (1);
-		in_quote = 0;
 		(*amount)++;
 	}
 	return (0);

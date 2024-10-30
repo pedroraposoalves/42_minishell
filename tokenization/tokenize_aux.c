@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:13:31 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/15 18:28:30 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:05:26 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*token_space(char *cmd, int *i)
 {
 	char	*token;
 
-	token = malloc(2);
+	token = ft_calloc(sizeof(char), 2);
 	token[0] = cmd[*i];
 	token[1] = '\0';
 	while (ft_isspace(cmd[*i]) && cmd[*i])
@@ -48,7 +48,7 @@ char	*token_special(char *cmd, int *i)
 	{
 		if (cmd[*i] == cmd[*i + 1])
 		{
-			token = malloc(3);
+			token = ft_calloc(sizeof(char), 3);
 			token[0] = cmd[*i];
 			token[1] = cmd[*i + 1];
 			token[2] = '\0';
@@ -56,7 +56,7 @@ char	*token_special(char *cmd, int *i)
 			return (token);
 		}
 	}
-	token = malloc(2);
+	token = ft_calloc(sizeof(char), 2);
 	token[0] = cmd[*i];
 	token[1] = '\0';
 	(*i)++;
@@ -94,7 +94,7 @@ char	**tokenize_aux(char *cmd)
 
 	i = 0;
 	tokens_index = 0;
-	tokens = malloc(sizeof(char *) * get_token_amount(cmd));
+	tokens = ft_calloc(get_token_amount(cmd) + 1, sizeof(char *));
 	while (cmd[i])
 	{
 		if (cmd[i] == '"' || cmd[i] == '\'')
@@ -107,6 +107,7 @@ char	**tokenize_aux(char *cmd)
 			tokens[tokens_index] = token_cmd(cmd, &i);
 		tokens_index++;
 	}
+	tokens[tokens_index] = NULL;
 	return (tokens);
 }
 

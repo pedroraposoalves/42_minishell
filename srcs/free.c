@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 11:22:45 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/17 11:31:29 by malves-b         ###   ########.fr       */
+/*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
+/*   Updated: 2024/10/23 15:54:30 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	free_tmain(t_main *pgr)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < len)
+	while (pgr->tokens->next)
 	{
-		((char *)b)[i] = c;
+		pgr->tokens = pgr->tokens->next;
+		free (pgr->tokens->prev->content);
+		free (pgr->tokens->prev);
+	}
+	free (pgr->tokens->content);
+	free (pgr->tokens);
+	free_double_array (pgr->cur_envp);
+}
+
+void	free_double_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
 		i++;
 	}
-	return (b);
+	free(array);
 }
-/* 
-#include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char a[40] = "teste 01";
-
-	puts(memset(a, '!', 40));
-	puts(ft_memset(a, '@', 50));
-}
- */
