@@ -26,6 +26,7 @@ RM = rm -f
 GREEN = \033[1;32m
 BROWN = \033[1;33m
 P = \033[1;31m
+R = \033[0m
 
 TOTAL_FILES := $(words $(OBJS))
 COMPILED_FILES := 0

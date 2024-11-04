@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/30 09:55:26 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:13:17 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ typedef struct s_main
 
 typedef struct s_exec
 {
-	char	**args;
 	int		type;
+	char	**args;
 }	t_exec;
 
 typedef struct s_redir
 {
 	int		type;
 	char	*file;
-	t_exec	*exec;
+	void	*next;
 }	t_redir;
 
 typedef struct s_pipe
@@ -111,6 +111,8 @@ t_exec	*create_exec_node(void);
 t_redir	*create_redir_node(void);
 t_pipe	*create_pipe_node(void);
 char	**add_word(char **args, char *new_word);
+
+void	join_tokens(t_token **tokens);
 
 /* -------------------------------------------------------------------------- */
 

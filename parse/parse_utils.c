@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:03:05 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/30 09:58:01 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:49:30 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_redir	*create_redir_node(void)
 
 	redir = (t_redir *)malloc(sizeof(t_redir));
 	redir->type = NULL;
-	redir->exec = NULL;
+	redir->next = NULL;
 	redir->file = NULL;
 	return (redir);
 }

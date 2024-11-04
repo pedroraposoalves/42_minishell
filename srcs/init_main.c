@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/23 16:14:26 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:32:21 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char	**cpy_envp(char **envp)
 
 void	init_main(t_main *pgr, char **envp)
 {
-	memset(pgr, 0, sizeof(*pgr));
+	ft_memset(pgr, 0, sizeof(*pgr));
 	pgr->cur_envp = cpy_envp(envp);
 }

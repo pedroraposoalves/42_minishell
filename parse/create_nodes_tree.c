@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/30 10:09:33 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:24:00 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,35 @@ t_exec	*parse_exec(t_token **cur, int limit)
 
 /* -------------------------------------------------------------------------- */
 
-t_redir	*parse_redir(t_token *start, t_token *end)
+t_redir	*parse_redir(t_token **start, t_token *end)
 {
 	t_redir	*redir_node;
 	t_exec	*exec_node;
+	char	**cmd;
 
+	cmd = NULL;
 	redir_node = create_redir_node();
 	exec_node = create_exec_node();
-	while (start->id < end->id)
+	while ((*start)->id < end->id)
 	{
-		if (start->type == REDIR || start->type == APPEND
-			|| start->type == REDIR_MQ || start->type == HERE_DOC)
+		if ((*start)->type == IS_SPACE)
+			continue ;
+		else if ((*start)->type == CMD)
+			cmd = add_word(cmd, (*start)->content);
+		else if ((*start)->type == REDIR || (*start)->type == APPEND
+			|| (*start)->type == REDIR_MQ || (*start)->type == HERE_DOC)
 		{
-			if (search_redir(start->next, end->id))
-				exec_node->right = mult_redir();
+			redir_node->type = (*start)->type;
+			if (search_redir((*start)->next, end->id))
+			{
+				redir_node->next = mult_redir((*start)->next, end, cmd);
+				break;
+			}
 		}
-		if (!redir_node->exec && start->type == CMD)
-		{
-			redir_node->exec = exec_node;
-			exec_node->left = start->content;
-		}
-		else if (!redir_node->file && start->type == CMD)
-			exec_node = start->content;
-		start = start->next;
-
+		(*start) = (*start)->next;
 	}
+	redir_node->next = exec_node;
+	exec_node->args = cmd; /* Need free*/
 }
 
 /* -------------------------------------------------------------------------- */
@@ -84,15 +88,12 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 			pipe->left = parse_redir(start, cur);
 		else
 			parse_exec(start, (*cur)->id);
-
-
-		/* the start arrives at the pipe */
 		if ((*start)->id + 1 == (*cur)->id)
 		{
 			if (search_pipe(cur, NULL))
 				parse_pipe(*start + 1, cur);
 			else if (search_redir(cur, NULL))
-				parse_redir(*start, )
+				parse_redir(start, *cur);
 		}
 		start = (*start)->next;
 	}

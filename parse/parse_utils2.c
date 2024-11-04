@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/29 16:43:47 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:33:15 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,39 @@ char	**add_word(char **args, char *new_word)
 	if (args)
 		free_double_array(args);
 	return (new_args);
+}
+
+/** @brief Function build multiple redir nodes*/
+void	*mult_redir(t_token *start, t_token *end, char **args)
+{
+	t_redir	*new_redir;
+
+	new_redir = create_redir_node();
+	while (start->id < end->id)
+	{
+		if (start->type == CMD)
+			new_redir->file = start->content;
+		if (search_redir(start, end->id))
+		{
+			/* code */
+		}
+		*start = *start->next;
+	}
+}
+
+void	*redir_aux(t_token *start, t_token *end, char **cmd)
+{
+	t_redir	*redir_node;
+
+	if (search_redir(start->next, end->id))
+		redir_node = mult_redir((*start)->next, end, cmd);
+	else
+	{
+		while (start->id < end->id)
+		{
+			if (start->type == IS_SPACE)
+				continue ;
+			else if 
+		}
+	}
 }
