@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/04 16:33:15 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:46:55 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	*redir_aux(t_token *start, t_token *end, char **cmd)
 		{
 			if (start->type == IS_SPACE)
 				continue ;
-			else if 
+			else if ()
 		}
 	}
 }

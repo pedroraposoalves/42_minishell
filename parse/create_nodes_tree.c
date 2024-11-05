@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/04 16:24:00 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:51:44 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 	t_token	*ptr_aux;
 
 	pipe = create_pipe_node();
-	ptr_aux = *start;
+	ptr_aux = (*start);
 	while ((*start)->id < (*cur)->id)
 	{
 		if (search_redir(ptr_aux, (*cur)->id))
