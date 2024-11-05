@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/04 17:29:43 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:01:01 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ void	set_envp_value(char **cont, char **envp, int i, int wrd)
 			index = -1;
 			while (envp[++index] && cont[0][i])
 			{
-				if (!ft_strncmp(envp[index], cont[0] + (i + 1), wrd))
+				if (cmp_env(envp[index], cont[0] + (i + 1)))
 				{
 					change_content(envp[index] + (wrd + 1), &cont[0], &i, wrd);
 					break ;
 				}
 				if (!envp[index + 1])
-					i += wrd;
+					remove_badenvp(cont, i, i);
 			}
 		}
 		else

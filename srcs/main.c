@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:27:21 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/04 18:24:28 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:24:09 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_list(t_main *pgr)
 	printf("----------------------------------------------------\n");
 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token", "id", "len token", "type");
 	printf("----------------------------------------------------\n");
-	for (int i = 0; i < pgr->token_amount; i++)
+	while (pgr->tokens)
 	{
 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
 			pgr->tokens->content,
@@ -53,10 +53,14 @@ int	main(int argc, char *argv[], char **envp)
 			usleep (500000);
 			puts("\nBEFORE\n");
 			print_list(pgr);
+
 			
+			pgr->tokens = start;
 			join_tokens(&pgr->tokens);
 			puts("\n\nAFTER\n\n");
 			print_list(pgr);
+			// join_tokens(&pgr->tokens);
+			// print_list(pgr);
 			pgr->tokens = start;
 			// free_tmain(pgr);
 			// free (pgr);

@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/04 19:00:39 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:31:30 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,26 @@ int	iscmd_or_quotes(int type)
 	return (0);
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-void remove_quotes(t_token *head)
+/** @brief Remove the first and last quote by the token */
+void	remove_quotes(t_token **head)
 {
-	t_token *cur;
+	t_token	*cur;
+	int		len;
 
-	cur = head;
-	while (cur != NULL) {
+	cur = (*head);
+	while (cur != NULL)
+	{
 		if (cur->type == S_QUOTES || cur->type == D_QUOTES)
 		{
-			remove_quotes(cur->content);
-			int len = strlen(cur->content);
-			if (len > 1 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'')
-				|| (cur->content[0] == '"' && cur->content[len - 1] == '"')))
+			len = ft_strlen(cur->content);
+			if (len > 1 && ((cur->content[0] == '\''
+						&& cur->content[len - 1] == '\'')
+					|| (cur->content[0] == '"'
+						&& cur->content[len - 1] == '"')))
 			{
 				ft_memmove(cur->content, cur->content + 1, len - 2);
 				cur->content[len - 2] = '\0';
+				cur->c_len = ft_strlen(cur->content);
 			}
 		}
 		cur = cur->next;
@@ -51,27 +52,28 @@ void remove_quotes(t_token *head)
 void	join_tokens(t_token **tokens)
 {
 	t_token	*remove;
-	t_token *start;
+	t_token	*start;
 
 	start = *tokens;
-	while (*tokens)
+	remove_quotes(tokens);
+	while (*tokens && (*tokens)->next)
 	{
-		if (iscmd_or_quotes((*tokens)->type) && iscmd_or_quotes((*tokens)->next->type))
+		if (iscmd_or_quotes((*tokens)->type)
+			&& iscmd_or_quotes((*tokens)->next->type))
 		{
-			join_cmd(&(*tokens), (*tokens)->next->content);
+			(*tokens)->content = ft_strjoin((*tokens)->content,
+					(*tokens)->next->content);
+			(*tokens)->c_len = ft_strlen((*tokens)->content);
 			remove = (*tokens)->next;
-			((*tokens)->next = (*tokens)->next->next);
+			(*tokens)->next = (*tokens)->next->next;
+			if ((*tokens)->next)
+				(*tokens)->next->prev = (*tokens);
 			free (remove);
 		}
-		(*tokens) = (*tokens)->next;
-		// else if (iscmd_or_quotes((*tokens)) == 2 || iscmd_or_quotes((*tokens)) == 3)
-		// {
-		// 	remove_quotes();
-		// 	continue ;
-		// }
-		// else if ((*tokens)->type == IS_SPACE)
-		// 	continue ;
-		// else if ((*tokens)->type == )
+		if ((*tokens)->next)
+			(*tokens) = (*tokens)->next;
+		else
+			break ;
 	}
 	(*tokens) = start;
 }

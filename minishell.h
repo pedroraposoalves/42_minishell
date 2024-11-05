@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/04 18:13:17 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:47:09 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int		check_isjoin(char *cmd, int *error);
 /*                                   EXPAND                                   */
 /* -------------------------------------------------------------------------- */
 void	ft_expand(t_main *main);
+int		cmp_env(char *s1, char *s2);
+void	remove_badenvp(char **str, int i, int j);
 
 /* -------------------------------------------------------------------------- */
 /*                                 CREATE TREE                                */
@@ -115,17 +117,5 @@ char	**add_word(char **args, char *new_word);
 void	join_tokens(t_token **tokens);
 
 /* -------------------------------------------------------------------------- */
-
-// typedef struct s_pipe
-// {
-//     char    *left;
-//     char    *right;
-// } t_pipe;
-
-// typedef struct s_redir
-// {
-//     char    *file;
-//     char    *next;
-// } t_redir;
 
 #endif
