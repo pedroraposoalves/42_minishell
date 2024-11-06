@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/05 15:51:44 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:49:17 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,23 @@ t_redir	*parse_redir(t_token **start, t_token *end)
 {
 	t_redir	*redir_node;
 	t_exec	*exec_node;
-	char	**cmd;
 
-	cmd = NULL;
-	redir_node = create_redir_node();
 	exec_node = create_exec_node();
 	while ((*start)->id < end->id)
 	{
 		if ((*start)->type == IS_SPACE)
 			continue ;
-		else if ((*start)->type == CMD)
-			cmd = add_word(cmd, (*start)->content);
+		else if ((*start)->type == CMD || (*start)->type == S_QUOTES
+			|| (*start)->type == D_QUOTES)
+			exec_node->args = add_word(exec_node->args, (*start)->content);
 		else if ((*start)->type == REDIR || (*start)->type == APPEND
 			|| (*start)->type == REDIR_MQ || (*start)->type == HERE_DOC)
 		{
-			redir_node->type = (*start)->type;
-			if (search_redir((*start)->next, end->id))
-			{
-				redir_node->next = mult_redir((*start)->next, end, cmd);
-				break;
-			}
+			redir_node = redir_aux(start, end, exec_node);
+			return (redir_node);
 		}
 		(*start) = (*start)->next;
 	}
-	redir_node->next = exec_node;
-	exec_node->args = cmd; /* Need free*/
 }
 
 /* -------------------------------------------------------------------------- */
@@ -87,29 +79,30 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 		if (search_redir(ptr_aux, (*cur)->id))
 			pipe->left = parse_redir(start, cur);
 		else
-			parse_exec(start, (*cur)->id);
+			pipe->left = parse_exec(start, (*cur)->id);
 		if ((*start)->id + 1 == (*cur)->id)
 		{
+			(*start) = (*cur);
 			if (search_pipe(cur, NULL))
-				parse_pipe(*start + 1, cur);
+				pipe->right = parse_pipe(start, cur);
 			else if (search_redir(cur, NULL))
-				parse_redir(start, *cur);
+				pipe->right = parse_redir(start, cur);
+			else
+				pipe->right = parse_exec(start, NULL);
 		}
 		start = (*start)->next;
 	}
 }
 
-void	*start_parsing(t_token *start, t_main *pgr)
+void	*start_parsing(t_token *start)
 {
-	void	*root;
 	t_token	*cur;
 	
 	cur = start;
 	if (search_pipe(&cur, NULL))
-		root = parse_pipe(&start, &cur);
+		return (parse_pipe(&start, &cur));
 	else if (search_redir(&cur, NULL))
-		root = parse_redir(&start, &cur);
+		return (parse_redir(&start, &cur));
 	else
-		root = parse_exec(start, NULL);
-	return (root);
+		return (parse_exec(&start, NULL));
 }

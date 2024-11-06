@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:03:05 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/30 15:49:30 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/06 12:19:20 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ t_exec	*create_exec_node(void)
 	t_exec	*cmd;
 
 	cmd = (t_exec *)malloc(sizeof(t_exec));
+	if (!cmd)
+		return (NULL);
 	cmd->args = NULL;
 	cmd->type = CMD;
 	return (cmd);
@@ -91,6 +93,8 @@ t_redir	*create_redir_node(void)
 	t_redir	*redir;
 
 	redir = (t_redir *)malloc(sizeof(t_redir));
+	if (!redir)
+		return (NULL);
 	redir->type = NULL;
 	redir->next = NULL;
 	redir->file = NULL;
@@ -105,6 +109,8 @@ t_pipe	*create_pipe_node(void)
 	t_pipe	*pipe_node;
 
 	pipe_node = (t_pipe *)malloc(sizeof(t_pipe));
+	if (!pipe_node)
+		return (NULL);
 	pipe_node->left = NULL;
 	pipe_node->right = NULL;
 	pipe_node->type = PIPE;
