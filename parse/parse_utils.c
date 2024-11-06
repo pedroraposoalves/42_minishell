@@ -6,67 +6,46 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:03:05 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/06 12:19:20 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:53:15 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /** @brief Check if the list has a redir */
-int	search_redir(t_token **token, int *i)
+int	search_redir(t_token **token, int limit)
 {
-	t_token	*start;
+	t_token	*current;
 
-	start = *token;
-	if (!*i || !i)
+	current = (*token);
+	while (current && (limit == 0 || current->id < limit))
 	{
-		while (token)
+		if (current->type == REDIR || current->type ==REDIR_MQ
+			|| current->type == HERE_DOC || current->type == APPEND)
 		{
-			if (((*token)->type == REDIR) || ((*token)->type == REDIR_MQ)
-				|| ((*token)->type == HERE_DOC) || ((*token)->type == APPEND))
-				return (1);
-			else if ((*token)->next)
-				*token = (*token)->next;
-			else
-				break ;
-		}
-	}
-	while ((*token)->id < *i && (i || *i))
-	{
-		if (((*token)->type == REDIR) || ((*token)->type == REDIR_MQ)
-			|| ((*token)->type == HERE_DOC) || ((*token)->type == APPEND))
+			(*token) = current;
 			return (1);
-		*token = (*token)->next;
+		}
+		current = current->next;
 	}
-	*token = start;
 	return (0);
 }
 
 /** @brief Check if the list has a pipe */
-int	search_pipe(t_token **token, int *i)
+int	search_pipe(t_token **token, int limit)
 {
-	t_token	*start;
+	t_token	*current;
 
-	start = *token;
-	if (!*i || !i)
+	current = (*token);
+	while (current && (limit == 0 || current->id < limit))
 	{
-		while (token)
+		if (current->type == PIPE)
 		{
-			if ((*token)->type == PIPE)
-				return (1);
-			else if ((*token)->next)
-				*token = (*token)->next;
-			else
-				break ;
-		}
-	}
-	while ((*token)->id < *i && (i || *i))
-	{
-		if ((*token)->type == PIPE)
+			(*token) = current;
 			return (1);
-		*token = (*token)->next;
+		}
+		current = current->next;
 	}
-	*token = start;
 	return (0);
 }
 
@@ -95,7 +74,7 @@ t_redir	*create_redir_node(void)
 	redir = (t_redir *)malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
-	redir->type = NULL;
+	redir->type = REDIR;
 	redir->next = NULL;
 	redir->file = NULL;
 	return (redir);

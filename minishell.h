@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/06 11:08:45 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:44:51 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,26 @@ void	remove_badenvp(char **str, int i, int j);
 /*                                 CREATE TREE                                */
 /* -------------------------------------------------------------------------- */
 
+void	*start_parsing(t_token *start);
+
 // --- UTILS --- //
-int		search_pipe(t_token **token, int *i);
-int		search_redir(t_token **token, int *i);
+int		search_pipe(t_token **token, int limit);
+int		search_redir(t_token **token, int limit);
 t_exec	*create_exec_node(void);
 t_redir	*create_redir_node(void);
 t_pipe	*create_pipe_node(void);
 char	**add_word(char **args, char *new_word);
-void	*redir_aux(t_token *start, t_token *end, char **cmd);
+t_redir	*redir_aux(t_token **start, t_token *end, t_exec *exec_node);
 
 void	join_tokens(t_token **tokens);
+
+/* -------------------------------------------------------------------------- */
+
+
+/* --------------------------- DEBUG AUX FUNCTIONS -------------------------- */
+
+void	print_list(t_main *pgr);
+void	print_tree(void *root, int left, int right);
 
 /* -------------------------------------------------------------------------- */
 

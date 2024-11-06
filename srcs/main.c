@@ -6,29 +6,11 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:27:21 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/05 16:50:39 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:42:12 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	print_list(t_main *pgr)
-{
-	printf("----------------------------------------------------\n");
-	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token", "id", "len token", "type");
-	printf("----------------------------------------------------\n");
-	while (pgr->tokens)
-	{
-		printf("| %-13s | %-8i | %-10i | %-8i |\n",
-			pgr->tokens->content,
-			pgr->tokens->id,
-			pgr->tokens->c_len,
-			pgr->tokens->type);
-
-		pgr->tokens = pgr->tokens->next;
-	}
-	printf("----------------------------------------------------\n");
-}
 
 int	main(int argc, char *argv[], char **envp)
 {
@@ -59,9 +41,11 @@ int	main(int argc, char *argv[], char **envp)
 			join_tokens(&pgr->tokens);
 			puts("\n\nAFTER\n\n");
 			print_list(pgr);
-			// join_tokens(&pgr->tokens);
-			// print_list(pgr);
 			pgr->tokens = start;
+
+			puts("\n\nTREE :\n\n");
+			void *root = start_parsing(start);
+			print_tree(root, 40, 40);
 			// free_tmain(pgr);
 			// free (pgr);
 			/*------------*/
