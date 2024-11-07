@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/07 12:47:04 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:44:59 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_exec	*parse_exec(t_token **cur, int limit)
 	{
 		while (*cur)
 		{
-			if ((*cur)->type == CMD)
+			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
+				|| (*cur)->type == S_QUOTES)
 				exec_node->args = add_word(exec_node->args, (*cur)->content);
 			(*cur) = (*cur)->next;		
 		}
@@ -30,7 +31,8 @@ t_exec	*parse_exec(t_token **cur, int limit)
 	{
 		while (*cur && (*cur)->id < limit)
 		{
-			if ((*cur)->type == CMD)
+			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
+				|| (*cur)->type == S_QUOTES)
 				exec_node->args = add_word(exec_node->args, (*cur)->content);
 			if ((*cur)->next)
 				(*cur) = (*cur)->next;		

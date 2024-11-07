@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/07 13:00:08 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:04:27 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**add_word(char **args, char *new_word)
 void	*mult_redir(t_token *start, t_token *end, t_exec *exec_node)
 {
 	t_redir	*new_redir;
+	t_token	*aux;
 
 	new_redir = create_redir_node();
 	while (start && start->type != PIPE)
@@ -55,16 +56,12 @@ void	*mult_redir(t_token *start, t_token *end, t_exec *exec_node)
 		if (start->type == REDIR || start->type == REDIR_MQ
 			|| start->type == APPEND || start->type == HERE_DOC)
 		{
-			if (search_redir(&start, 0))
-			{
-				new_redir->next = mult_redir(start, end, exec_node);
-				return (new_redir);
-			}
+			aux = (*start).next;
+			if (search_redir(&aux, 0))
+				new_redir->next = mult_redir((*start).next, end, exec_node);
 			else
-			{
 				new_redir->next = exec_node;
-				return (new_redir);
-			}
+			return (new_redir);
 		}
 		*start = *start->next;
 	}
@@ -86,7 +83,10 @@ t_redir	*redir_aux(t_token **start, t_token *end, t_exec *exec_node)
 		redir_node->next = exec_node;
 		while ((*start) && (*start)->type != PIPE)
 		{
-			if ((*start)->type == CMD || (*start)->type == S_QUOTES
+			if (((*start)->type == CMD || (*start)->type == S_QUOTES
+				|| (*start)->type == D_QUOTES) && redir_node->file)
+				exec_node->args = add_word(exec_node->args, (*start)->content);
+			else if ((*start)->type == CMD || (*start)->type == S_QUOTES
 				|| (*start)->type == D_QUOTES)
 				redir_node->file = ft_strdup((*start)->content);
 			if (!(*start)->next)
