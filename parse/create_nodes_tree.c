@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/06 17:41:16 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:47:04 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ t_redir	*parse_redir(t_token **start, t_token *end)
 	t_exec	*exec_node;
 
 	exec_node = create_exec_node();
-	while ((*start)->id < end->id)
+	while ((*start) && (*start)->type != PIPE)
 	{
-		if ((*start)->type == IS_SPACE)
-			continue ;
-		else if ((*start)->type == CMD || (*start)->type == S_QUOTES
+		if ((*start)->type == CMD || (*start)->type == S_QUOTES
 			|| (*start)->type == D_QUOTES)
 			exec_node->args = add_word(exec_node->args, (*start)->content);
 		else if ((*start)->type == REDIR || (*start)->type == APPEND
@@ -74,7 +72,7 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 
 	pipe = create_pipe_node();
 	ptr_aux = (*start);
-	while ((*start)->id < (*cur)->id)
+	while ((*start) && (*start)->id < (*cur)->id)
 	{
 		if (search_redir(&ptr_aux, (*cur)->id))
 			pipe->left = parse_redir(start, (*cur));
@@ -85,11 +83,17 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 			(*cur) = (*cur)->next;
 			(*start) = (*start)->next;
 			if (search_pipe(cur, 0))
+			{
 				pipe->right = parse_pipe(start, cur);
+				return (pipe);
+			}
 			else if (search_redir(cur, 0))
 				pipe->right = parse_redir(start, (*cur));
 			else
+			{
 				pipe->right = parse_exec(start, 0);
+				return (pipe);
+			}
 		}
 		start = &(*start)->next;
 	}

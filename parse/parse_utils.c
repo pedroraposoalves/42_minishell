@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:03:05 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/06 14:53:15 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:31:56 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	search_redir(t_token **token, int limit)
 	t_token	*current;
 
 	current = (*token);
-	while (current && (limit == 0 || current->id < limit))
+	while (current && (limit == 0 || current->id < limit)
+		&& current->type != PIPE)
 	{
 		if (current->type == REDIR || current->type ==REDIR_MQ
 			|| current->type == HERE_DOC || current->type == APPEND)
