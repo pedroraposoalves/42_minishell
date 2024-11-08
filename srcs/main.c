@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:27:21 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/06 16:42:12 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:35:11 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,8 @@ int	main(int argc, char *argv[], char **envp)
 			
 			/*------------*/
 			start = pgr->tokens;
-			usleep (500000);
-			puts("\nBEFORE\n");
-			print_list(pgr);
-
-			
-			pgr->tokens = start;
 			join_tokens(&pgr->tokens);
-			puts("\n\nAFTER\n\n");
+			puts("\nTOKEN LIST:\n");
 			print_list(pgr);
 			pgr->tokens = start;
 

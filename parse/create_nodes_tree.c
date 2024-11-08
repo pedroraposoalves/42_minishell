@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/07 17:44:59 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:23:01 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_exec	*parse_exec(t_token **cur, int limit)
 			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
 				|| (*cur)->type == S_QUOTES)
 				exec_node->args = add_word(exec_node->args, (*cur)->content);
-			(*cur) = (*cur)->next;		
+			(*cur) = (*cur)->next;
 		}
 	}
 	else
@@ -35,7 +35,7 @@ t_exec	*parse_exec(t_token **cur, int limit)
 				|| (*cur)->type == S_QUOTES)
 				exec_node->args = add_word(exec_node->args, (*cur)->content);
 			if ((*cur)->next)
-				(*cur) = (*cur)->next;		
+				(*cur) = (*cur)->next;
 		}
 	}
 	return (exec_node);
@@ -76,9 +76,9 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 	ptr_aux = (*start);
 	while ((*start) && (*start)->id < (*cur)->id)
 	{
-		if (search_redir(&ptr_aux, (*cur)->id))
+		if (search_redir(&ptr_aux, (*cur)->id) && !pipe->left)
 			pipe->left = parse_redir(start, (*cur));
-		else
+		else if (!pipe->left)
 			pipe->left = parse_exec(start, (*cur)->id);
 		if ((*start)->id == (*cur)->id)
 		{
@@ -105,7 +105,7 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 void	*start_parsing(t_token *start)
 {
 	t_token	*cur;
-	
+
 	cur = start;
 	if (search_pipe(&cur, 0))
 		return (parse_pipe(&start, &cur));
