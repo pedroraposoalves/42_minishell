@@ -44,7 +44,10 @@ void print_tree(void *root, int left, int right) {
     else if (type == REDIR || type == REDIR_MQ || type == APPEND || type == HERE_DOC) {
         t_redir *redir_node = (t_redir *)root;
         
-        printf("%*s%s %s\n", left, "", (redir_node->type == APPEND)? "APPEND" : (redir_node->type == HERE_DOC)? "HERE_DOC": "REDIR" , redir_node->file);
+        printf("%*s%s %s\n", left, "", (redir_node->type == APPEND)? "APPEND" : 
+                                        (redir_node->type == HERE_DOC)? "HERE_DOC":
+                                        (redir_node->type == REDIR_MQ)? "REDIR_MQ":
+                                         "REDIR" , redir_node->file);
 		printf("%*s|\n", left + spacing, "");
         print_tree(redir_node->next, left, right);
     }

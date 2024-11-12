@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/06 10:07:45 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:27:47 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ void	join_tokens(t_token **tk)
 	t_token	*remove;
 	t_token	*start;
 
-	start = *tk;
 	remove_quotes(tk);
 	remove_null(tk);
+	start = *tk;
 	while (*tk && (*tk)->next)
 	{
 		if (iscmd_or_quotes((*tk)->type) && iscmd_or_quotes((*tk)->next->type))

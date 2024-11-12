@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/23 10:46:46 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:28:45 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int	check_cmds(char *cmd)
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')
 			is_quote_open(cmd, &i, &error);
-		else if (cmd[i] == '|')
-			find_exe(cmd, &i, &error);
+		// else if (cmd[i] == '|')
+		// 	find_exe(cmd, &i, &error);
 		else if (cmd[i] == '\\' || cmd[i] == ';')
 		{
 			puts ("minishell: syntax error");

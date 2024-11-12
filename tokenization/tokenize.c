@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/30 09:54:42 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:04:20 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,10 @@ void	add_node(t_token **current, char *token)
 
 void	tokenize(t_main *pgr, char *cmd)
 {
-	t_token	*start;
 	char	**tokens;
 	int		i;
 
 	i = 0;
-	start = NULL;
 	tokens = tokenize_aux(cmd);
 	pgr->token_amount = get_token_amount(cmd);
 	pgr->tokens = NULL;

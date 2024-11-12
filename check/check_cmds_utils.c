@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:16:06 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/23 10:45:44 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:07:53 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_isjoin(char *cmd, int *error)
 	i = 0;
 	while (cmd[i])
 	{
-		if (is_special_char(cmd[i]))
+		if (is_special_char(cmd[i]) && cmd[i] != '|')
 		{
 			i++;
 			if ((cmd[i] == '>' || cmd[i] == '<') && cmd[i] == cmd[i - 1])

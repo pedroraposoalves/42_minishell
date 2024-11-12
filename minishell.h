@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/08 12:36:11 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:15:56 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
@@ -88,6 +89,7 @@ char	**tokenize_aux(char *cmd);
 
 void	free_tmain(t_main *pgr);
 void	free_double_array(char **array);
+void	free_all(t_main *pgr, void *root);
 
 /* -------------------------------------------------------------------------- */
 
@@ -115,7 +117,7 @@ t_exec	*create_exec_node(void);
 t_redir	*create_redir_node(void);
 t_pipe	*create_pipe_node(void);
 char	**add_word(char **args, char *new_word);
-t_redir	*redir_aux(t_token **start, t_token *end, t_exec *exec_node);
+t_redir	*redir_aux(t_token **start, t_exec *exec_node);
 
 void	join_tokens(t_token **tokens);
 

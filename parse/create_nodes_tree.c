@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/08 13:23:01 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:14:57 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_exec	*parse_exec(t_token **cur, int limit)
 
 /* -------------------------------------------------------------------------- */
 
-t_redir	*parse_redir(t_token **start, t_token *end)
+t_redir	*parse_redir(t_token **start)
 {
 	t_redir	*redir_node;
 	t_exec	*exec_node;
@@ -57,7 +57,7 @@ t_redir	*parse_redir(t_token **start, t_token *end)
 		else if ((*start)->type == REDIR || (*start)->type == APPEND
 			|| (*start)->type == REDIR_MQ || (*start)->type == HERE_DOC)
 		{
-			redir_node = redir_aux(start, end, exec_node);
+			redir_node = redir_aux(start, exec_node);
 			return (redir_node);
 		}
 		(*start) = (*start)->next;
@@ -74,10 +74,10 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 
 	pipe = create_pipe_node();
 	ptr_aux = (*start);
-	while ((*start) && (*start)->id < (*cur)->id)
+	while ((*start))
 	{
 		if (search_redir(&ptr_aux, (*cur)->id) && !pipe->left)
-			pipe->left = parse_redir(start, (*cur));
+			pipe->left = parse_redir(start);
 		else if (!pipe->left)
 			pipe->left = parse_exec(start, (*cur)->id);
 		if ((*start)->id == (*cur)->id)
@@ -90,7 +90,7 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 				return (pipe);
 			}
 			else if (search_redir(cur, 0))
-				pipe->right = parse_redir(start, (*cur));
+				pipe->right = parse_redir(start);
 			else
 			{
 				pipe->right = parse_exec(start, 0);
@@ -110,7 +110,7 @@ void	*start_parsing(t_token *start)
 	if (search_pipe(&cur, 0))
 		return (parse_pipe(&start, &cur));
 	else if (search_redir(&cur, 0))
-		return (parse_redir(&start, cur));
+		return (parse_redir(&start));
 	else
 		return (parse_exec(&start, 0));
 }

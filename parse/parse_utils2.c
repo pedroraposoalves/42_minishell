@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/08 12:28:53 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:52:06 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,27 @@ char	**add_word(char **args, char *new_word)
 }
 
 /** @brief Function build multiple redir nodes*/
-void	*mult_redir(t_token *start, t_token *end, t_exec *exec_node)
+void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 {
 	t_redir	*new_redir;
 	t_token	*aux;
 
 	new_redir = create_redir_node();
+	new_redir->type = type;
 	while (start && start->type != PIPE)
 	{
-		if (start->type == CMD)
+		if (start->type == CMD && new_redir->file)
+			exec_node->args = add_word(exec_node->args, start->content);
+		else if (start->type == CMD)
 			new_redir->file = start->content;
 		if (start->type == REDIR || start->type == REDIR_MQ
 			|| start->type == APPEND || start->type == HERE_DOC)
 		{
 			aux = (*start).next;
 			if (search_redir(&aux, 0))
-				new_redir->next = mult_redir((*start).next, end, exec_node);
+				new_redir->next = mult_redir((*start).next, exec_node, (*start).type);
 			else
-				new_redir->next = redir_aux(&start, end, exec_node);
+				new_redir->next = redir_aux(&start, exec_node);
 			return (new_redir);
 		}
 		*start = *start->next;
@@ -68,14 +71,14 @@ void	*mult_redir(t_token *start, t_token *end, t_exec *exec_node)
 	return (NULL);
 }
 
-t_redir	*redir_aux(t_token **start, t_token *end, t_exec *exec_node)
+t_redir	*redir_aux(t_token **start, t_exec *exec_node)
 {
 	t_redir	*redir_node;
 	t_token	*aux;
 
 	aux = (*start)->next;
 	if (search_redir(&aux, 0))
-		redir_node = mult_redir((*start)->next, end, exec_node);
+		redir_node = mult_redir((*start)->next, exec_node, (*start)->type);
 	else
 	{
 		redir_node = create_redir_node();
