@@ -6,18 +6,18 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:27:21 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 16:38:48 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:15:59 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	glob_sig;
+int	g_signal;
 
 int	main(int argc, char *argv[], char **envp)
 {
 	t_main	*pgr;
-	char	*line_read;
+	char	*input;
 	t_token *start;
 
 	(void)argc;
@@ -26,15 +26,17 @@ int	main(int argc, char *argv[], char **envp)
 	init_main(pgr, envp);
 	while (1)
 	{
-		line_read = readline("minishell: ");
+		input = readline("minishell: ");
+		if (input)
+			add_history(input);
 		if (argc != 1)
 		{
-			printf ("The minishell should not have aguments!");
+			print_err ("The minishell should not have aguments!");
 			return (127);
 		}
-		if (!check_cmds(line_read))					/*1*/
+		if (!check_cmds(input))					/*1*/
 		{
-			tokenize(pgr, line_read);				/*2*/
+			tokenize(pgr, input);				/*2*/
 			ft_expand(pgr); 						/*3*/
 			
 			/*------------*/

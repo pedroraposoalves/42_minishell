@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 12:13:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:01:23 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_redir_node(void *root)
 	t_redir	*redir;
 	t_exec	*exec;
 	int		type;
-	
+
 	exec = NULL;
 	if (!root)
 		return ;
@@ -77,7 +77,8 @@ void	free_tree(void *root)
 		free_tree(pipe->right);
 		free(pipe);
 	}
-	else if (type == REDIR || type == REDIR_MQ || type == APPEND || type == HERE_DOC)
+	else if (type == REDIR || type == REDIR_MQ || type == APPEND
+		|| type == HERE_DOC)
 		free_redir_node(root);
 	else
 	{

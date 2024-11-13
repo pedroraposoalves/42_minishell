@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 16:28:45 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:40:02 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_init_pipe(char *cmd, int *error)
 		i++;
 	if (cmd[i] == '|')
 	{
-		puts("minishell: syntax error near unexpected token `|'");
+		print_err("minishell: syntax error near unexpected token `|'");
 		(*error) = 2;
 		return (1);
 	}
@@ -33,14 +33,18 @@ int	finderr_aux(char *cmd)
 {
 	if (cmd[0] == ';' || cmd[0] == '\\')
 	{
-		printf ("minishell: syntax error unexpected token '%c'\n", cmd[0]);
+		print_err("minishell: syntax error unexpected token");
+		write(2, &cmd[0], 1);
+		print_err("\n");
 		return (3);
 	}
 	if (cmd[0] && (cmd[0] == '>' || cmd[0] == '<'))
 	{
 		if (cmd[1] == cmd[0] && cmd[2] == cmd[0])
 		{
-			printf ("minishell: error unexpected token '%c'3x\n", cmd[0]);
+			print_err("minishell: error unexpected token '");
+			write(2, &cmd[0], 1);
+			print_err("'\n");
 			return (2);
 		}
 	}
@@ -59,7 +63,7 @@ int	find_exe(char *cmd, int *i, int *error)
 			j++;
 		if (cmd[j] == '|' || !cmd[j])
 		{
-			puts ("minishell: syntax error near unexpected token `|'");
+			print_err ("minishell: syntax error near unexpected token `|'");
 			(*error) = 2;
 			return (1);
 		}
@@ -68,7 +72,7 @@ int	find_exe(char *cmd, int *i, int *error)
 	}
 	if (j - *i == 1)
 	{
-		puts ("minishell: syntax error near unexpected token `|'");
+		print_err ("minishell: syntax error near unexpected token `|'");
 		(*error) = 2;
 		return (1);
 	}
@@ -90,7 +94,7 @@ int	is_quote_open(char *cmd, int *i, int *error)
 		}
 		j++;
 	}
-	puts ("minishell: syntax error - the quote is open");
+	print_err ("minishell: syntax error - the quote is open");
 	(*error) = 1;
 	return (1);
 }
@@ -106,11 +110,9 @@ int	check_cmds(char *cmd)
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')
 			is_quote_open(cmd, &i, &error);
-		// else if (cmd[i] == '|')
-		// 	find_exe(cmd, &i, &error);
 		else if (cmd[i] == '\\' || cmd[i] == ';')
 		{
-			puts ("minishell: syntax error");
+			print_err ("minishell: syntax error\n");
 			error = 1;
 		}
 		else if (finderr_aux(cmd + i))

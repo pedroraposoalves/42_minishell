@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/11 15:52:06 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:55:56 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 		{
 			aux = (*start).next;
 			if (search_redir(&aux, 0))
-				new_redir->next = mult_redir((*start).next, exec_node, (*start).type);
+				new_redir->next = mult_redir((*start).next, exec_node,
+						(*start).type);
 			else
 				new_redir->next = redir_aux(&start, exec_node);
 			return (new_redir);

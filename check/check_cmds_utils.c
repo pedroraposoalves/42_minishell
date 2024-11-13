@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:16:06 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/11 15:07:53 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:58:38 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int	check_isjoin(char *cmd, int *error)
 			if (is_special_char(cmd[i]))
 			{
 				(*error) = 2;
-				printf ("minishel: syntax error near unexpected token `%c'\n",
-					cmd[i]);
+				print_err("minishel: syntax error near unexpected token `");
+				write (2, &cmd[i], 1);
+				print_err("'\n");
 				return (2);
 			}
 		}

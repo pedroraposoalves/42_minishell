@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 15:15:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:16:31 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
+
+extern int	g_signal;
 
 # define PIPE 1
 # define REDIR 2
@@ -96,6 +98,7 @@ void	free_all(t_main *pgr, void *root);
 void	init_main(t_main *pgr, char **envp);
 int		check_cmds(char *cmd);
 int		check_isjoin(char *cmd, int *error);
+void	print_err(char *message);
 
 /* -------------------------------------------------------------------------- */
 /*                                   EXPAND                                   */
@@ -122,6 +125,10 @@ t_redir	*redir_aux(t_token **start, t_exec *exec_node);
 void	join_tokens(t_token **tokens);
 
 /* -------------------------------------------------------------------------- */
+
+/* --------------------------------- SIGNALS -------------------------------- */
+
+void	setup_signals(void);
 
 /* --------------------------- DEBUG AUX FUNCTIONS -------------------------- */
 
