@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:19:59 by malves-b          #+#    #+#             */
-/*   Updated: 2023/11/02 15:09:53 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:57:10 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	}
 	return (ret);
 }
-/* 
-int main(void)
-{
-    puts(ft_strtrim("!!-!AmigoA!", "!"));
-    return 0;
-} */
+
+// #include <stdio.h>
+// int main(void)
+// {
+//     puts(ft_strtrim("!!-!AmigoA!", "!"));
+//     return 0;
+// }

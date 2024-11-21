@@ -1,0 +1,116 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_nodes_tree.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
+/*   Updated: 2024/11/11 19:14:57 by malves-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+t_exec	*parse_exec(t_token **cur, int limit)
+{
+	t_exec	*exec_node;
+
+	exec_node = create_exec_node();
+	if (!limit)
+	{
+		while (*cur)
+		{
+			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
+				|| (*cur)->type == S_QUOTES)
+				exec_node->args = add_word(exec_node->args, (*cur)->content);
+			(*cur) = (*cur)->next;
+		}
+	}
+	else
+	{
+		while (*cur && (*cur)->id < limit)
+		{
+			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
+				|| (*cur)->type == S_QUOTES)
+				exec_node->args = add_word(exec_node->args, (*cur)->content);
+			if ((*cur)->next)
+				(*cur) = (*cur)->next;
+		}
+	}
+	return (exec_node);
+}
+
+/* -------------------------------------------------------------------------- */
+
+t_redir	*parse_redir(t_token **start)
+{
+	t_redir	*redir_node;
+	t_exec	*exec_node;
+
+	exec_node = create_exec_node();
+	while ((*start) && (*start)->type != PIPE)
+	{
+		if ((*start)->type == CMD || (*start)->type == S_QUOTES
+			|| (*start)->type == D_QUOTES)
+			exec_node->args = add_word(exec_node->args, (*start)->content);
+		else if ((*start)->type == REDIR || (*start)->type == APPEND
+			|| (*start)->type == REDIR_MQ || (*start)->type == HERE_DOC)
+		{
+			redir_node = redir_aux(start, exec_node);
+			return (redir_node);
+		}
+		(*start) = (*start)->next;
+	}
+	return (NULL);
+}
+
+/* -------------------------------------------------------------------------- */
+
+t_pipe	*parse_pipe(t_token **start, t_token **cur)
+{
+	t_pipe	*pipe;
+	t_token	*ptr_aux;
+
+	pipe = create_pipe_node();
+	ptr_aux = (*start);
+	while ((*start))
+	{
+		if (search_redir(&ptr_aux, (*cur)->id) && !pipe->left)
+			pipe->left = parse_redir(start);
+		else if (!pipe->left)
+			pipe->left = parse_exec(start, (*cur)->id);
+		if ((*start)->id == (*cur)->id)
+		{
+			(*cur) = (*cur)->next;
+			(*start) = (*start)->next;
+			if (search_pipe(cur, 0))
+			{
+				pipe->right = parse_pipe(start, cur);
+				return (pipe);
+			}
+			else if (search_redir(cur, 0))
+				pipe->right = parse_redir(start);
+			else
+			{
+				pipe->right = parse_exec(start, 0);
+				return (pipe);
+			}
+		}
+		start = &(*start)->next;
+	}
+	return (pipe);
+}
+
+void	*start_parsing(t_token *start)
+{
+	t_token	*cur;
+
+	cur = start;
+	if (search_pipe(&cur, 0))
+		return (parse_pipe(&start, &cur));
+	else if (search_redir(&cur, 0))
+		return (parse_redir(&start));
+	else
+		return (parse_exec(&start, 0));
+}

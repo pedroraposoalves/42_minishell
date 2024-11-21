@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 11:22:45 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/17 11:31:29 by malves-b         ###   ########.fr       */
+/*   Created: 2024/11/13 13:32:48 by malves-b          #+#    #+#             */
+/*   Updated: 2024/11/13 17:15:59 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	set_sigint(int signal)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < len)
+	if (signal == SIGINT)
 	{
-		((char *)b)[i] = c;
-		i++;
+		rl_replace_line("", 0);
+		print_err("\n");
+		rl_redisplay();
+		g_signal = 130;
+		exit (g_signal);
 	}
-	return (b);
+	else if (signal == SIGQUIT)
+	{
+		g_signal = 131;
+		print_err("Quit (core dumped)\n");
+		exit (g_signal);
+	}
 }
-/* 
-#include <string.h>
-#include <stdio.h>
 
-int	main(void)
+void	setup_signals(void)
 {
-	char a[40] = "teste 01";
-
-	puts(memset(a, '!', 40));
-	puts(ft_memset(a, '@', 50));
+	signal(SIGINT, set_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }
- */

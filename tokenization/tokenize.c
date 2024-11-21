@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/16 10:35:43 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:53:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@ int	token_type(char *token)
 		return (APPEND);
 	else if (!ft_strncmp (token, "<<", 2))
 		return (HERE_DOC);
-	else if (token[0] == '>' || token[0] == '<')
+	else if (token[0] == '>')
 		return (REDIR);
+	else if (token[0] == '<')
+		return (REDIR_MQ);
 	else if (ft_isspace(token[0]))
 		return (IS_SPACE);
+	else if (!ft_strncmp(token, "\"\"", ft_strlen(token)))
+		return (IS_NULL);
+	else if (!ft_strncmp(token, "\'\'", ft_strlen(token)))
+		return (IS_NULL);
 	else if (token[0] == '\'')
 		return (S_QUOTES);
 	else if (token[0] == '"')
@@ -38,9 +44,7 @@ void	add_node(t_token **current, char *token)
 	t_token	*last_node;
 
 	new_node = malloc(sizeof(t_token));
-	if (!new_node)
-		return ;
-	new_node->content = token;
+	new_node->content = ft_strdup(token);
 	new_node->type = token_type(token);
 	new_node->c_len = ft_strlen(token);
 	if (*current == NULL)
@@ -62,26 +66,18 @@ void	add_node(t_token **current, char *token)
 	}
 }
 
-t_main	*tokenize(char *cmd)
+void	tokenize(t_main *pgr, char *cmd)
 {
-	t_main	*pgr;
-	t_token	*start;
 	char	**tokens;
 	int		i;
 
 	i = 0;
-	start = NULL;
 	tokens = tokenize_aux(cmd);
-	pgr = malloc(sizeof(t_main));
-	if (!pgr)
-	{
-		return (NULL);
-	}
 	pgr->token_amount = get_token_amount(cmd);
 	pgr->tokens = NULL;
 	while (i < pgr->token_amount)
 		add_node(&pgr->tokens, tokens[i++]);
-	return (pgr);
+	free_double_array(tokens);
 }
 
 // int main(int argc, char const *argv[])

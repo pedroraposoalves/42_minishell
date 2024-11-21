@@ -1,38 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   print_err.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 11:22:45 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/17 11:31:29 by malves-b         ###   ########.fr       */
+/*   Created: 2024/11/13 15:49:21 by malves-b          #+#    #+#             */
+/*   Updated: 2024/11/13 16:06:55 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	print_err(char *message)
 {
-	size_t	i;
+	size_t	len;
 
-	i = 0;
-	while (i < len)
-	{
-		((char *)b)[i] = c;
-		i++;
-	}
-	return (b);
+	len = ft_strlen(message);
+	if (message != NULL)
+		write(2, message, len);
 }
-/* 
-#include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char a[40] = "teste 01";
-
-	puts(memset(a, '!', 40));
-	puts(ft_memset(a, '@', 50));
-}
- */
