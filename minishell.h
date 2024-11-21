@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/19 17:28:54 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:15:22 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
@@ -126,8 +128,14 @@ void	join_tokens(t_token **tokens);
 
 /* ---------------------------------- EXEC ---------------------------------- */
 
+void	ft_redir(void *node, t_main *pgr);
+void	exec_tree(void *root, t_main *pgr);
+int		ft_execve(t_exec *exec_node, char **envp);
+void	ft_exec(void *node, t_main *pgr);
+
 /* --- UTILS ---*/
 char	*find_path(char *cmd, char **envp);
+int		isbuiltin(char *str);
 
 /* --------------------------------- SIGNALS -------------------------------- */
 

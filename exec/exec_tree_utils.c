@@ -6,12 +6,34 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/19 17:29:05 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:29:09 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/** @brief Check if the cmd is builtin*/
+int	isbuiltin(char *str)
+{
+	if (!ft_strncmp(str, "cd", 2))
+		return (1);
+	else if (!ft_strncmp(str, "echo", 4))
+		return (1);
+	else if (!ft_strncmp(str, "pwd", 3))
+		return (1);
+	else if (!ft_strncmp(str, "export", 6))
+		return (1);
+	else if (!ft_strncmp(str, "unset", 5))
+		return (1);
+	else if (!ft_strncmp(str, "env", 3))
+		return (1);
+	else if (!ft_strncmp(str, "exit", 4))
+		return (1);
+	else
+		return (0);
+}
+
+/** @brief Find the absolute path of the command by the envp*/
 char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -38,5 +60,33 @@ char	*find_path(char *cmd, char **envp)
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
+	return (0);
+}
+
+/** @brief The function search the absolut path of the command and  */
+int	ft_execve(t_exec *exec_node, char **envp)
+{
+	char	*absolute_path;
+
+	if (!exec_node->args || !exec_node->args[0])
+		return (0);
+	absolute_path = find_path(exec_node->args[0], envp);
+	if (!exec_node->args[0][0])
+		exit(EXIT_SUCCESS);
+	if (!absolute_path)
+	{
+		if (execve(exec_node->args[0], exec_node->args, envp) == -1)
+		{
+			print_err(exec_node->args[0]);
+			print_err(": command not found\n");
+			exit(127);
+		}
+	}
+	else if (execve(absolute_path, exec_node->args, envp) == -1)
+	{
+		print_err(absolute_path);
+		print_err(": command not found");
+		exit(127);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 17:27:47 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:38:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ void	remove_null(t_token **head)
 	t_token	*next_node;
 
 	current = (*head);
-	while (current)
+	while (current && current->next)
 	{
-		if (current->type == IS_NULL || current->c_len == 0)
+		if ((current->type == IS_NULL || current->c_len == 0)
+			&& (current->prev->type != IS_SPACE || current->next->type != IS_SPACE))
 		{
 			next_node = current->next;
 			remove_node(head, &current);

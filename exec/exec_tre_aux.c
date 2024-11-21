@@ -6,60 +6,53 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/19 18:05:21 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:47:52 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_exec(t_exec *exec_node)
+void	ft_redir(void *node, t_main *pgr)
 {
-	int	pid;
+	t_redir	*redir_node;
 
+	redir_node = (t_redir *)node;
+	int fd = open(redir_node->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		print_err("minishell: cannot open file");
+		exit(1);
+	}
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	exec_tree(redir_node->next, pgr);
+}
+
+void	ft_exec(void *node, t_main *pgr)
+{
+	t_exec	*exec_node;
+	int		pid;
+
+	exec_node = (t_exec *)node;
 	if (isbuiltin(exec_node->args[0]))
 	{
-		/*g_signal =  **call builtin -- */
+		// Executar builtin no mesmo processo
+		/* g_signal = execute_builtin(exec_node->args); */
 		return ;
 	}
 	pid = fork();
 	if (pid < 0)
 	{
-		print_err("fork");
-		return ;
+		print_err("fork failed");
+		exit(1);
 	}
 	if (pid == 0)
 	{
-		/* code */
+		// Processo filho
+		ft_execve(exec_node, pgr->cur_envp);
+		exit(0);
 	}
+	waitpid(pid, NULL, 0); // Esperar pelo processo filho
 }
 
-void	ft_execve(t_exec *exec_node, t_main *pgr)
-{
-	char	*absolute_path;
-	
-	absolute_path = find_path(exec_node->args[0], pgr->cur_envp);
-	if (execve(exec_node->args[0], exec_node->args, pgr->cur_envp) != 0)
-	{
-		
-	}
-}
 
-int	isbuiltin(char *str)
-{
-	if (!ft_strncmp(str, "cd", 2))
-		return (1);
-	else if (!ft_strncmp(str, "echo", 4))
-		return (1);
-	else if (!ft_strncmp(str, "pwd", 3))
-		return (1);
-	else if (!ft_strncmp(str, "export", 6))
-		return (1);
-	else if (!ft_strncmp(str, "unset", 5))
-		return (1);
-	else if (!ft_strncmp(str, "env", 3))
-		return (1);
-	else if (!ft_strncmp(str, "exit", 4))
-		return (1);
-	else
-		return (0);
-}

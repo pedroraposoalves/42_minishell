@@ -6,7 +6,7 @@
 #    By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/10 17:50:15 by malves-b          #+#    #+#              #
-#    Updated: 2024/11/06 14:41:05 by malves-b         ###   ########.fr        #
+#    Updated: 2024/11/20 19:42:46 by malves-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ OBJS = $(patsubst srcs/%.c, objs/srcs/%.o, $(wildcard srcs/*.c)) \
        $(patsubst libft/%.c, objs/libft/%.o, $(wildcard libft/*.c)) \
        $(patsubst check/%.c, objs/check/%.o, $(wildcard check/*.c)) \
        $(patsubst tokenization/%.c, objs/tokenization/%.o, $(wildcard tokenization/*.c))\
-       $(patsubst parse/%.c, objs/parse/%.o, $(wildcard parse/*.c))
+       $(patsubst parse/%.c, objs/parse/%.o, $(wildcard parse/*.c)) \
+       $(patsubst exec/%.c, objs/exec/%.o, $(wildcard exec/*.c))
 
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
@@ -35,7 +36,7 @@ COMPILED_FILES := 0
 all: create_objs $(TARGET)
 
 create_objs:
-	@mkdir -p objs/srcs objs/libft objs/tokenization objs/check objs/parse
+	@mkdir -p objs/srcs objs/libft objs/tokenization objs/check objs/parse objs/exec
 
 $(TARGET): $(OBJS)
 	@$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) -lreadline
@@ -60,6 +61,9 @@ objs/check/%.o: check/%.c
 	$(compile_template)
 
 objs/parse/%.o: parse/%.c
+	$(compile_template)
+
+objs/exec/%.o: exec/%.c
 	$(compile_template)
 
 clean:

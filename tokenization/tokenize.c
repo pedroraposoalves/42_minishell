@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/11 13:04:20 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:53:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	token_type(char *token)
 		return (REDIR_MQ);
 	else if (ft_isspace(token[0]))
 		return (IS_SPACE);
-	else if (token[0] == '\'')
-		return (S_QUOTES);
 	else if (!ft_strncmp(token, "\"\"", ft_strlen(token)))
 		return (IS_NULL);
+	else if (!ft_strncmp(token, "\'\'", ft_strlen(token)))
+		return (IS_NULL);
+	else if (token[0] == '\'')
+		return (S_QUOTES);
 	else if (token[0] == '"')
 		return (D_QUOTES);
 	else

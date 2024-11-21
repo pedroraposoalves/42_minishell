@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:27:21 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/13 17:15:59 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:11:29 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,24 @@ int	main(int argc, char *argv[], char **envp)
 			tokenize(pgr, input);				/*2*/
 			ft_expand(pgr); 						/*3*/
 			
-			/*------------*/
+			// ---- PRINT TOKENS ----
 			start = pgr->tokens;
 			join_tokens(&pgr->tokens);
-			puts("\nTOKEN LIST:\n");
-			print_list(pgr);
+			// puts("\nTOKEN LIST:\n");
+			// print_list(pgr);
 			pgr->tokens = start;
 
+
+			// ---- PRINT TREE ----
 			puts("\n\nTREE :\n\n");
 			void *root = start_parsing(start);
 			print_tree(root, 40, 40);
-			// free_all(pgr, root);
+
+
+
+			// void *root = start_parsing(start);
+			exec_tree(root, pgr);
+			free_all(pgr, root);
 			/*------------*/
 		}
 	}

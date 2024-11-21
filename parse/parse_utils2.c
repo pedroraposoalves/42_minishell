@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 17:55:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:00:43 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ t_redir	*redir_aux(t_token **start, t_exec *exec_node)
 		while ((*start) && (*start)->type != PIPE)
 		{
 			if (((*start)->type == CMD || (*start)->type == S_QUOTES
-				|| (*start)->type == D_QUOTES) && redir_node->file)
+					|| (*start)->type == D_QUOTES) && redir_node->file)
 				exec_node->args = add_word(exec_node->args, (*start)->content);
 			else if ((*start)->type == CMD || (*start)->type == S_QUOTES
 				|| (*start)->type == D_QUOTES)
 				redir_node->file = ft_strdup((*start)->content);
 			if (!(*start)->next)
-				break;
+				break ;
 			(*start) = (*start)->next;
 		}
 	}

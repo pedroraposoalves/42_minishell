@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/13 16:40:02 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:42:52 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	is_quote_open(char *cmd, int *i, int *error)
 		}
 		j++;
 	}
-	print_err ("minishell: syntax error - the quote is open");
+	print_err ("minishell: syntax error - the quote is open\n");
 	(*error) = 1;
 	return (1);
 }
