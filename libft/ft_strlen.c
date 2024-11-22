@@ -3,30 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 14:05:36 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/16 14:48:54 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 08:57:54 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:33:48 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//Funcao que conta e retorna do tamanho de uma string
+#include "../includes/libft.h"
 
-#include "libft.h"
-
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (s[i])
 		i++;
 	return (i);
 }
-/* 
-#include <stdio.h>
-
-int	main(void)
-{
-	printf("%i", ft_strlen("jaca mole"));
-} */

@@ -3,49 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 18:54:35 by malves-b          #+#    #+#             */
-/*   Updated: 2024/09/08 16:21:30 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:35:38 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Funcao que aloca espaco de memoria para um bloco de dados
-Na funcao calloc os lixos de memoria sao deletados, ou seja,
-inicializa com '0' */
+#include "../includes/libft.h"
 
-#include "libft.h"
-#include <limits.h>
-
-void	*ft_calloc(size_t n, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*x;
+	void	*p;
 
-	if (n == 0 || size == 0)
-		return (malloc(0));
-	if (n > ((size_t) -1) / size)
-	{
+	p = (void *)malloc(nmemb * size);
+	if (!p)
 		return (NULL);
-	}
-	x = malloc(n * size);
-	if (!x)
-		return (NULL);
-	ft_bzero(x, n * size);
-	return (x);
+	ft_bzero(p, nmemb * size);
+	return (p);
 }
-/* 
-int main(void)
-{
-    int *a1;
-    int i;
-
-    a1 = (int *) ft_calloc(sizeof(int), 4);
-    i = 0;
-    while (i < sizeof(a1))
-    {
-        printf("%i\n", *a1);
-        i++;
-    }
-    printf("%lu", sizeof(int));
-    return 0;
-} */

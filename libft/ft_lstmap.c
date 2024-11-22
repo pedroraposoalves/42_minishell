@@ -3,43 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 16:21:12 by malves-b          #+#    #+#             */
-/*   Updated: 2024/09/08 16:23:41 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:35:04 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-/* Itera sobre uma lista encadeada, aplicando a funcao 'f' ao conteudo de cada
-no, e cria uma nova lista com os resultados, se ocorrer algum erro usa a funcao
-'del' para limpar os nos criados e retornar NULL*/
+static t_list	*new_node_or_clear(t_list *lst, t_list **head,
+				void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*new;
+	void	*set;
+
+	set = f(lst->content);
+	new = ft_lstnew(set);
+	if (!new)
+	{
+		del(set);
+		ft_lstclear(head, del);
+		return (NULL);
+	}
+	return (new);
+}
+
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*first;
+	t_list	*head;
+	t_list	*actual;
 	t_list	*new;
 
-	if (!f || !del)
+	if (!lst || !f || !del)
 		return (NULL);
-	first = NULL;
+	head = NULL;
 	while (lst)
 	{
-		new = ft_lstnew((*f)(lst->content));
+		new = new_node_or_clear(lst, &head, f, del);
 		if (!new)
-		{
-			while (first)
-			{
-				new = first->next;
-				(*del)(first->content);
-				free(first);
-				first = new;
-			}
-			lst = NULL;
 			return (NULL);
+		if (!head)
+		{
+			head = new;
+			actual = head;
 		}
-		ft_lstadd_back(&first, new);
+		else
+		{
+			actual->next = new;
+			actual = actual->next;
+		}
 		lst = lst->next;
 	}
-	return (first);
+	return (head);
 }

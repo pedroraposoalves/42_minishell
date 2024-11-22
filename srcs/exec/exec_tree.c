@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 13:48:35 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:55:50 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 void	ft_pipe(void *node, t_main *pgr)
 {
@@ -63,6 +63,6 @@ void	exec_tree(void *root, t_main *pgr)
 		ft_pipe(root, pgr);
 	else
 		ft_redir(root, pgr);
-	
+
 }
 

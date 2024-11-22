@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 16:15:22 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/22 09:42:13 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <signal.h>
-# include <sys/wait.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft/libft.h"
-
-extern int	g_signal;
+# include <ctype.h>
+# include <errno.h>
+# include <limits.h>
+# include "libft.h"
 
 # define PIPE 1
 # define REDIR 2
@@ -35,6 +35,8 @@ extern int	g_signal;
 # define HERE_DOC 8
 # define IS_NULL 9
 # define REDIR_MQ 10
+
+# define SHELL_NAME "minishell"
 
 typedef struct s_token
 {
@@ -105,7 +107,14 @@ void	print_err(char *message);
 /* -------------------------------------------------------------------------- */
 /*                                   EXPAND                                   */
 /* -------------------------------------------------------------------------- */
+
+void	get_return_last_cmd(char **content, int ret_last_cmd);
+void	change_content(char *vrbl, char **content, int *i, int word_len);
+void	set_envp_value(char **cont, char **envp, int i, int wrd);
+int		search_exp(char *content);
 void	ft_expand(t_main *main);
+
+
 int		cmp_env(char *s1, char *s2);
 void	remove_badenvp(char **str, int i, int j);
 
@@ -123,7 +132,8 @@ t_redir	*create_redir_node(void);
 t_pipe	*create_pipe_node(void);
 char	**add_word(char **args, char *new_word);
 t_redir	*redir_aux(t_token **start, t_exec *exec_node);
-
+char	*find_path(char *cmd, char **envp);
+int		isbuiltin(char *str);
 void	join_tokens(t_token **tokens);
 
 /* ---------------------------------- EXEC ---------------------------------- */
@@ -132,10 +142,6 @@ void	ft_redir(void *node, t_main *pgr);
 void	exec_tree(void *root, t_main *pgr);
 int		ft_execve(t_exec *exec_node, char **envp);
 void	ft_exec(void *node, t_main *pgr);
-
-/* --- UTILS ---*/
-char	*find_path(char *cmd, char **envp);
-int		isbuiltin(char *str);
 
 /* --------------------------------- SIGNALS -------------------------------- */
 
@@ -146,6 +152,26 @@ void	setup_signals(void);
 void	print_list(t_main *pgr);
 void	print_tree(void *root, int left, int right);
 
-/* -------------------------------------------------------------------------- */
+/* ------------------------------ ENV FUNCTIONS ----------------------------- */
 
+char	*get_env_value(char *value, t_main *pgr);
+int		set_env_value(char *variable, t_main *pgr, char *new_v);
+int		append_env_value(char *variable, t_main *pgr);
+int		del_env_value(char *value, t_main *pgr);
+
+/* -------------------------------- BUILTINS -------------------------------- */
+int		ft_cd(char *path, t_main *pgr);
+int		ft_env(t_main *pgr);
+int		update_pwd(t_main *pgr, char *old_cwd);
+int		ft_echo(char **argv);
+int		ft_pwd(void);
+int		ft_unset(t_main *pgr, char **argv);
+int		ft_exit(t_main *pgr, int argc, char **argv);
+
+/* ----------------------------- ERROR HANDLING ----------------------------- */
+
+int		print_error(char *s1, char *s2, char *s3, char *message);
+int		print_error_errno(char *s1, char *s2, char *s3);
+
+/* -------------------------------------------------------------------------- */
 #endif

@@ -3,50 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 15:56:44 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/19 13:57:04 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:32 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Funcao que cria uma copia de uma string
-e retorna o endereco do ponteiro criado*/
+#include "../includes/libft.h"
 
-#include "libft.h"
-
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *src)
 {
-	char	*a;
+	int		len;
 	int		i;
+	char	*s;
 
-	i = 0;
-	a = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (a == NULL)
+	len = ft_strlen(src);
+	s = (char *)malloc(sizeof(char) * (len + 1));
+	if (!s)
 		return (NULL);
-	while (s[i])
+	i = 0;
+	while (src[i] != '\0')
 	{
-		a[i] = s[i];
+		s[i] = src[i];
 		i++;
 	}
-	a[i] = 0;
-	return (a);
+	s[i] = '\0';
+	return (s);
 }
-/* 
-int main(void)
-{
-	const char a1[] = "teste 01";
-	const char *a2;
-	int		i;
-
-	printf("%p\n", &a1);
-
-
-	a2 = ft_strdup(a1);
-	while (i < sizeof(a2))
-	{
-		printf("Endereco: %p | armazena: %c\n", a2, *(a2 + i));
-		i++;
-	}
-	return 0;
-} */

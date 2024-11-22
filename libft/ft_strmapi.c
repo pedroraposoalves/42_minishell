@@ -3,44 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 14:03:43 by malves-b          #+#    #+#             */
-/*   Updated: 2023/11/02 15:03:23 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:33:44 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-/* Funcao que cria uma nova string com base na string 's' passada
-como primeiro parametro, com a alteracao da funcao de
-callback passada como segundo parametro */
+#include "../includes/libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	unsigned int	i;
-	char			*ret;
+	char	*res;
+	int		len;
+	int		i;
 
-	i = 0;
-	ret = (char *)malloc(sizeof(char) * (ft_strlen(s)) + 1);
-	if (ret == NULL)
+	if (!s)
+		return (ft_strdup(""));
+	len = (int) ft_strlen(s);
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (!res)
 		return (NULL);
+	i = 0;
 	while (s[i])
 	{
-		ret[i] = f(i, s[i]);
+		res[i] = f(i, s[i]);
 		i++;
 	}
-	ret[i] = '\0';
-	return (ret);
+	res[i] = '\0';
+	return (res);
 }
-/* 
-static aux(unsigned int, char str)
-{
-    
-}
-
-int main(void)
-{
-    
-    return 0;
-} */

@@ -3,41 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 11:03:58 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/17 16:33:00 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:17 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Funcao que copia o valor de uma string 
-para outra e retorna o tamanho da source
-*/
+#include "../includes/libft.h"
 
-#include "libft.h"
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	if (size == 0)
-		return (ft_strlen((char *)src));
-	while (src[i] != '\0' && i < (size - 1))
-	{
-		dest[i] = src[i];
+	while (s[i])
 		i++;
-	}
-	dest[i] = '\0';
-	return (ft_strlen((char *)src));
+	return (i);
 }
 
-// #include <stdio.h>
-// int main(void)
-// {
-//     char a1[] = "teste";
-//     char a2[] = "matheus";
-//     printf("%ld\n", ft_strlcpy(a1, a2, 4));
-//     puts(a1);
-//     return 0;
-// }
+unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
+{
+	unsigned int	srcsize;
+	unsigned int	i;
+
+	srcsize = ft_strlen(src);
+	if (size > 0)
+	{
+		i = 0;
+		while (i < size - 1 && *(src + i) != '\0')
+		{
+			dest[i] = src[i];
+			i ++;
+		}
+		dest[i] = '\0';
+	}
+	return (srcsize);
+}

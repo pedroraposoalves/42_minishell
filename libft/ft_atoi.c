@@ -3,48 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 17:45:04 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/16 18:21:39 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:33:06 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Funcao que converte uma string em um inteiro */
+#include "../includes/libft.h"
 
-#include "libft.h"
+static size_t	ft_num_len(char *n)
+{
+	size_t	i;
+	size_t	res;
+	int		bool_left_zero;
 
-int	ft_atoi(const char *nptr)
+	i = 0;
+	res = 0;
+	bool_left_zero = 1;
+	while (n[i] && n[i] >= '0' && n[i++] <= '9')
+	{
+		if (bool_left_zero)
+			if (n[i] >= '1')
+				bool_left_zero = 0;
+		if (!bool_left_zero)
+			res++;
+	}
+	return (res);
+}
+
+static int	rm_spaces_signal(char **str)
 {
 	int	i;
-	int	r;
-	int	sinal;
+	int	signal;
 
-	sinal = 1;
+	signal = 1;
 	i = 0;
-	r = 0;
-	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+	while (**str == ' ' || (**str >= 9 && **str <= 13))
+		(*str)++;
+	if (*str[i] == '-')
 	{
-		if (nptr[i] == '-')
-			sinal *= -1;
-		i++;
+		signal = -signal;
+		(*str)++;
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		r *= 10;
-		r += (nptr[i] - '0');
-		i++;
-	}
-	r *= sinal;
-	return (r);
+	else if (*str[i] == '+')
+		(*str)++;
+	return (signal);
 }
-/*
-int main(void)
-{
-    char a1[] = "\n 10";
 
-    printf("%i\n", ft_atoi(a1));
-    return 0;
-}*/
+int	ft_atoi(const char *str)
+{
+	int			signal;
+	size_t		len;
+	long int	res;
+	char		*tmp;
+
+	tmp = (char *)str;
+	res = 0;
+	signal = rm_spaces_signal(&tmp);
+	len = ft_num_len(tmp);
+	if (len > 19)
+	{
+		if (signal == 1)
+			return (-1);
+		else
+			return (0);
+	}
+	while (*tmp >= '0' && *tmp <= '9' && *tmp != '\0')
+	{
+		res = res * 10 + *tmp - '0';
+		tmp++;
+	}
+	return ((int) res * signal);
+}

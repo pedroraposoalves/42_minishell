@@ -3,29 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 09:27:43 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/11 09:45:09 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:33:18 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//Funcao que converte um caracter menusculo em maiusculo
+#include "../includes/libft.h"
 
-#include "libft.h"
-
-int	ft_toupper(int a)
+int	ft_toupper(int c)
 {
-	if (a >= 'a' && a <= 'z')
-		return (a - 32);
-	return (a);
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
 }
-/* 
-#include <ctype.h>
-
-int main(void)
-{
-    printf("After %c\n", toupper('l'));
-    printf("After %c\n", ft_toupper('l'));
-    return 0;
-} */

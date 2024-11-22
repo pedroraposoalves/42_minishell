@@ -3,39 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 13:28:22 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/19 15:08:51 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:33:33 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Funcao que encontra a ultima ocorrencia do caractere passado como
-parametro em uma string. Funcao retorna um ponteiro para o mesmo. */
-
-#include "libft.h"
+#include "../includes/libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	int	len;
 
-	i = ft_strlen(s);
-	if ((char)c == 0)
-		return ((char *)s + i);
-	while (i >= 0)
+	len = (int) ft_strlen(s);
+	while (len >= 0)
 	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i--;
+		if (s[len] == (char) c)
+			return ((char *) &s[len]);
+		len--;
 	}
 	return (NULL);
 }
-/* 
-int main(void)
-{
-    char a1[] = "exercise 01";
-    
-    printf("%s\n", ft_strrchr(a1, 'x'));
-    printf("%s\n", strrchr(a1, 'x'));
-    return 0;
-} */

@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 14:40:02 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/25 10:54:29 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:30 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Funcao que vai percorrer uma string e aplicar
-a funcao de callback se necessario. */
-
-#include "libft.h"
+#include "../includes/libft.h"
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	unsigned int	i;
+	int	i;
 
-	if (!s || !f)
-		return ;
-	i = 0;
-	while (s[i])
+	if (s)
 	{
-		f(i, s + i);
-		i++;
+		i = 0;
+		while (s[i])
+		{
+			f(i, s + i);
+			i++;
+		}
 	}
 }

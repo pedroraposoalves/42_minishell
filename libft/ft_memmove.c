@@ -3,48 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 16:54:53 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/11 18:28:42 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:50 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*s;
-	char	*d;
-	size_t	i;
+	char		*ps;
+	char		*pd;
+	size_t		i;
 
-	s = (char *)src;
-	d = (char *)dst;
-	i = 0;
-	if (!dst && !src)
-		return (dst);
-	if (d > s)
-		while (n-- > 0)
-			d[n] = s[n];
-	else
+	if (!dest && !src)
+		return (dest);
+	ps = (char *) src;
+	pd = (char *) dest;
+	if (dest < src)
 	{
+		i = 0;
 		while (i < n)
 		{
-			d[i] = s[i];
+			pd[i] = ps[i];
 			i++;
 		}
 	}
-	return (dst);
+	else
+	{
+		while (n--)
+			pd[n] = ps[n];
+	}
+	return (dest);
 }
-/* 
-int main(void)
-{
-    char src[] = "this setence has 24 char";
-    char dest[25] = "";
-
-    puts(dest);
-    ft_memmove(dest, src, sizeof(char) * 24);
-    puts(dest);
-
-    return 0;
-} */

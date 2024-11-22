@@ -3,45 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 19:02:28 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/20 12:16:22 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:27 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Funcao que concatena duas strings e retorna um ponteiro
-para a string criada*/
+#include "../includes/libft.h"
 
-#include "libft.h"
+static char	*ft_strjoin_valid(char const *s1, char const *s2)
+{
+	if (!s1 && !s2)
+		return (ft_strdup(""));
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	return (NULL);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	unsigned int	i;
-	unsigned int	j;
-	char			*ret;
+	int		s1_len;
+	int		s2_len;
+	char	*res;
+	int		i;
 
-	i = 0;
-	j = 0;
-	ret = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!ret)
+	res = ft_strjoin_valid(s1, s2);
+	if (res)
+		return (res);
+	s1_len = (int) ft_strlen(s1);
+	s2_len = (int) ft_strlen(s2);
+	res = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!res)
 		return (NULL);
-	while (s1[i])
+	res[s1_len + s2_len] = '\0';
+	i = 0;
+	while (i < s1_len || i < s2_len)
 	{
-		ret[i] = s1[i];
+		if (i < s1_len)
+			res[i] = s1[i];
+		if (i < s2_len)
+			res[s1_len + i] = s2[i];
 		i++;
 	}
-	while (s2[j])
-		ret[i++] = s2[j++];
-	ret[i] = '\0';
-	return (ret);
+	return (res);
 }
-/* 
-int main(void)
-{
-    char    *ex;
-
-    ex = ft_strjoin("bom", "dia");
-    puts(ex);
-    return 0;
-} */

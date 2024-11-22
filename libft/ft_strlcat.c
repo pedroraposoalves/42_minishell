@@ -3,53 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 14:47:53 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/19 14:52:03 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:23 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Funcao que verifica o espaco vazio de uma string (dst)
-e preenche com o (src). Funcao retorna o tamanho do
-src + a quantidade de casas ja preenchidas */
+#include "../includes/libft.h"
 
-#include "libft.h"
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 {
-	size_t	i;
-	size_t	j;
-	char	*a;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	len_dest;
+	unsigned int	len_src;
 
-	a = (char *)src;
 	i = 0;
 	j = 0;
-	while (dst[i] && i < size)
-		i++;
-	while (a[j] && (i + j + 1) < size)
+	while (dest[j] != '\0')
 	{
-		dst[i + j] = a[j];
 		j++;
 	}
-	if (i < size)
-		dst[i + j] = '\0';
-	return (i + ft_strlen(a));
+	len_dest = j;
+	len_src = ft_strlen(src);
+	if (size == 0 || size <= len_dest)
+		return (len_src + size);
+	while (src[i] != '\0' && i < size - len_dest - 1)
+	{
+		dest[j] = src[i];
+		i++;
+		j++;
+	}
+	dest[j] = '\0';
+	return (len_dest + len_src);
 }
-
-//#include <bsd/string.h>
-/*
-#include <stdio.h>
-//compilar funcao original com "lbsd" no final
-
-int main(void)
-{
-    char dest[4] = "oi";
-    char src[] = "teste";
-    
-    puts(dest);
-    printf("%zu\n", ft_strlcat(dest, src, 4));
-    puts(dest);
-    
-    return 0;
-} */

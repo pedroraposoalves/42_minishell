@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:27:21 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 16:11:29 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:57:44 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 int	g_signal;
 
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[], char **envp)
 		{
 			tokenize(pgr, input);				/*2*/
 			ft_expand(pgr); 						/*3*/
-			
+
 			// ---- PRINT TOKENS ----
 			start = pgr->tokens;
 			join_tokens(&pgr->tokens);

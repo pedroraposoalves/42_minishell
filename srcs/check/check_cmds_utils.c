@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:16:06 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/13 16:58:38 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:55:14 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
-/** @brief Function check if a special caracter is followed by 
+/** @brief Function check if a special caracter is followed by
  * other special caracter
  */
 int	check_isjoin(char *cmd, int *error)

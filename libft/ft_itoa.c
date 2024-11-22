@@ -3,66 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 13:23:36 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/21 15:33:16 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:35:23 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Funcao que converte um integer em uma string*/
+#include "../includes/libft.h"
 
-#include "libft.h"
-
-static unsigned int	size_number(int number)
+static int	ft_nlen(long int n)
 {
-	unsigned int	x;
+	int	len;
 
-	x = 0;
-	if (number == 0)
-		return (1);
-	if (number < 0)
-		x += 1;
-	while (number != 0)
+	len = 1;
+	if (n < 0)
 	{
-		number /= 10;
-		x++;
+		n = -n;
+		len++;
 	}
-	return (x);
+	while (n > 9)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	char			*ret;
-	unsigned int	y;
-	unsigned int	x;
+	int			len;
+	long int	ln;
+	char		*res;
 
-	y = size_number(n);
-	ret = (char *)malloc(sizeof(char) * (y + 1));
-	if (ret == NULL)
+	ln = n;
+	len = ft_nlen(ln);
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (!res)
 		return (NULL);
-	if (n < 0)
+	if (ln < 0)
 	{
-		ret[0] = '-';
-		x = -n;
+		ln = -ln;
+		res[0] = '-';
 	}
-	else
-		x = n;
-	if (x == 0)
-		ret[0] = '0';
-	ret[y] = '\0';
-	while (x != 0)
+	res[len--] = '\0';
+	while (ln > 9)
 	{
-		ret[y - 1] = (x % 10) + '0';
-		x /= 10;
-		y--;
+		res[len--] = ln % 10 + '0';
+		ln /= 10;
 	}
-	return (ret);
+	res[len] = ln + '0';
+	return (res);
 }
-/* 
-int main(int argc, char const *argv[])
-{
-    (void)argc;
-
-    printf("%s", argv[1]);
-} */

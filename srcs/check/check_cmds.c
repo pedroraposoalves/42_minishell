@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/20 16:42:52 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:55:19 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 /** @brief check if the cmd init with a pipe */
 int	check_init_pipe(char *cmd, int *error)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 12:50:15 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/15 14:56:53 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:37 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 /** @brief check if the char is a special caracter*/
 int	is_special_char(char c)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmp_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:50 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 17:23:02 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:55 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 int	cmp_env(char *s1, char *s2)
 {

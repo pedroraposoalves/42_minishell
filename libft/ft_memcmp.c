@@ -3,39 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 12:06:03 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/16 14:45:35 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:54 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	const unsigned char	*a;
-	const unsigned char	*b;
-	size_t				i;
+	size_t			i;
+	unsigned char	*s1_type;
+	unsigned char	*s2_type;
 
-	a = (const unsigned char *)s1;
-	b = (const unsigned char *)s2;
+	s1_type = (unsigned char *) s1;
+	s2_type = (unsigned char *) s2;
 	i = 0;
 	while (i < n)
 	{
-		if (a[i] != b[i])
-			return (a[i] - b[i]);
+		if (s1_type[i] != s2_type[i])
+			return (s1_type[i] - s2_type[i]);
 		i++;
 	}
 	return (0);
 }
-/* 
-int main(void)
-{
-    char a1[] = "\xff\xaa\xde\xffMACOSX\xff";
-    char a2[] = "\xff\xaa\xde\x02";
-
-    printf("%i\n", memcmp(a1, a2, 8));
-    printf("%i\n", ft_memcmp(a1, a2, 8));
-    return 0;
-} */

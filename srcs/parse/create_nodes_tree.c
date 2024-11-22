@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_nodes_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/11 19:14:57 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:08 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 t_exec	*parse_exec(t_token **cur, int limit)
 {

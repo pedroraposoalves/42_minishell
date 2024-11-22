@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_amount.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:13:31 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/19 13:24:50 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:30 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 int	special_or_space(char *cmd, int *i, int *amount)
 {
@@ -77,9 +77,9 @@ int	get_token_amount(char *cmd)
 				return (1);
 			i++;
 		}
-		else if (cmd[i] && !is_special_char(cmd[i]) && !isspace(cmd[i]))
+		else if (cmd[i] && !is_special_char(cmd[i]) && !ft_isspace(cmd[i]))
 		{
-			while (cmd[i] && !is_special_char(cmd[i]) && !isspace(cmd[i])
+			while (cmd[i] && !is_special_char(cmd[i]) && !ft_isspace(cmd[i])
 				&& (cmd[i] != '"' && cmd[i] != '\''))
 				i++;
 			amount++;

@@ -3,40 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 16:01:24 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/11 17:25:00 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:52 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-void	*ft_memcpy(void *a, const void *b, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t	i;
-	char	*d;
-	char	*s;
+	char		*ps;
+	char		*pd;
+	size_t		i;
 
+	if (!dest && !src)
+		return (dest);
+	ps = (char *) src;
+	pd = (char *) dest;
 	i = 0;
-	d = (char *)a;
-	s = (char *)b;
-	if (a == b)
-		return (a);
 	while (i < n)
 	{
-		d[i] = s[i];
+		pd[i] = ps[i];
 		i++;
 	}
-	return (a);
+	return (dest);
 }
-/*
-int main(void)
-{
-    char a[] = "empty";
-    char b[28] = "empty";
-
-    puts(b);
-    ft_memcpy(b, a, 0);
-    puts(b);
-}*/

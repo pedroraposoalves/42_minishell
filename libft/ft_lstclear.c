@@ -3,26 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 16:03:14 by malves-b          #+#    #+#             */
-/*   Updated: 2024/09/07 16:14:40 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:35:15 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-/** @brief Funcao que libera todos os nos da estrutura usando a funcao 'del' */
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list	*next;
+	t_list	*tmp;
+	t_list	*del_node;
 
-	while (*lst)
+	if (*lst)
 	{
-		next = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = next;
+		tmp = *lst;
+		*lst = NULL;
+		while (tmp)
+		{
+			del_node = tmp;
+			tmp = tmp->next;
+			del(del_node->content);
+			free(del_node);
+		}
 	}
-	*lst = NULL;
 }

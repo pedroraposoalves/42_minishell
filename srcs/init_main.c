@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/12 12:29:26 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:57:59 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 /** @brief Copy the envp to a double pointer in the main struct*/
 char	**cpy_envp(char **envp)

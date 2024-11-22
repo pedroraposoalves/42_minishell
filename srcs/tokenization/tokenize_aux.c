@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:13:31 by malves-b          #+#    #+#             */
-/*   Updated: 2024/10/16 16:05:26 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:41 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 char	*token_space(char *cmd, int *i)
 {
@@ -128,7 +128,7 @@ char	**tokenize_aux(char *cmd)
 //         for (size_t i = 0; i < get_token_amount(line_read); i++)
 //         {
 //             printf("- %s \n", tokens[i]);
-//         } 
+//         }
 //     }
 //     return 0;
 // }

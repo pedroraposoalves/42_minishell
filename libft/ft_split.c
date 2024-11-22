@@ -3,117 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 14:29:31 by malves-b          #+#    #+#             */
-/*   Updated: 2023/10/30 14:52:53 by malves-b         ###   ########.fr       */
+/*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
+/*   Updated: 2024/10/29 16:34:37 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-/* Funcao que conta e retorna a quantidade de palavras na string*/
-
-static int	count_words(char const *s, char c)
+static int	ft_word_len(char const *s, char sep)
 {
-	int	word;
 	int	i;
 
-	word = 0;
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
-		if ((s[i] != c) && ((s[i + 1] == c) || (s[i + 1] == '\0')))
-			word++;
+		if (s[i] == sep)
+			return (i);
 		i++;
 	}
-	return (word);
+	return (i);
 }
 
-/* Funcao que aloca tamanho da palavra e copia a palavra 
-para uma nova substring */
-
-static char	*put_word(char const *s, char c)
+static int	ft_count_words(char const *s, char sep)
 {
-	char	*str;
+	int		n_words;
 	int		i;
 	int		len;
 
-	len = 0;
-	while (s[len] && s[len] != c)
-		len++;
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
+	if (!s)
+		return (0);
+	n_words = 0;
 	i = 0;
-	while (i < len)
+	while (s[i])
 	{
-		str[i] = s[i];
-		i++;
+		while (s[i] == sep)
+			i++;
+		len = ft_word_len(&s[i], sep);
+		if (len > 0)
+			n_words++;
+		i += len;
 	}
-	str[i] = '\0';
-	return (str);
+	return (n_words);
 }
 
-/*Funcao que chama a funcao put_word e faz o free se a alocacao falhar. */
-
-static char	*ft_cpy_str(int i, char const *s, char c, char **res)
+static int	ft_add_word(char **str_split, const char *str, int index, int len)
 {
-	res[i] = put_word(s, c);
-	if (!res[i])
+	int		i;
+
+	str_split[index] = ft_substr(str, 0, len);
+	if (!str_split[index])
 	{
-		while (i > 0)
+		i = 0;
+		while (i <= index)
 		{
-			i--;
-			free(res[i]);
+			free(str_split[i]);
+			i++;
 		}
-		free(res);
-		return (NULL);
+		free(str_split);
+		return (-1);
 	}
-	return (res[i]);
+	return (0);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		nb_words;
 	int		i;
+	int		len;
 	char	**res;
 
 	if (!s)
 		return (NULL);
-	i = 0;
-	nb_words = count_words(s, c);
-	res = (char **)malloc(sizeof(char *) * (nb_words + 1));
+	res = (char **)malloc(sizeof(char *) * (ft_count_words(s, c) + 1));
 	if (!res)
 		return (NULL);
-	while (i < nb_words)
+	i = 0;
+	while (*s)
 	{
-		while (*s == c)
+		while (*s == c && *s)
 			s++;
-		if (*s != '\0')
-			res[i] = ft_cpy_str(i, s, c, res);
-		if (!res || res[i] == NULL)
-			return (NULL);
-		while (*s && *s != c)
-			s++;
-		i++;
+		len = ft_word_len(s, c);
+		if (len > 0)
+		{
+			if (ft_add_word(res, s, i++, len) == -1)
+				return (NULL);
+		}
+		s += len;
 	}
 	res[i] = 0;
 	return (res);
 }
-/*
-int main(void)
-{
-    char    a1[] = "a b c de f";
-    char    **teste;
-
-    teste = ft_split(a1, ' ');
-    
-    puts(*(teste));
-    puts(*(teste + 1));
-    puts(*(teste + 2));
-    puts(*(teste + 3));
-    puts(*(teste + 4));
-    
-    return 0;
-}*/

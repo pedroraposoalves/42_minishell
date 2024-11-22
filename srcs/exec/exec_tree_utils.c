@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 15:29:09 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:55:56 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/minishell.h"
 
 /** @brief Check if the cmd is builtin*/
 int	isbuiltin(char *str)
