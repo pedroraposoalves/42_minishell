@@ -17,12 +17,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <string.h>
+# include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <ctype.h>
 # include <errno.h>
 # include <limits.h>
+# include <string.h>
 # include "libft.h"
 
 # define PIPE 1

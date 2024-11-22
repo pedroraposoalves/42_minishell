@@ -12,7 +12,6 @@ WHITE			= \033[1;37m
 ##########FLAGS##########
 CC				= cc
 CPFLAGS			= -Wall -Wextra -Werror -g #-fsanitize=address
-CPFLAGS_MAIN	= -Wall -Wextra -Werror -g -lreadline #-fsanitize=address
 RM				= rm -rf
 AR				= ar -rcs
 MK				= --no-print-directory
@@ -38,7 +37,7 @@ _FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUI
 				$(EXEC_DIR)/exec_tre_aux $(EXEC_DIR)/exec_tree_utils $(EXEC_DIR)/exec_tree \
 				$(PARSE_DIR)/create_nodes_tree $(PARSE_DIR)/parse_utils $(PARSE_DIR)/parse_utils2 \
 				$(TOKEN_DIR)/get_token_amount $(TOKEN_DIR)/tokenize_aux $(TOKEN_DIR)/tokenize_utils $(TOKEN_DIR)/tokenize \
-				cmp_env DEBUG_AUX expand free init_main join_tokens print_err signals utils_error
+				cmp_env DEBUG_AUX expand free init_main join_tokens print_err utils_error
 
 OBJS			= $(_FILES:%=%.o)
 TARGET			= $(addprefix $(OBJ_DIR)/, $(OBJS))
@@ -50,7 +49,7 @@ all				: 	$(NAME)
 
 $(NAME)			:	${LIBFT_LIB} $(OBJ_DIR) $(TARGET) $(SRC)/main.c
 					echo "[$(CYAN) Compiling $(RESET)] $(GREEN)Main$(RESET)"
-					$(CC) $(CPFLAGS_MAIN) $(SRC)/main.c $(TARGET) $(LIBFT) -o $(NAME) -I $(DEPS)
+					$(CC) $(CPFLAGS) $(SRC)/main.c $(TARGET) $(LIBFT) -o $(NAME) -I $(DEPS) -lreadline
 
 					echo "$(GREEN)Done.$(RESET)"
 
