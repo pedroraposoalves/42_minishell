@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:56:08 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:07:22 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_exec	*parse_exec(t_token **cur, int limit)
 		{
 			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
 				|| (*cur)->type == S_QUOTES)
-				exec_node->args = add_word(exec_node->args, (*cur)->content);
+				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
 			(*cur) = (*cur)->next;
 		}
 	}
@@ -33,7 +33,7 @@ t_exec	*parse_exec(t_token **cur, int limit)
 		{
 			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
 				|| (*cur)->type == S_QUOTES)
-				exec_node->args = add_word(exec_node->args, (*cur)->content);
+				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
 			if ((*cur)->next)
 				(*cur) = (*cur)->next;
 		}
@@ -53,7 +53,7 @@ t_redir	*parse_redir(t_token **start)
 	{
 		if ((*start)->type == CMD || (*start)->type == S_QUOTES
 			|| (*start)->type == D_QUOTES)
-			exec_node->args = add_word(exec_node->args, (*start)->content);
+			exec_node->argv = add_word(exec_node->argv, (*start)->content);
 		else if ((*start)->type == REDIR || (*start)->type == APPEND
 			|| (*start)->type == REDIR_MQ || (*start)->type == HERE_DOC)
 		{

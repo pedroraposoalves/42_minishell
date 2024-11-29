@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/21 22:54:38 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/29 10:37:25 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	check_is_number(char *number);
 
-int	ft_exit(t_main *pgr, int argc, char **argv)
+/*testar para comenados do género ls | exit ou outrop builtin */
+
+int	ft_exit(t_main *pgr, int argc, char **argv, void *root)
 {
 	int	exit_num;
 
@@ -38,6 +40,7 @@ int	ft_exit(t_main *pgr, int argc, char **argv)
 		}
 	}
 	//free estrutura
+	free_all(pgr, root, 1);
 	exit(exit_num);
 }
 

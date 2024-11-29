@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	print_list(t_main *pgr)
+void	ft_print_list(t_main *pgr)
 {
 	printf("----------------------------------------------------\n");
 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token", "id", "len token", "type");
@@ -30,8 +30,8 @@ void	print_tree(void *root, int left, int right)
 	{
 		t_exec	*cmd_node = (t_exec *)root;
 		printf("%*sCMD: ", left, "");
-		for (int i = 0; cmd_node->args && cmd_node->args[i]; i++)
-			printf("%s ", cmd_node->args[i]);
+		for (int i = 0; cmd_node->argv && cmd_node->argv[i]; i++)
+			printf("%s ", cmd_node->argv[i]);
 		printf("\n");
 	}
 	else if (type == REDIR || type == REDIR_MQ || type == APPEND || type == HERE_DOC)

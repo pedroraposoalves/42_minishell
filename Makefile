@@ -26,30 +26,29 @@ NAME			= minishell
 SRC				= srcs
 OBJ_DIR			= objs
 BUILTINS_DIR	= builtins
-CHECK_DIR		= check
 ENV_DIR			= env
 EXEC_DIR		= exec
-PARSE_DIR		= parse
-TOKEN_DIR		= tokenization
-_FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUILTINS_DIR)/unset $(BUILTINS_DIR)/exit $(BUILTINS_DIR)/cd \
-				$(CHECK_DIR)/check_cmds_utils $(CHECK_DIR)/check_cmds \
-				$(ENV_DIR)/env \
+INIT_DIR		= init
+PARS_DIR		= parsing
+UTILS_DIR		= utils
+_FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUILTINS_DIR)/unset $(BUILTINS_DIR)/exit $(BUILTINS_DIR)/cd $(BUILTINS_DIR)/export \
+				$(ENV_DIR)/env $(ENV_DIR)/cmp_env\
 				$(EXEC_DIR)/exec_tre_aux $(EXEC_DIR)/exec_tree_utils $(EXEC_DIR)/exec_tree \
-				$(PARSE_DIR)/create_nodes_tree $(PARSE_DIR)/parse_utils $(PARSE_DIR)/parse_utils2 \
-				$(TOKEN_DIR)/get_token_amount $(TOKEN_DIR)/tokenize_aux $(TOKEN_DIR)/tokenize_utils $(TOKEN_DIR)/tokenize \
-				cmp_env DEBUG_AUX expand free init_main join_tokens print_err utils_error
+				$(INIT_DIR)/init $(INIT_DIR)/create_nodes_tree \
+				$(PARS_DIR)/check_cmds $(PARS_DIR)/tokenize_aux $(PARS_DIR)/tokenize $(PARS_DIR)/utils $(PARS_DIR)/utils2 $(PARS_DIR)/expand $(PARS_DIR)/join_tokens \
+				$(UTILS_DIR)/sort_char_tab $(UTILS_DIR)/utils_error $(UTILS_DIR)/matrix_handle $(UTILS_DIR)/string_utils $(UTILS_DIR)/free \
+				debug
 
 OBJS			= $(_FILES:%=%.o)
 TARGET			= $(addprefix $(OBJ_DIR)/, $(OBJS))
 DEPS			= includes
 
-
 ##########RULES##########
 all				: 	$(NAME)
 
-$(NAME)			:	${LIBFT_LIB} $(OBJ_DIR) $(TARGET) $(SRC)/main.c
+$(NAME)			:	${LIBFT_LIB} $(OBJ_DIR) $(TARGET) $(SRC)/minishell.c
 					echo "[$(CYAN) Compiling $(RESET)] $(GREEN)Main$(RESET)"
-					$(CC) $(CPFLAGS) $(SRC)/main.c $(TARGET) $(LIBFT) -o $(NAME) -I $(DEPS) -lreadline
+					$(CC) $(CPFLAGS) $(SRC)/minishell.c $(TARGET) $(LIBFT) -o $(NAME) -I $(DEPS) -lreadline
 
 					echo "$(GREEN)Done.$(RESET)"
 
@@ -63,12 +62,12 @@ $(OBJ_DIR)/%.o	:$(SRC)/%.c
 
 $(OBJ_DIR)		:
 					mkdir -p $(OBJ_DIR)
+					mkdir -p $(OBJ_DIR)/$(INIT_DIR)
 					mkdir -p $(OBJ_DIR)/$(BUILTINS_DIR)
-					mkdir -p $(OBJ_DIR)/$(CHECK_DIR)
 					mkdir -p $(OBJ_DIR)/$(ENV_DIR)
 					mkdir -p $(OBJ_DIR)/$(EXEC_DIR)
-					mkdir -p $(OBJ_DIR)/$(PARSE_DIR)
-					mkdir -p $(OBJ_DIR)/$(TOKEN_DIR)
+					mkdir -p $(OBJ_DIR)/$(PARS_DIR)
+					mkdir -p $(OBJ_DIR)/$(UTILS_DIR)
 
 clean			:
 					${RM} minishell.o

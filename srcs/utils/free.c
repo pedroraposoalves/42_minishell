@@ -6,23 +6,25 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:58:03 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/29 10:40:28 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_tmain(t_main *pgr)
+void	free_tmain(t_main *pgr, int exit_flag)
 {
+	t_token	*tmp;
+
 	while (pgr->tokens->next)
 	{
+		tmp = pgr->tokens;
 		pgr->tokens = pgr->tokens->next;
-		free (pgr->tokens->prev->content);
-		free (pgr->tokens->prev);
+		free (tmp->content);
+		free (tmp);
 	}
-	free (pgr->tokens->content);
-	free (pgr->tokens);
-	free_double_array (pgr->cur_envp);
+	if (exit_flag)
+		free_double_array (pgr->cur_envp);
 }
 
 void	free_double_array(char **array)
@@ -53,7 +55,7 @@ void	free_redir_node(void *root)
 	if (type == CMD)
 	{
 		exec = (t_exec *)redir->next;
-		free_double_array(exec->args);
+		free_double_array(exec->argv);
 		free(exec);
 	}
 	else
@@ -83,14 +85,14 @@ void	free_tree(void *root)
 	else
 	{
 		exec = (t_exec *)root;
-		free_double_array(exec->args);
+		free_double_array(exec->argv);
 		free(exec);
 	}
 }
 
-void	free_all(t_main *pgr, void *root)
+void	free_all(t_main *pgr, void *root, int exit_flag)
 {
-	free_tmain(pgr);
+	free_tmain(pgr, exit_flag);
 	free_tree(root);
 	free(pgr);
 }

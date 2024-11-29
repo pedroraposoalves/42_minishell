@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:55:56 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/29 10:47:20 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	isbuiltin(char *str)
 	if (!ft_strncmp(str, "cd", 2))
 		return (1);
 	else if (!ft_strncmp(str, "echo", 4))
-		return (1);
+		return (2);
 	else if (!ft_strncmp(str, "pwd", 3))
-		return (1);
+		return (3);
 	else if (!ft_strncmp(str, "export", 6))
-		return (1);
+		return (4);
 	else if (!ft_strncmp(str, "unset", 5))
-		return (1);
+		return (5);
 	else if (!ft_strncmp(str, "env", 3))
-		return (1);
+		return (6);
 	else if (!ft_strncmp(str, "exit", 4))
-		return (1);
+		return (7);
 	else
 		return (0);
 }
@@ -68,25 +68,45 @@ int	ft_execve(t_exec *exec_node, char **envp)
 {
 	char	*absolute_path;
 
-	if (!exec_node->args || !exec_node->args[0])
+	if (!exec_node->argv || !exec_node->argv[0])
 		return (0);
-	absolute_path = find_path(exec_node->args[0], envp);
-	if (!exec_node->args[0][0])
+	absolute_path = find_path(exec_node->argv[0], envp);
+	if (!exec_node->argv[0][0])
 		exit(EXIT_SUCCESS);
 	if (!absolute_path)
 	{
-		if (execve(exec_node->args[0], exec_node->args, envp) == -1)
+		if (execve(exec_node->argv[0], exec_node->argv, envp) == -1)
 		{
-			print_err(exec_node->args[0]);
-			print_err(": command not found\n");
+			print_error("minishell:", exec_node->argv[0], NULL, NULL);
+			print_error("minishell:", "command not found", NULL, NULL);
 			exit(127);
 		}
 	}
-	else if (execve(absolute_path, exec_node->args, envp) == -1)
+	else if (execve(absolute_path, exec_node->argv, envp) == -1)
 	{
-		print_err(absolute_path);
-		print_err(": command not found");
+		print_error("minishell:", absolute_path, NULL, NULL);
+		print_error("minishell:", "command not found", NULL, NULL);
 		exit(127);
 	}
+	return (0);
+}
+
+int	call_builtin(int number, t_exec *node, t_main *pgr, void *root)
+{
+	(void)pgr;
+	if (number == 1)
+		return (ft_cd(node->argv[1], pgr));
+	if (number == 2)
+		return (ft_echo(node->argv));
+	if (number == 3)
+		return (ft_pwd());
+	// if (number == 4)
+	// 	return (ft_)
+	if (number == 5)
+		return (ft_unset(pgr, node->argv));
+	if (number == 6)
+		return (ft_env(pgr));
+	if (number == 7)
+		return (ft_exit(pgr, matrix_len(node->argv), node->argv, root));
 	return (0);
 }

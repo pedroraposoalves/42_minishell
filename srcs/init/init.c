@@ -1,55 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 15:03:05 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:56:17 by pemirand         ###   ########.fr       */
+/*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
+/*   Updated: 2024/11/25 23:48:04 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/** @brief Check if the list has a redir */
-int	search_redir(t_token **token, int limit)
+t_main	*init_main(char **envp)
 {
-	t_token	*current;
+	t_main	*pgr;
+	int		i;
 
-	current = (*token);
-	while (current && (limit == 0 || current->id < limit)
-		&& current->type != PIPE)
+	pgr = (t_main *)malloc(sizeof(t_main));
+	pgr->tokens = NULL;
+	pgr->cur_envp = NULL;
+	if (!envp)
+		return (pgr);
+	i = 0;
+	while (envp[i])
+		i++;
+	pgr->cur_envp = (char **)malloc(sizeof(char *) * (i + 1));
+	pgr->cur_envp[i--] = NULL;
+	while (i >= 0)
 	{
-		if (current->type == REDIR || current->type == REDIR_MQ
-			|| current->type == HERE_DOC || current->type == APPEND)
-		{
-			(*token) = current;
-			return (1);
-		}
-		current = current->next;
+		pgr->cur_envp[i] = ft_strdup(envp[i]);
+		i--;
 	}
-	return (0);
+	return (pgr);
 }
 
-/** @brief Check if the list has a pipe */
-int	search_pipe(t_token **token, int limit)
+void	add_node(t_token **current, char *token)
 {
-	t_token	*current;
+	t_token	*new_node;
+	t_token	*last_node;
 
-	current = (*token);
-	while (current && (limit == 0 || current->id < limit))
+	new_node = malloc(sizeof(t_token));
+	new_node->content = ft_strdup(token);
+	new_node->type = token_type(token);
+	new_node->c_len = ft_strlen(token);
+	if (*current == NULL)
 	{
-		if (current->type == PIPE)
-		{
-			(*token) = current;
-			return (1);
-		}
-		current = current->next;
+		new_node->id = 0;
+		new_node->prev = NULL;
+		new_node->next = NULL;
+		*current = new_node;
 	}
-	return (0);
+	else
+	{
+		last_node = *current;
+		while (last_node->next)
+			last_node = last_node->next;
+		new_node->id = last_node->id + 1;
+		new_node->prev = last_node;
+		new_node->next = NULL;
+		last_node->next = new_node;
+	}
 }
-
 /** @brief alloc a node type t_exec and start content = NULL
  * / arg_len = 0 / type = CMD
  */
@@ -60,7 +72,7 @@ t_exec	*create_exec_node(void)
 	cmd = (t_exec *)malloc(sizeof(t_exec));
 	if (!cmd)
 		return (NULL);
-	cmd->args = NULL;
+	cmd->argv = NULL;
 	cmd->type = CMD;
 	return (cmd);
 }

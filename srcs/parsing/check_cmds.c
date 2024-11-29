@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:55:19 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:42:05 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	check_init_pipe(char *cmd, int *error)
 		i++;
 	if (cmd[i] == '|')
 	{
-		print_err("minishell: syntax error near unexpected token `|'");
+		print_error(SHELL_NAME, "syntax error near unexpected token `|'", \
+			cmd, NULL);
 		(*error) = 2;
 		return (1);
 	}
@@ -32,22 +33,12 @@ int	check_init_pipe(char *cmd, int *error)
 int	finderr_aux(char *cmd)
 {
 	if (cmd[0] == ';' || cmd[0] == '\\')
-	{
-		print_err("minishell: syntax error unexpected token");
-		write(2, &cmd[0], 1);
-		print_err("\n");
-		return (3);
-	}
+		return (print_error(SHELL_NAME, "syntax error unexpected token", \
+			cmd, NULL), 3);
 	if (cmd[0] && (cmd[0] == '>' || cmd[0] == '<'))
-	{
 		if (cmd[1] == cmd[0] && cmd[2] == cmd[0])
-		{
-			print_err("minishell: error unexpected token '");
-			write(2, &cmd[0], 1);
-			print_err("'\n");
-			return (2);
-		}
-	}
+			return (print_error(SHELL_NAME, "error unexpected token", \
+				cmd, NULL), 2);
 	return (0);
 }
 
@@ -63,7 +54,8 @@ int	find_exe(char *cmd, int *i, int *error)
 			j++;
 		if (cmd[j] == '|' || !cmd[j])
 		{
-			print_err ("minishell: syntax error near unexpected token `|'");
+			print_error(SHELL_NAME, "syntax error near unexpected token `|'", \
+				NULL, NULL);
 			(*error) = 2;
 			return (1);
 		}
@@ -72,7 +64,8 @@ int	find_exe(char *cmd, int *i, int *error)
 	}
 	if (j - *i == 1)
 	{
-		print_err ("minishell: syntax error near unexpected token `|'");
+		print_error(SHELL_NAME, \
+			"syntax error near unexpected token `|'", NULL, NULL);
 		(*error) = 2;
 		return (1);
 	}
@@ -94,7 +87,7 @@ int	is_quote_open(char *cmd, int *i, int *error)
 		}
 		j++;
 	}
-	print_err ("minishell: syntax error - the quote is open\n");
+	print_error(SHELL_NAME, "syntax error - the quote is open", NULL, NULL);
 	(*error) = 1;
 	return (1);
 }
@@ -112,7 +105,7 @@ int	check_cmds(char *cmd)
 			is_quote_open(cmd, &i, &error);
 		else if (cmd[i] == '\\' || cmd[i] == ';')
 		{
-			print_err ("minishell: syntax error\n");
+			print_error(SHELL_NAME, "syntax error", NULL, NULL);
 			error = 1;
 		}
 		else if (finderr_aux(cmd + i))
@@ -123,18 +116,3 @@ int	check_cmds(char *cmd)
 	}
 	return (error);
 }
-
-// int main(int argc, char *argv[])
-// {
-// 	char *line;
-// 	(void) argc;
-// 	while (1)
-// 	{
-// 		line = readline("minishell: ");
-// 		if (check_cmds(line))
-// 			printf("\033[31m - NOK! -\033[0m\n");
-// 		else
-// 			printf("The line is ok! \n");
-// 	}
-// 	return (0);
-// }

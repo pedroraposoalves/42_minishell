@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/22 09:42:13 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/29 10:47:38 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_main
 typedef struct s_exec
 {
 	int		type;
-	char	**args;
+	char	**argv;
 }	t_exec;
 
 typedef struct s_redir
@@ -81,78 +81,16 @@ typedef struct s_pipe
 	void	*right;
 }	t_pipe;
 
-/* -------------------------------------------------------------------------- */
-/*                                  TOKENIZE                                  */
-/* -------------------------------------------------------------------------- */
+/* -------------------------------- BUILTINS -------------------------------- */
 
-void	tokenize(t_main *pgr, char *cmd);
-int		is_special_char(char c);
-int		ft_isspace(int c);
-int		get_token_amount(char *cmd);
-char	**tokenize_aux(char *cmd);
-
-/* -------------------------------------------------------------------------- */
-/*                                    FREE                                    */
-/* -------------------------------------------------------------------------- */
-
-void	free_tmain(t_main *pgr);
-void	free_double_array(char **array);
-void	free_all(t_main *pgr, void *root);
-
-/* -------------------------------------------------------------------------- */
-
-void	init_main(t_main *pgr, char **envp);
-int		check_cmds(char *cmd);
-int		check_isjoin(char *cmd, int *error);
-void	print_err(char *message);
-
-/* -------------------------------------------------------------------------- */
-/*                                   EXPAND                                   */
-/* -------------------------------------------------------------------------- */
-
-void	get_return_last_cmd(char **content, int ret_last_cmd);
-void	change_content(char *vrbl, char **content, int *i, int word_len);
-void	set_envp_value(char **cont, char **envp, int i, int wrd);
-int		search_exp(char *content);
-void	ft_expand(t_main *main);
-
-
-int		cmp_env(char *s1, char *s2);
-void	remove_badenvp(char **str, int i, int j);
-
-/* -------------------------------------------------------------------------- */
-/*                                 CREATE TREE                                */
-/* -------------------------------------------------------------------------- */
-
-void	*start_parsing(t_token *start);
-
-// --- UTILS --- //
-int		search_pipe(t_token **token, int limit);
-int		search_redir(t_token **token, int limit);
-t_exec	*create_exec_node(void);
-t_redir	*create_redir_node(void);
-t_pipe	*create_pipe_node(void);
-char	**add_word(char **args, char *new_word);
-t_redir	*redir_aux(t_token **start, t_exec *exec_node);
-char	*find_path(char *cmd, char **envp);
-int		isbuiltin(char *str);
-void	join_tokens(t_token **tokens);
-
-/* ---------------------------------- EXEC ---------------------------------- */
-
-void	ft_redir(void *node, t_main *pgr);
-void	exec_tree(void *root, t_main *pgr);
-int		ft_execve(t_exec *exec_node, char **envp);
-void	ft_exec(void *node, t_main *pgr);
-
-/* --------------------------------- SIGNALS -------------------------------- */
-
-void	setup_signals(void);
-
-/* --------------------------- DEBUG AUX FUNCTIONS -------------------------- */
-
-void	print_list(t_main *pgr);
-void	print_tree(void *root, int left, int right);
+int		ft_cd(char *path, t_main *pgr);
+int		ft_env(t_main *pgr);
+int		update_pwd(t_main *pgr, char *old_cwd);
+int		ft_echo(char **argv);
+int		ft_pwd(void);
+int		ft_unset(t_main *pgr, char **argv);
+int		ft_exit(t_main *pgr, int argc, char **argv, void *root);
+int		ft_export(t_main *pgr, int argc, char **argv);
 
 /* ------------------------------ ENV FUNCTIONS ----------------------------- */
 
@@ -160,20 +98,68 @@ char	*get_env_value(char *value, t_main *pgr);
 int		set_env_value(char *variable, t_main *pgr, char *new_v);
 int		append_env_value(char *variable, t_main *pgr);
 int		del_env_value(char *value, t_main *pgr);
+int		cmp_env(char *s1, char *s2);
+void	remove_badenvp(char **str, int i, int j);
 
-/* -------------------------------- BUILTINS -------------------------------- */
-int		ft_cd(char *path, t_main *pgr);
-int		ft_env(t_main *pgr);
-int		update_pwd(t_main *pgr, char *old_cwd);
-int		ft_echo(char **argv);
-int		ft_pwd(void);
-int		ft_unset(t_main *pgr, char **argv);
-int		ft_exit(t_main *pgr, int argc, char **argv);
+/* ---------------------------------- EXEC ---------------------------------- */
 
-/* ----------------------------- ERROR HANDLING ----------------------------- */
+void	ft_redir(void *node, t_main *pgr);
+void	ft_exec(void *node, t_main *pgr, void *root);
+void	exec_tree(void *root, t_main *pgr);
+int		ft_execve(t_exec *exec_node, char **envp);
+char	*find_path(char *cmd, char **envp);
+int		isbuiltin(char *str);
+int		call_builtin(int number, t_exec *node, t_main *pgr, void *root);
 
+/* ---------------------------------- INIT ---------------------------------- */
+
+void	*start_parsing(t_token *start);
+t_main	*init_main(char **envp);
+t_exec	*create_exec_node(void);
+t_redir	*create_redir_node(void);
+t_pipe	*create_pipe_node(void);
+void	add_node(t_token **current, char *token);
+
+/* --------------------------------- PARSING -------------------------------- */
+
+int		check_cmds(char *cmd);
+void	tokenize(t_main *pgr, char *cmd);
+int		is_special_char(char c);
+int		ft_isspace(int c);
+int		get_token_amount(char *cmd);
+char	**tokenize_aux(char *cmd);
+int		check_isjoin(char *cmd, int *error);
+void	get_return_last_cmd(char **content, int ret_last_cmd);
+void	change_content(char *vrbl, char **content, int *i, int word_len);
+void	set_envp_value(char **cont, char **envp, int i, int wrd);
+int		search_exp(char *content);
+void	ft_expand(t_main *main);
+int		search_pipe(t_token **token, int limit);
+int		search_redir(t_token **token, int limit);
+char	**add_word(char **args, char *new_word);
+t_redir	*redir_aux(t_token **start, t_exec *exec_node);
+void	join_tokens(t_token **tokens);
+int		token_type(char *token);
+int		special_or_space(char *cmd, int *i, int *amount);
+int		is_quote(char *cmd, int *i, int *amount);
+
+/* -----------------------------------UTILS---------------------------------- */
+
+void	free_tmain(t_main *pgr, int exit_flag);
+void	free_double_array(char **array);
+void	free_all(t_main *pgr, void *root, int exit_flag);
+void	free_tree(void *root);
 int		print_error(char *s1, char *s2, char *s3, char *message);
 int		print_error_errno(char *s1, char *s2, char *s3);
+char	**ft_sort_char_tab(char **tab, int size);
+char	**matrix_dup(char **m);
+void	free_matrix(char **m);
+int		ft_str_char(char *s, char c);
+int		matrix_len(char **m);
 
-/* -------------------------------------------------------------------------- */
+/* -----------------------------------DEBUG---------------------------------- */
+
+void	ft_print_list(t_main *pgr);
+void	print_tree(void *root, int left, int right);
+
 #endif

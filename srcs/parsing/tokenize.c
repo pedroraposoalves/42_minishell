@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:56:34 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:45:27 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,31 @@ int	token_type(char *token)
 		return (CMD);
 }
 
-void	add_node(t_token **current, char *token)
+int	get_token_amount(char *cmd)
 {
-	t_token	*new_node;
-	t_token	*last_node;
+	int	i;
+	int	amount;
 
-	new_node = malloc(sizeof(t_token));
-	new_node->content = ft_strdup(token);
-	new_node->type = token_type(token);
-	new_node->c_len = ft_strlen(token);
-	if (*current == NULL)
+	i = 0;
+	amount = 0;
+	while (cmd[i])
 	{
-		new_node->id = 0;
-		new_node->prev = NULL;
-		new_node->next = NULL;
-		*current = new_node;
+		special_or_space(cmd, &i, &amount);
+		if (cmd[i] == '"' || cmd[i] == '\'')
+		{
+			if (is_quote(cmd, &i, &amount))
+				return (1);
+			i++;
+		}
+		else if (cmd[i] && !is_special_char(cmd[i]) && !ft_isspace(cmd[i]))
+		{
+			while (cmd[i] && !is_special_char(cmd[i]) && !ft_isspace(cmd[i])
+				&& (cmd[i] != '"' && cmd[i] != '\''))
+				i++;
+			amount++;
+		}
 	}
-	else
-	{
-		last_node = *current;
-		while (last_node->next)
-			last_node = last_node->next;
-		new_node->id = last_node->id + 1;
-		new_node->prev = last_node;
-		new_node->next = NULL;
-		last_node->next = new_node;
-	}
+	return (amount);
 }
 
 void	tokenize(t_main *pgr, char *cmd)
@@ -79,26 +78,3 @@ void	tokenize(t_main *pgr, char *cmd)
 		add_node(&pgr->tokens, tokens[i++]);
 	free_double_array(tokens);
 }
-
-// int main(int argc, char const *argv[])
-// {
-//     t_main  *pgr;
-//     char    *line_read;
-
-//     while (1)
-//     {
-//         line_read = readline("minishell: ");
-//         puts(line_read);
-//         pgr = tokenize(line_read);
-//         for (int i = 0; i < pgr->token_amount; i++)
-//         {
-//             printf("token:      %s\n", pgr->tokens->content);
-//             printf("id:         %i\n", pgr->tokens->id);
-//             printf("len token:  %i\n", pgr->tokens->c_len);
-//             printf("type:       %i\n", pgr->tokens->type);
-//             puts("\n* ------ * \n");
-//             pgr->tokens = pgr->tokens->next;
-//         }
-//     }
-//     return 0;
-// }

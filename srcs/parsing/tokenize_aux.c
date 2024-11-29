@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:13:31 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:56:41 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:40:34 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,24 +111,3 @@ char	**tokenize_aux(char *cmd)
 	return (tokens);
 }
 
-// /* EXCLUIR */
-
-// int main(int argc, char const *argv[])
-// {
-//     char    **tokens;
-//     char    *line_read;
-
-//     while (1)
-//     {
-//         line_read = readline("minishell: ");
-//         puts(line_read);
-//	printf ("The line read has %i tokens\n", get_token_amount(line_read));
-//         tokens = tokenize_aux (line_read);
-//         puts ("\n\nTokens: \n\n");
-//         for (size_t i = 0; i < get_token_amount(line_read); i++)
-//         {
-//             printf("- %s \n", tokens[i]);
-//         }
-//     }
-//     return 0;
-// }

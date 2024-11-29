@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:56:13 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:49:46 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 	while (start && start->type != PIPE)
 	{
 		if (start->type == CMD && new_redir->file)
-			exec_node->args = add_word(exec_node->args, start->content);
+			exec_node->argv = add_word(exec_node->argv, start->content);
 		else if (start->type == CMD)
 			new_redir->file = start->content;
 		if (start->type == REDIR || start->type == REDIR_MQ
@@ -89,7 +89,7 @@ t_redir	*redir_aux(t_token **start, t_exec *exec_node)
 		{
 			if (((*start)->type == CMD || (*start)->type == S_QUOTES
 					|| (*start)->type == D_QUOTES) && redir_node->file)
-				exec_node->args = add_word(exec_node->args, (*start)->content);
+				exec_node->argv = add_word(exec_node->argv, (*start)->content);
 			else if ((*start)->type == CMD || (*start)->type == S_QUOTES
 				|| (*start)->type == D_QUOTES)
 				redir_node->file = ft_strdup((*start)->content);
@@ -99,4 +99,42 @@ t_redir	*redir_aux(t_token **start, t_exec *exec_node)
 		}
 	}
 	return (redir_node);
+}
+
+/** @brief Check if the list has a redir */
+int	search_redir(t_token **token, int limit)
+{
+	t_token	*current;
+
+	current = (*token);
+	while (current && (limit == 0 || current->id < limit)
+		&& current->type != PIPE)
+	{
+		if (current->type == REDIR || current->type == REDIR_MQ
+			|| current->type == HERE_DOC || current->type == APPEND)
+		{
+			(*token) = current;
+			return (1);
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
+/** @brief Check if the list has a pipe */
+int	search_pipe(t_token **token, int limit)
+{
+	t_token	*current;
+
+	current = (*token);
+	while (current && (limit == 0 || current->id < limit))
+	{
+		if (current->type == PIPE)
+		{
+			(*token) = current;
+			return (1);
+		}
+		current = current->next;
+	}
+	return (0);
 }

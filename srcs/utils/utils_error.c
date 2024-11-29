@@ -6,11 +6,11 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:56:15 by hepple            #+#    #+#             */
-/*   Updated: 2024/11/21 22:57:23 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:28:29 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 // Alterar código, copy paste
 
