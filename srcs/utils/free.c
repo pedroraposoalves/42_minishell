@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/29 10:40:28 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:38:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void	free_tmain(t_main *pgr, int exit_flag)
 {
 	t_token	*tmp;
 
-	while (pgr->tokens->next)
+	while (pgr->tokens)
 	{
 		tmp = pgr->tokens;
 		pgr->tokens = pgr->tokens->next;
 		free (tmp->content);
 		free (tmp);
+		tmp = NULL;
 	}
 	if (exit_flag)
 		free_double_array (pgr->cur_envp);
@@ -32,10 +33,13 @@ void	free_double_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	if (array && array[i])
 	{
-		free(array[i]);
-		i++;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
 	}
 	free(array);
 }

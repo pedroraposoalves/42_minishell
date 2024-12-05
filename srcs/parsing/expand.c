@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:58:07 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:47:11 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_expand(t_main *main)
 			if (search_exp(main->tokens->content) == 2)
 			{
 				get_return_last_cmd(&main->tokens->content,
-					main->return_last_cmd);
+					main->exit_status[1]);
 			}
 			set_envp_value(&main->tokens->content, main->cur_envp, 0, 0);
 			main->tokens->c_len = ft_strlen(main->tokens->content);

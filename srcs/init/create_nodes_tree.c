@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_nodes_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/25 23:07:22 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:55:21 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,33 @@ t_redir	*parse_redir(t_token **start)
 
 /* -------------------------------------------------------------------------- */
 
-t_pipe	*parse_pipe(t_token **start, t_token **cur)
+// t_pipe	*parse_pipe_right(t_token **start, t_token **cur)
+// {
+// 	t_pipe	*pipe;
+
+// 	pipe = create_pipe_node();
+// 	if (!pipe)
+// 		return (NULL);
+// 	if (search_pipe(cur, 0))
+// 	{
+// 		pipe->right = parse_pipe(start, cur);
+// 	}
+// 	else if (search_redir(cur, 0))
+// 	{
+// 		pipe->right = parse_redir(start);
+// 	}
+// 	else
+// 	{
+// 		pipe->right = parse_exec(start, 0);
+// 	}
+// return (pipe);
+// }
+
+/* -------------------------------------------------------------------------- */
+
+t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux)
 {
 	t_pipe	*pipe;
-	t_token	*ptr_aux;
 
 	pipe = create_pipe_node();
 	ptr_aux = (*start);
@@ -84,18 +107,13 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 		{
 			(*cur) = (*cur)->next;
 			(*start) = (*start)->next;
-			if (search_pipe(cur, 0))
-			{
-				pipe->right = parse_pipe(start, cur);
-				return (pipe);
-			}
-			else if (search_redir(cur, 0))
+			if (search_redir(cur, 0))
 				pipe->right = parse_redir(start);
+			else if (search_pipe(cur, 0))
+				pipe->right = parse_pipe(start, cur, ptr_aux);
 			else
-			{
 				pipe->right = parse_exec(start, 0);
-				return (pipe);
-			}
+			return (pipe);
 		}
 		start = &(*start)->next;
 	}
@@ -105,10 +123,12 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur)
 void	*start_parsing(t_token *start)
 {
 	t_token	*cur;
+	t_token	*ptr_aux;
 
+	ptr_aux = NULL;
 	cur = start;
 	if (search_pipe(&cur, 0))
-		return (parse_pipe(&start, &cur));
+		return (parse_pipe(&start, &cur, ptr_aux));
 	else if (search_redir(&cur, 0))
 		return (parse_redir(&start));
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/29 10:47:38 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:34:59 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define IS_NULL 9
 # define REDIR_MQ 10
 
-# define SHELL_NAME "minishell"
+# define SHELL_NAME "minishell: "
 
 typedef struct s_token
 {
@@ -53,10 +53,10 @@ typedef struct s_token
 typedef struct s_main
 {
 	int				token_amount;
-	int				return_last_cmd;
-	int				return_cur_cmd;
+	int				exit_status[2];
 	struct s_token	*tokens;
 	char			**cur_envp;
+	void			*root;
 }	t_main;
 
 /* ------------------------------ TREE STRUCTS ------------------------------ */
@@ -104,7 +104,7 @@ void	remove_badenvp(char **str, int i, int j);
 /* ---------------------------------- EXEC ---------------------------------- */
 
 void	ft_redir(void *node, t_main *pgr);
-void	ft_exec(void *node, t_main *pgr, void *root);
+void	ft_exec(void *node, t_main *pgr);
 void	exec_tree(void *root, t_main *pgr);
 int		ft_execve(t_exec *exec_node, char **envp);
 char	*find_path(char *cmd, char **envp);
@@ -129,7 +129,7 @@ int		ft_isspace(int c);
 int		get_token_amount(char *cmd);
 char	**tokenize_aux(char *cmd);
 int		check_isjoin(char *cmd, int *error);
-void	get_return_last_cmd(char **content, int ret_last_cmd);
+void	get_exit_status(char **content, int ret_last_cmd);
 void	change_content(char *vrbl, char **content, int *i, int word_len);
 void	set_envp_value(char **cont, char **envp, int i, int wrd);
 int		search_exp(char *content);
@@ -142,6 +142,7 @@ void	join_tokens(t_token **tokens);
 int		token_type(char *token);
 int		special_or_space(char *cmd, int *i, int *amount);
 int		is_quote(char *cmd, int *i, int *amount);
+t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux);
 
 /* -----------------------------------UTILS---------------------------------- */
 
@@ -159,7 +160,7 @@ int		matrix_len(char **m);
 
 /* -----------------------------------DEBUG---------------------------------- */
 
-void	ft_print_list(t_main *pgr);
+void	print_list(t_main *pgr);
 void	print_tree(void *root, int left, int right);
 
 #endif

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:56:15 by hepple            #+#    #+#             */
-/*   Updated: 2024/11/22 13:28:29 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:13:13 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// Alterar código, copy paste
 
 int	print_error(char *s1, char *s2, char *s3, char *message)
 {
@@ -20,8 +18,6 @@ int	print_error(char *s1, char *s2, char *s3, char *message)
 		ft_putstr_fd(s1, 2);
 	if (s2)
 	{
-		if (s1)
-			ft_putstr_fd(": ", 2);
 		ft_putstr_fd(s2, 2);
 	}
 	if (s3)

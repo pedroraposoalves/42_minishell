@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/29 10:47:20 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:55:08 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,14 @@ int	ft_execve(t_exec *exec_node, char **envp)
 	{
 		if (execve(exec_node->argv[0], exec_node->argv, envp) == -1)
 		{
-			print_error("minishell:", exec_node->argv[0], NULL, NULL);
-			print_error("minishell:", "command not found", NULL, NULL);
-			exit(127);
+			print_error(SHELL_NAME, "command not found", NULL, NULL);
+			return(127);
 		}
 	}
 	else if (execve(absolute_path, exec_node->argv, envp) == -1)
 	{
-		print_error("minishell:", absolute_path, NULL, NULL);
-		print_error("minishell:", "command not found", NULL, NULL);
-		exit(127);
+		print_error(SHELL_NAME, NULL, "command not found", NULL);
+		return(127);
 	}
 	return (0);
 }
@@ -101,7 +99,7 @@ int	call_builtin(int number, t_exec *node, t_main *pgr, void *root)
 	if (number == 3)
 		return (ft_pwd());
 	// if (number == 4)
-	// 	return (ft_)
+	// 	return (ft_export);
 	if (number == 5)
 		return (ft_unset(pgr, node->argv));
 	if (number == 6)
