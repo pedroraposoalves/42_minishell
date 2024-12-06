@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/04 17:38:36 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:16:18 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,16 @@ void	free_tmain(t_main *pgr, int exit_flag)
 	{
 		tmp = pgr->tokens;
 		pgr->tokens = pgr->tokens->next;
-		free (tmp->content);
-		free (tmp);
-		tmp = NULL;
+		if (tmp->content)
+		{
+			free (tmp->content);
+			tmp->content = NULL;
+		}
+		if (tmp)
+		{
+			free (tmp);
+			tmp = NULL;
+		}
 	}
 	if (exit_flag)
 		free_double_array (pgr->cur_envp);
@@ -44,7 +51,7 @@ void	free_double_array(char **array)
 	free(array);
 }
 
-void	free_redir_node(void *root)
+void		free_redir_node(void *root)
 {
 	t_redir	*redir;
 	t_exec	*exec;
@@ -54,7 +61,11 @@ void	free_redir_node(void *root)
 	if (!root)
 		return ;
 	redir = (t_redir *)root;
-	free(redir->file);
+	if (redir->file)
+	{
+		free(redir->file);
+		redir->file = NULL;
+	}
 	type = *(int *)redir->next;
 	if (type == CMD)
 	{
