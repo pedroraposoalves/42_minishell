@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/03 17:47:11 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:26:11 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	set_envp_value(char **cont, char **envp, int i, int wrd)
 					break ;
 				}
 				if (!envp[index + 1])
-					remove_badenvp(cont, i, i);
+					(*cont) = remove_badenvp(cont, i);
 			}
 		}
 		else

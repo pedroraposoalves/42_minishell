@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/03 18:56:25 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:21:57 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	ft_exec(void *node, t_main *pgr)
 	int		pid;
 
 	exec_node = (t_exec *)node;
+	if (!exec_node->argv)
+		return ;
 	if (isbuiltin(exec_node->argv[0]))
 	{
 		call_builtin(isbuiltin(exec_node->argv[0]), node, pgr, pgr->root);

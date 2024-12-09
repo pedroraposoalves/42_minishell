@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/04 19:34:59 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:26:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		set_env_value(char *variable, t_main *pgr, char *new_v);
 int		append_env_value(char *variable, t_main *pgr);
 int		del_env_value(char *value, t_main *pgr);
 int		cmp_env(char *s1, char *s2);
-void	remove_badenvp(char **str, int i, int j);
+char	*remove_badenvp(char **str, int j);
 
 /* ---------------------------------- EXEC ---------------------------------- */
 
@@ -138,7 +138,7 @@ int		search_pipe(t_token **token, int limit);
 int		search_redir(t_token **token, int limit);
 char	**add_word(char **args, char *new_word);
 t_redir	*redir_aux(t_token **start, t_exec *exec_node);
-void	join_tokens(t_token **tokens);
+int		join_tokens(t_token **tk);
 int		token_type(char *token);
 int		special_or_space(char *cmd, int *i, int *amount);
 int		is_quote(char *cmd, int *i, int *amount);
