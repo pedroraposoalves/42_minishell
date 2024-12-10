@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/09 18:26:05 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:00:00 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,17 +138,18 @@ int		search_pipe(t_token **token, int limit);
 int		search_redir(t_token **token, int limit);
 char	**add_word(char **args, char *new_word);
 t_redir	*redir_aux(t_token **start, t_exec *exec_node);
-int		join_tokens(t_token **tk);
+int		join_tokens(t_token **tk, t_token *remove, t_token *start);
 int		token_type(char *token);
 int		special_or_space(char *cmd, int *i, int *amount);
 int		is_quote(char *cmd, int *i, int *amount);
 t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux);
+int		order_tokens(t_main **pgr);
 
 /* -----------------------------------UTILS---------------------------------- */
 
 void	free_tmain(t_main *pgr, int exit_flag);
 void	free_double_array(char **array);
-void	free_all(t_main *pgr, void *root, int exit_flag);
+int		free_all(t_main *pgr, void *root, int exit_flag);
 void	free_tree(void *root);
 int		print_error(char *s1, char *s2, char *s3, char *message);
 int		print_error_errno(char *s1, char *s2, char *s3);
@@ -157,6 +158,7 @@ char	**matrix_dup(char **m);
 void	free_matrix(char **m);
 int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
+int		set_exit_signal(int exit_status);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

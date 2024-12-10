@@ -6,22 +6,20 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/09 18:26:11 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:31:46 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	get_return_last_cmd(char **content, int ret_last_cmd)
+void	get_return_last_cmd(char **content, int ret_last_cmd, int j)
 {
 	char	new_content[9000];
 	char	*aux;
 	int		i;
-	int		j;
 	int		x;
 
 	i = 0;
-	j = 0;
 	while (content[0][i])
 	{
 		if (content[0][i] == '$' && content[0][i + 1] == '?')
@@ -37,6 +35,8 @@ void	get_return_last_cmd(char **content, int ret_last_cmd)
 			new_content[j++] = content[0][i];
 		i++;
 	}
+	new_content[j] = '\0';
+	free (*content);
 	*content = ft_strdup(new_content);
 }
 
@@ -126,7 +126,7 @@ void	ft_expand(t_main *main)
 			if (search_exp(main->tokens->content) == 2)
 			{
 				get_return_last_cmd(&main->tokens->content,
-					main->exit_status[1]);
+					main->exit_status[1], 0);
 			}
 			set_envp_value(&main->tokens->content, main->cur_envp, 0, 0);
 			main->tokens->c_len = ft_strlen(main->tokens->content);

@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/06 18:35:43 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:46:23 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_double_array(char **array)
 	free(array);
 }
 
-void		free_redir_node(void *root)
+void	free_redir_node(void *root)
 {
 	t_redir	*redir;
 	t_exec	*exec;
@@ -107,9 +107,13 @@ void	free_tree(void *root)
 	}
 }
 
-void	free_all(t_main *pgr, void *root, int exit_flag)
+int	free_all(t_main *pgr, void *root, int exit_flag)
 {
+	int	status;
+
+	status = pgr->exit_status[1];
 	free_tmain(pgr, exit_flag);
 	free_tree(root);
 	free(pgr);
+	return (status);
 }

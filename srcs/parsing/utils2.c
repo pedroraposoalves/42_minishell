@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/06 16:12:29 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:36:19 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_redir	*redir_aux(t_token **start, t_exec *exec_node)
 {
 	t_redir	*redir_node;
 	t_token	*aux;
-	t_token	*start_cpy;/**/
+	t_token	*start_cpy;
 
 	aux = (*start)->next;
 	start_cpy = aux;

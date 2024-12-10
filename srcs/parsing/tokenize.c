@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/25 23:45:27 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:48:27 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,19 @@ void	tokenize(t_main *pgr, char *cmd)
 	while (i < pgr->token_amount)
 		add_node(&pgr->tokens, tokens[i++]);
 	free_double_array(tokens);
+}
+
+int	order_tokens(t_main **pgr)
+{
+	t_token	*remove;
+	t_token	*start;
+
+	remove = NULL;
+	start = NULL;
+	if (join_tokens(&(*pgr)->tokens, remove, start))
+	{
+		free_tmain((*pgr), 0);
+		return (1);
+	}
+	return (0);
 }

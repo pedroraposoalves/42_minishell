@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/03 17:39:45 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:20:26 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ft_pipe(void *node, t_main *pgr)
 	end_pipe(pgr, p, pid);
 }
 
-
 void	exec_tree(void *root, t_main *pgr)
 {
 	int	type;
@@ -77,10 +76,12 @@ void	exec_tree(void *root, t_main *pgr)
 		return ;
 	type = *((int *)root);
 	if (type == CMD)
+	{
 		ft_exec(root, pgr);
+		/**/
+	}
 	else if (type == PIPE)
 		ft_pipe(root, pgr);
 	else
 		ft_redir(root, pgr);
 }
-

@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/06 18:37:37 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:27:45 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,31 +78,27 @@ int	remove_null(t_token **head)
 	t_token	*next_node;
 
 	current = (*head);
-	if ((current->c_len == 0 || current->type == IS_NULL || current->type == IS_SPACE)
-		&& !current->next)
+	if ((current->c_len == 0 || current->type == IS_NULL
+			|| current->type == IS_SPACE) && !current->next)
 		return (1);
 	while (current && current->next)
 	{
 		if ((current->type == IS_NULL || current->c_len == 0)
-			&& (current->prev->type != IS_SPACE || current->next->type != IS_SPACE))
+			&& (current->prev->type != IS_SPACE
+				|| current->next->type != IS_SPACE))
 		{
 			next_node = current->next;
 			remove_node(head, &current);
 			current = next_node;
 		}
 		else
-		{
 			current = current->next;
-		}
 	}
 	return (0);
 }
 
-int	join_tokens(t_token **tk)
+int	join_tokens(t_token **tk, t_token *remove, t_token *start)
 {
-	t_token	*remove;
-	t_token	*start;
-
 	remove_quotes(tk);
 	if (remove_null(tk))
 		return (1);

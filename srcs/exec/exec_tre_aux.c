@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/06 16:21:57 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:05:52 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	ft_exec(void *node, t_main *pgr)
 {
 	t_exec	*exec_node;
 	int		pid;
+	int		status;
 
 	exec_node = (t_exec *)node;
 	if (!exec_node->argv)
@@ -92,9 +93,10 @@ void	ft_exec(void *node, t_main *pgr)
 	}
 	if (pid == 0)
 	{
-		ft_execve(exec_node, pgr->cur_envp);
+		status = ft_execve(exec_node, pgr->cur_envp);
 		free_all(pgr, pgr->root, 1);
-		exit(0);
+		exit(status);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	pgr->exit_status[1] = set_exit_signal(status);
 }

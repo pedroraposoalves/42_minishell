@@ -33,7 +33,7 @@ PARS_DIR		= parsing
 UTILS_DIR		= utils
 _FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUILTINS_DIR)/unset $(BUILTINS_DIR)/exit $(BUILTINS_DIR)/cd $(BUILTINS_DIR)/export \
 				$(ENV_DIR)/env $(ENV_DIR)/cmp_env\
-				$(EXEC_DIR)/exec_tre_aux $(EXEC_DIR)/exec_tree_utils $(EXEC_DIR)/exec_tree \
+				$(EXEC_DIR)/exec_tre_aux $(EXEC_DIR)/exec_tree_utils $(EXEC_DIR)/exec_tree $(EXEC_DIR)/exit_signals \
 				$(INIT_DIR)/init $(INIT_DIR)/create_nodes_tree \
 				$(PARS_DIR)/check_cmds $(PARS_DIR)/tokenize_aux $(PARS_DIR)/tokenize $(PARS_DIR)/utils $(PARS_DIR)/utils2 $(PARS_DIR)/expand $(PARS_DIR)/join_tokens \
 				$(UTILS_DIR)/sort_char_tab $(UTILS_DIR)/utils_error $(UTILS_DIR)/matrix_handle $(UTILS_DIR)/string_utils $(UTILS_DIR)/free \

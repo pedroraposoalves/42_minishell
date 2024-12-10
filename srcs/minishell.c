@@ -6,71 +6,11 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2024/12/06 18:30:53 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:38:50 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	print_tree(void *root, int left, int right)
-{
-	int		type;
-	int		spacing;
-	t_exec	*cmd_node;
-
-	if (!root)
-		return ;
-	spacing = 5;
-	type = *((int *)root);
-	if (type == CMD)
-	{
-		cmd_node = (t_exec *)root;
-		printf("%*sCMD: ", left, "");
-		for (int i = 0; cmd_node->argv && cmd_node->argv[i]; i++)
-			printf("%s ", cmd_node->argv[i]);
-		printf("\n");
-	}
-	else if (type == REDIR || type == REDIR_MQ || type == APPEND
-		|| type == HERE_DOC)
-	{
-		t_redir	*redir_node = (t_redir *)root;
-		printf("%*s%s %s %p\n", left, "", (redir_node->type == APPEND)? "APPEND" :
-			(redir_node->type == HERE_DOC)? "HERE_DOC":
-			(redir_node->type == REDIR_MQ)? "REDIR_MQ":
-			"REDIR" , redir_node->file, redir_node->file);
-		printf("%*s|\n", left + spacing, "");
-		print_tree(redir_node->next, left, right);
-	}
-	else if (type == PIPE)
-	{
-		t_pipe	*pipe_node = (t_pipe *)root;
-
-		printf("%*sPIPE\n", left, "");
-		printf("%*s/\n", left, "");
-		print_tree(pipe_node->left, left - spacing, right);
-		printf("%*s\\\n", left + spacing, "");
-		print_tree(pipe_node->right, left + spacing, right);
-	}
-}
-
-void	print_list(t_main *pgr)
-{
-	printf("----------------------------------------------------\n");
-	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
-		"id", "len token", "type");
-	printf("----------------------------------------------------\n");
-	for (int i = 0; i < pgr->token_amount; i++)
-	{
-		printf("| %-13s | %-8i | %-10i | %-8i |\n",
-			pgr->tokens->content,
-			pgr->tokens->id,
-			pgr->tokens->c_len,
-			pgr->tokens->type);
-
-		pgr->tokens = pgr->tokens->next;
-	}
-	printf("----------------------------------------------------\n");
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -93,11 +33,8 @@ int	main(int argc, char **argv, char **envp)
 			tokenize(pgr, input);
 			ft_expand(pgr);
 			start = pgr->tokens;
-			if (join_tokens(&pgr->tokens))
-			{
-				free_tmain(pgr, 0);
+			if (order_tokens(&pgr))
 				continue;
-			}
 			pgr->tokens = start;
 			pgr->root = start_parsing(start);
 			exec_tree(pgr->root, pgr);
@@ -109,10 +46,68 @@ int	main(int argc, char **argv, char **envp)
 }
 
 /* ------------------------------- PRINT_LIST ------------------------------- */
+// void	print_list(t_main *pgr)
+// {
+// 	printf("----------------------------------------------------\n");
+// 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
+// 		"id", "len token", "type");
+// 	printf("----------------------------------------------------\n");
+// 	for (int i = 0; i < pgr->token_amount; i++)
+// 	{
+// 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
+// 			pgr->tokens->content,
+// 			pgr->tokens->id,
+// 			pgr->tokens->c_len,
+// 			pgr->tokens->type);
+
+// 		pgr->tokens = pgr->tokens->next;
+// 	}
+// 	printf("----------------------------------------------------\n");
+// }
 
 
 /* -------------------------------------------------------------------------- */
 /* ------------------------------- PRINT_TREE ------------------------------- */
+// void	print_tree(void *root, int left, int right)
+// {
+// 	int		type;
+// 	int		spacing;
+// 	t_exec	*cmd_node;
+
+// 	if (!root)
+// 		return ;
+// 	spacing = 5;
+// 	type = *((int *)root);
+// 	if (type == CMD)
+// 	{
+// 		cmd_node = (t_exec *)root;
+// 		printf("%*sCMD: ", left, "");
+// 		for (int i = 0; cmd_node->argv && cmd_node->argv[i]; i++)
+// 			printf("%s ", cmd_node->argv[i]);
+// 		printf("\n");
+// 	}
+// 	else if (type == REDIR || type == REDIR_MQ || type == APPEND
+// 		|| type == HERE_DOC)
+// 	{
+// 		t_redir	*redir_node = (t_redir *)root;
+// 		printf("%*s%s %s %p\n", left, "", (redir_node->type == APPEND)? "APPEND" :
+// 			(redir_node->type == HERE_DOC)? "HERE_DOC":
+// 			(redir_node->type == REDIR_MQ)? "REDIR_MQ":
+// 			"REDIR" , redir_node->file, redir_node->file);
+// 		printf("%*s|\n", left + spacing, "");
+// 		print_tree(redir_node->next, left, right);
+// 	}
+// 	else if (type == PIPE)
+// 	{
+// 		t_pipe	*pipe_node = (t_pipe *)root;
+
+// 		printf("%*sPIPE\n", left, "");
+// 		printf("%*s/\n", left, "");
+// 		print_tree(pipe_node->left, left - spacing, right);
+// 		printf("%*s\\\n", left + spacing, "");
+// 		print_tree(pipe_node->right, left + spacing, right);
+// 	}
+// }
 // void	print_tree(void *root, int left, int right)
 // {
 // 	int		type;

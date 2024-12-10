@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/03 18:34:30 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:21:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	add_node(t_token **current, char *token)
 		last_node->next = new_node;
 	}
 }
+
 /** @brief alloc a node type t_exec and start content = NULL
  * / arg_len = 0 / type = CMD
  */
