@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 17:31:46 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:25:16 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_expand(t_main *main)
 			if (search_exp(main->tokens->content) == 2)
 			{
 				get_return_last_cmd(&main->tokens->content,
-					main->exit_status[1], 0);
+					main->exit_status[0], 0);
 			}
 			set_envp_value(&main->tokens->content, main->cur_envp, 0, 0);
 			main->tokens->c_len = ft_strlen(main->tokens->content);

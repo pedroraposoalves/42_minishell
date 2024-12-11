@@ -6,11 +6,30 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2024/12/10 10:38:50 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:23:13 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	print_list(t_main *pgr)
+{
+	printf("----------------------------------------------------\n");
+	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
+		"id", "len token", "type");
+	printf("----------------------------------------------------\n");
+	for (int i = 0; i < pgr->token_amount; i++)
+	{
+		printf("| %-13s | %-8i | %-10i | %-8i |\n",
+			pgr->tokens->content,
+			pgr->tokens->id,
+			pgr->tokens->c_len,
+			pgr->tokens->type);
+
+		pgr->tokens = pgr->tokens->next;
+	}
+	printf("----------------------------------------------------\n");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -22,20 +41,25 @@ int	main(int argc, char **argv, char **envp)
 	pgr = init_main(envp);
 	if (argc != 1)
 		return (print_error(SHELL_NAME, \
-			"The minishell should not have aguments!", NULL, NULL), 127);
+			"The minishell should not have arguments!", NULL, NULL), 127);
 	while (1)
 	{
 		input = readline(SHELL_NAME);
 		if (input)
 			add_history(input);
-		if (!check_cmds(input))
+		pgr->exit_status[0] = pgr->exit_status[1];
+		if (!(pgr->exit_status[1] = check_cmds(input)))
 		{
 			tokenize(pgr, input);
 			ft_expand(pgr);
 			start = pgr->tokens;
+			// print_list(pgr);
+			// pgr->tokens = start;
 			if (order_tokens(&pgr))
 				continue;
-			pgr->tokens = start;
+			// print_list(pgr);/**/
+			// pgr->tokens = start;
+			// pgr->tokens = start;
 			pgr->root = start_parsing(start);
 			exec_tree(pgr->root, pgr);
 			free_tree(pgr->root);
@@ -46,24 +70,6 @@ int	main(int argc, char **argv, char **envp)
 }
 
 /* ------------------------------- PRINT_LIST ------------------------------- */
-// void	print_list(t_main *pgr)
-// {
-// 	printf("----------------------------------------------------\n");
-// 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
-// 		"id", "len token", "type");
-// 	printf("----------------------------------------------------\n");
-// 	for (int i = 0; i < pgr->token_amount; i++)
-// 	{
-// 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
-// 			pgr->tokens->content,
-// 			pgr->tokens->id,
-// 			pgr->tokens->c_len,
-// 			pgr->tokens->type);
-
-// 		pgr->tokens = pgr->tokens->next;
-// 	}
-// 	printf("----------------------------------------------------\n");
-// }
 
 
 /* -------------------------------------------------------------------------- */

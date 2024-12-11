@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 15:46:23 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:19:31 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	free_tmain(t_main *pgr, int exit_flag)
 	}
 	if (exit_flag)
 		free_double_array (pgr->cur_envp);
-	else
-		pgr->exit_status[0] = pgr->exit_status[1];
+	// else
+	// 	pgr->exit_status[0] = pgr->exit_status[1];
 }
 
 void	free_double_array(char **array)
