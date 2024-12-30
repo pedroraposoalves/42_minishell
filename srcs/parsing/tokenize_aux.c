@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:13:31 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/25 23:40:34 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:24:00 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,3 @@ char	**tokenize_aux(char *cmd)
 	tokens[tokens_index] = NULL;
 	return (tokens);
 }
-

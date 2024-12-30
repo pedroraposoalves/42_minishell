@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/11 23:20:15 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:12:44 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 /** @brief Check if the cmd is builtin*/
 int	isbuiltin(char *str)
 {
-	if (!ft_strncmp(str, "cd", 2))
+	if (!ft_strncmp(str, "cd", 2) && ft_strlen(str) == 2)
 		return (1);
-	else if (!ft_strncmp(str, "echo", 4))
+	else if (!ft_strncmp(str, "echo", 4) && ft_strlen(str) == 4)
 		return (2);
-	else if (!ft_strncmp(str, "pwd", 3))
+	else if (!ft_strncmp(str, "pwd", 3) && ft_strlen(str) == 3)
 		return (3);
-	else if (!ft_strncmp(str, "export", 6))
+	else if (!ft_strncmp(str, "export", 6) && ft_strlen(str) == 6)
 		return (4);
-	else if (!ft_strncmp(str, "unset", 5))
+	else if (!ft_strncmp(str, "unset", 5) && ft_strlen(str) == 5)
 		return (5);
-	else if (!ft_strncmp(str, "env", 3))
+	else if (!ft_strncmp(str, "env", 3) && ft_strlen(str) == 3)
 		return (6);
-	else if (!ft_strncmp(str, "exit", 4))
+	else if (!ft_strncmp(str, "exit", 4) && ft_strlen(str) == 4)
 		return (7);
 	else
 		return (0);
@@ -77,16 +77,14 @@ int	ft_execve(t_exec *exec_node, char **envp)
 	{
 		if (execve(exec_node->argv[0], exec_node->argv, envp) == -1)
 		{
-			print_error("minishell:", exec_node->argv[0], NULL, NULL);
-			print_error("minishell:", "command not found", NULL, NULL);
-			exit(127);
+			print_error(SHELL_NAME, "command not found", NULL, NULL);
+			return (127);
 		}
 	}
 	else if (execve(absolute_path, exec_node->argv, envp) == -1)
 	{
-		print_error("minishell:", absolute_path, NULL, NULL);
-		print_error("minishell:", "command not found", NULL, NULL);
-		exit(127);
+		print_error(SHELL_NAME, NULL, "command not found", NULL);
+		return (127);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:03:46 by pemirand          #+#    #+#             */
-/*   Updated: 2024/12/19 17:47:11 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:12:03 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,3 @@ int	append_env_value(char *variable, t_main *pgr)
 	pgr->cur_envp = res;
 	return (EXIT_SUCCESS);
 }
-

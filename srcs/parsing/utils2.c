@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
 /*   Updated: 2024/12/16 17:34:58 by pemirand         ###   ########.fr       */
@@ -55,7 +55,7 @@ void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 		if (start->type == CMD && new_redir->file)
 			exec_node->argv = add_word(exec_node->argv, start->content);
 		else if (start->type == CMD)
-			new_redir->file = start->content;
+			new_redir->file = ft_strdup(start->content);
 		if (start->type == REDIR || start->type == REDIR_MQ
 			|| start->type == APPEND || start->type == HERE_DOC)
 		{
@@ -67,7 +67,7 @@ void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 				new_redir->next = redir_aux(&start, exec_node);
 			return (new_redir);
 		}
-		*start = *start->next;
+		start = start->next;
 	}
 	return (NULL);
 }
@@ -76,10 +76,12 @@ t_redir	*redir_aux(t_token **start, t_exec *exec_node)
 {
 	t_redir	*redir_node;
 	t_token	*aux;
+	t_token	*start_cpy;
 
 	aux = (*start)->next;
+	start_cpy = aux;
 	if (search_redir(&aux, 0))
-		redir_node = mult_redir((*start)->next, exec_node, (*start)->type);
+		redir_node = mult_redir(start_cpy, exec_node, (*start)->type);
 	else
 	{
 		redir_node = create_redir_node();

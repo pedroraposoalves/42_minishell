@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:58:07 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:25:16 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	get_return_last_cmd(char **content, int ret_last_cmd)
+void	get_return_last_cmd(char **content, int ret_last_cmd, int j)
 {
 	char	new_content[9000];
 	char	*aux;
 	int		i;
-	int		j;
 	int		x;
 
 	i = 0;
-	j = 0;
 	while (content[0][i])
 	{
 		if (content[0][i] == '$' && content[0][i + 1] == '?')
@@ -37,6 +35,8 @@ void	get_return_last_cmd(char **content, int ret_last_cmd)
 			new_content[j++] = content[0][i];
 		i++;
 	}
+	new_content[j] = '\0';
+	free (*content);
 	*content = ft_strdup(new_content);
 }
 
@@ -81,7 +81,7 @@ void	set_envp_value(char **cont, char **envp, int i, int wrd)
 					break ;
 				}
 				if (!envp[index + 1])
-					remove_badenvp(cont, i, i);
+					(*cont) = remove_badenvp(cont, i);
 			}
 		}
 		else
@@ -126,7 +126,7 @@ void	ft_expand(t_main *main)
 			if (search_exp(main->tokens->content) == 2)
 			{
 				get_return_last_cmd(&main->tokens->content,
-					main->return_last_cmd);
+					main->exit_status[0], 0);
 			}
 			set_envp_value(&main->tokens->content, main->cur_envp, 0, 0);
 			main->tokens->c_len = ft_strlen(main->tokens->content);

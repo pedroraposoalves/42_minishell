@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/29 10:37:25 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:41:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_exit(t_main *pgr, int argc, char **argv, void *root)
 {
 	int	exit_num;
 
-	exit_num = pgr->return_cur_cmd;
+	exit_num = pgr->exit_status[0];
 	exit_num = 0;
 	if (argc > 2)
 		return (print_error(SHELL_NAME, "exit", NULL, \
@@ -39,7 +39,6 @@ int	ft_exit(t_main *pgr, int argc, char **argv, void *root)
 			exit_num = 2;
 		}
 	}
-	//free estrutura
 	free_all(pgr, root, 1);
 	exit(exit_num);
 }
