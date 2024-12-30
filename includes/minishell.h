@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 17:00:00 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:10:02 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		ft_echo(char **argv);
 int		ft_pwd(void);
 int		ft_unset(t_main *pgr, char **argv);
 int		ft_exit(t_main *pgr, int argc, char **argv, void *root);
-int		ft_export(t_main *pgr, int argc, char **argv);
+int		ft_export(t_main *pgr, char **argv);
 
 /* ------------------------------ ENV FUNCTIONS ----------------------------- */
 

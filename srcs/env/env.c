@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:03:46 by pemirand          #+#    #+#             */
-/*   Updated: 2024/12/03 13:13:43 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:12:03 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int	append_env_value(char *variable, t_main *pgr)
 	env_len = 0;
 	while (pgr->cur_envp[env_len])
 		env_len++;
-	res = (char **)malloc(sizeof(char *) * (env_len + 1));
+	res = (char **)malloc(sizeof(char *) * (env_len + 2));
+	res[env_len + 1] = NULL;
 	res[env_len] = ft_strjoin(variable, "=");
 	while (env_len-- > 0)
 		res[env_len] = pgr->cur_envp[env_len];
