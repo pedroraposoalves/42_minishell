@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/29 10:47:38 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:17:16 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define IS_NULL 9
 # define REDIR_MQ 10
 
-# define SHELL_NAME "minishell"
+# define SHELL_NAME "minishell: "
 
 typedef struct s_token
 {
@@ -90,7 +90,7 @@ int		ft_echo(char **argv);
 int		ft_pwd(void);
 int		ft_unset(t_main *pgr, char **argv);
 int		ft_exit(t_main *pgr, int argc, char **argv, void *root);
-int		ft_export(t_main *pgr, int argc, char **argv);
+int		ft_export(t_main *pgr, char **argv);
 
 /* ------------------------------ ENV FUNCTIONS ----------------------------- */
 
