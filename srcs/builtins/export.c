@@ -157,3 +157,39 @@ int	ft_export_update_env(t_main *pgr, char *var_name, char *var)
 	}
 	return (EXIT_SUCCESS);
 }
+
+	if (var_name == NULL)
+		return (EXIT_FAILURE);
+	append_flag = 0;
+	if (var_name[ft_strlen(var_name) - 1] == '+')
+		append_flag = 1;
+	if (append_flag == 0)
+	{
+		if (set_env_value(var_name, pgr, \
+			&var[ft_strlen(var_name) + 1]) == EXIT_FAILURE)
+		{
+			append_env_value(var_name, pgr);
+			set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 1]);
+		}
+	}
+	else
+	{
+		var_name[ft_strlen(var_name) - 1] = '\0';
+		tmp1 = get_env_value(var_name, pgr);
+		if (tmp1 == NULL)
+		{
+			append_env_value(var_name, pgr);
+			set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 2]);
+		}
+		else
+		{
+			tmp1 = ft_substr(tmp1, ft_strlen(var_name) \
+					+ 1, ft_strlen(tmp1) - ft_strlen(var_name) - 1);
+			tmp2 = ft_strjoin(tmp1, &var[ft_strlen(var_name) + 2]);
+			set_env_value(var_name, pgr, tmp2);
+			free(tmp1);
+			free(tmp2);
+		}
+	}
+	return (EXIT_SUCCESS);
+}
