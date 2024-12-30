@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/29 10:40:28 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:19:31 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,25 @@ void	free_tmain(t_main *pgr, int exit_flag)
 {
 	t_token	*tmp;
 
-	while (pgr->tokens->next)
+	while (pgr->tokens)
 	{
 		tmp = pgr->tokens;
 		pgr->tokens = pgr->tokens->next;
-		free (tmp->content);
-		free (tmp);
+		if (tmp->content)
+		{
+			free (tmp->content);
+			tmp->content = NULL;
+		}
+		if (tmp)
+		{
+			free (tmp);
+			tmp = NULL;
+		}
 	}
 	if (exit_flag)
 		free_double_array (pgr->cur_envp);
+	// else
+	// 	pgr->exit_status[0] = pgr->exit_status[1];
 }
 
 void	free_double_array(char **array)
@@ -32,10 +42,13 @@ void	free_double_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	if (array && array[i])
 	{
-		free(array[i]);
-		i++;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
 	}
 	free(array);
 }
@@ -50,7 +63,11 @@ void	free_redir_node(void *root)
 	if (!root)
 		return ;
 	redir = (t_redir *)root;
-	free(redir->file);
+	if (redir->file)
+	{
+		free(redir->file);
+		redir->file = NULL;
+	}
 	type = *(int *)redir->next;
 	if (type == CMD)
 	{
@@ -90,9 +107,13 @@ void	free_tree(void *root)
 	}
 }
 
-void	free_all(t_main *pgr, void *root, int exit_flag)
+int	free_all(t_main *pgr, void *root, int exit_flag)
 {
+	int	status;
+
+	status = pgr->exit_status[1];
 	free_tmain(pgr, exit_flag);
 	free_tree(root);
 	free(pgr);
+	return (status);
 }

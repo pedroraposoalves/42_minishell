@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:57:54 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:44:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,35 +72,36 @@ void	remove_node(t_token **head, t_token **node)
 }
 
 /** @brief Remove the null node of the token list */
-void	remove_null(t_token **head)
+int	remove_null(t_token **head)
 {
 	t_token	*current;
 	t_token	*next_node;
 
 	current = (*head);
+	if ((current->c_len == 0 || current->type == IS_NULL
+			|| current->type == IS_SPACE) && !current->next)
+		return (1);
 	while (current && current->next)
 	{
 		if ((current->type == IS_NULL || current->c_len == 0)
-			&& (current->prev->type != IS_SPACE || current->next->type != IS_SPACE))
+			&& (current->prev->type != IS_SPACE
+				|| current->next->type != IS_SPACE))
 		{
 			next_node = current->next;
 			remove_node(head, &current);
 			current = next_node;
 		}
 		else
-		{
 			current = current->next;
-		}
 	}
+	return (0);
 }
 
-void	join_tokens(t_token **tk)
+int	join_tokens(t_token **tk, t_token *remove, t_token *start)
 {
-	t_token	*remove;
-	t_token	*start;
-
 	remove_quotes(tk);
-	remove_null(tk);
+	if (remove_null(tk))
+		return (1);
 	start = *tk;
 	while (*tk && (*tk)->next)
 	{
@@ -121,4 +122,5 @@ void	join_tokens(t_token **tk)
 			break ;
 	}
 	(*tk) = start;
+	return (0);
 }

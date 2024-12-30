@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/25 23:48:04 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:21:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_main	*init_main(char **envp)
 
 	pgr = (t_main *)malloc(sizeof(t_main));
 	pgr->tokens = NULL;
+	pgr->root = NULL;
 	pgr->cur_envp = NULL;
+	pgr->exit_status[0] = 0;
+	pgr->exit_status[1] = 0;
 	if (!envp)
 		return (pgr);
 	i = 0;
@@ -62,6 +65,7 @@ void	add_node(t_token **current, char *token)
 		last_node->next = new_node;
 	}
 }
+
 /** @brief alloc a node type t_exec and start content = NULL
  * / arg_len = 0 / type = CMD
  */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:03:46 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/21 22:55:25 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:13:43 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ int	append_env_value(char *variable, t_main *pgr)
 	pgr->cur_envp = res;
 	return (EXIT_SUCCESS);
 }
-

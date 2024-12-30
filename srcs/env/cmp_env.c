@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmp_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:50 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/21 22:56:55 by pemirand         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:25:32 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,27 @@ int	cmp_env(char *s1, char *s2)
 	return (1);
 }
 
-void	remove_badenvp(char **str, int i, int j)
+char	*remove_badenvp(char **str, int j)
 {
-	char	*new_str;
-	int		word_len;
+	char	new_str[900];
 	int		index;
-
-	word_len = 1;
-	while ((*str)[j] != 32 && (*str)[j] != '"' && (*str)[j++])
-		word_len++;
-	while ((*str)[j])
+	
+	if ((*str)[0] != '\"')
+	{
+		free((*str));		
+		return (ft_strdup(""));
+	}
+	index = -1;
+	while (++index < j)
+		new_str[index] = (*str)[index];
+	while ((*str)[j] != 32 && (*str)[j] != '"' && (*str)[j])
 		j++;
-	new_str = malloc((j + 1) - word_len);
-	j = 0;
-	index = 0;
 	while ((*str)[j])
 	{
-		if (index == i)
-			index += (word_len - 1);
-		if ((*str)[index] == '\0')
-			break ;
-		new_str[j++] = (*str)[index++];
+		new_str[index] = (*str)[j++];
+		index++;
 	}
-	new_str[j] = '\0';
+	new_str[index] = '\0';
 	free ((*str));
-	(*str) = new_str;
+	return (ft_strdup(new_str));
 }
