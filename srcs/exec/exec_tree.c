@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 12:20:26 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:41:00 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_pipe(void *node, t_main *pgr)
 	pipe_node = (t_pipe *)node;
 	if (pipe(p) < 0)
 	{
-		print_error("minishell:", "pipe failed", NULL, NULL);
+		print_error(SHELL_NAME, "pipe failed", NULL, NULL);
 		exit(1);
 	}
 	pid[0] = fork();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 17:05:52 by malves-b         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:40:41 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_redir(void *node, t_main *pgr)
 	int		fd;
 	int		stdout_backup;
 
+	fd = 0;
 	redir_node = (t_redir *)node;
 	if (redir_node->type == REDIR)
 		fd = open(redir_node->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -59,7 +60,7 @@ void	ft_redir(void *node, t_main *pgr)
 	}
 	if (fd < 0)
 	{
-		print_error("minishell:", "cannot open file", NULL, NULL);
+		print_error(SHELL_NAME, "cannot open file", NULL, NULL);
 		exit(1);
 	}
 	stdout_backup = dup(STDOUT_FILENO);
@@ -88,7 +89,7 @@ void	ft_exec(void *node, t_main *pgr)
 	pid = fork();
 	if (pid < 0)
 	{
-		print_error("minishell:", "fork failed", NULL, NULL);
+		print_error(SHELL_NAME, "fork failed", NULL, NULL);
 		exit(1);
 	}
 	if (pid == 0)
