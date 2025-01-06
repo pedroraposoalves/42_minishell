@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2024/12/16 17:34:11 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:19:06 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_list(t_main *pgr)
-{
-	printf("----------------------------------------------------\n");
-	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
-		"id", "len token", "type");
-	printf("----------------------------------------------------\n");
-	for (int i = 0; i < pgr->token_amount; i++)
-	{
-		printf("| %-13s | %-8i | %-10i | %-8i |\n",
-			pgr->tokens->content,
-			pgr->tokens->id,
-			pgr->tokens->c_len,
-			pgr->tokens->type);
+// void	print_list(t_main *pgr)
+// {
+// 	printf("----------------------------------------------------\n");
+// 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
+// 		"id", "len token", "type");
+// 	printf("----------------------------------------------------\n");
+// 	for (int i = 0; i < pgr->token_amount; i++)
+// 	{
+// 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
+// 			pgr->tokens->content,
+// 			pgr->tokens->id,
+// 			pgr->tokens->c_len,
+// 			pgr->tokens->type);
 
-		pgr->tokens = pgr->tokens->next;
-	}
-	printf("----------------------------------------------------\n");
-}
+// 		pgr->tokens = pgr->tokens->next;
+// 	}
+// 	printf("----------------------------------------------------\n");
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -60,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 			// print_list(pgr);/**/
 			// pgr->tokens = start;
 			// pgr->tokens = start;
+			start = pgr->tokens;
 			pgr->root = start_parsing(start);
 			exec_tree(pgr->root, pgr);
 			free_tree(pgr->root);

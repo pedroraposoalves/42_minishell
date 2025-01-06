@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/30 12:38:32 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:07:25 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*remove_badenvp(char **str, int j);
 /* ---------------------------------- EXEC ---------------------------------- */
 
 void	ft_redir(void *node, t_main *pgr);
-void	ft_exec(void *node, t_main *pgr);
+void	ft_exec(void *node, t_main *pgr, int status);
 void	exec_tree(void *root, t_main *pgr);
 int		ft_execve(t_exec *exec_node, char **envp);
 char	*find_path(char *cmd, char **envp);
@@ -116,7 +116,7 @@ int		call_builtin(int number, t_exec *node, t_main *pgr, void *root);
 void	*start_parsing(t_token *start);
 t_main	*init_main(char **envp);
 t_exec	*create_exec_node(void);
-t_redir	*create_redir_node(void);
+t_redir	*create_redir_node(int type);
 t_pipe	*create_pipe_node(void);
 void	add_node(t_token **current, char *token);
 
@@ -138,12 +138,13 @@ int		search_pipe(t_token **token, int limit);
 int		search_redir(t_token **token, int limit);
 char	**add_word(char **args, char *new_word);
 t_redir	*redir_aux(t_token **start, t_exec *exec_node);
-int		join_tokens(t_token **tk, t_token *remove, t_token *start);
+int		join_tokens(t_token **tk, t_token *remove, t_token *start, char *aux);
 int		token_type(char *token);
 int		special_or_space(char *cmd, int *i, int *amount);
 int		is_quote(char *cmd, int *i, int *amount);
 t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux);
 int		order_tokens(t_main **pgr);
+int		check_dir_after_redir(const char *cmd);
 
 /* -----------------------------------UTILS---------------------------------- */
 

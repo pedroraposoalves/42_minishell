@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 18:18:01 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:28:43 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,12 @@ int	order_tokens(t_main **pgr)
 {
 	t_token	*remove;
 	t_token	*start;
+	char	*aux;
 
+	aux = NULL;
 	remove = NULL;
 	start = NULL;
-	if (join_tokens(&(*pgr)->tokens, remove, start))
+	if (join_tokens(&(*pgr)->tokens, remove, start, aux))
 	{
 		free_tmain((*pgr), 0);
 		return (1);

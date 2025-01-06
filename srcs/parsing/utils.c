@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:16:06 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/25 23:43:44 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:29:10 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_isjoin(char *cmd, int *error)
 /** @brief check if the char is a special caracter*/
 int	is_special_char(char c)
 {
-	return (c == '>' || c == '<' || c == '|' || c == '&' || c == ';');
+	return (c == '>' || c == '<' || c == '|' || c == '&');
 }
 
 /** @brief check if is a space or white space */

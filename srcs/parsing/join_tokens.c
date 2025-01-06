@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/11 15:44:05 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:27:59 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int	iscmd_or_quotes(int type)
 }
 
 /** @brief Remove the first and last quote by the token */
-void	remove_quotes(t_token **head)
+void	remove_quotes(t_token **head, int i)
 {
 	t_token	*cur;
 	int		len;
+	char	*new_str;
 
 	cur = (*head);
 	while (cur != NULL)
@@ -40,9 +41,13 @@ void	remove_quotes(t_token **head)
 					|| (cur->content[0] == '"'
 						&& cur->content[len - 1] == '"')))
 			{
-				ft_memmove(cur->content, cur->content + 1, len - 2);
-				cur->content[len - 2] = '\0';
-				cur->c_len = ft_strlen(cur->content);
+				new_str = (char *)malloc(len - 1);
+				i = -1;
+				while (++i < (len - 2))
+					new_str[i] = cur->content[i + 1];
+				new_str[i] = '\0';
+				free (cur->content);
+				cur->content = new_str;
 			}
 		}
 		cur = cur->next;
@@ -56,7 +61,7 @@ void	remove_node(t_token **head, t_token **node)
 	remove = (*node);
 	if (!remove->prev)
 	{
-		*head = remove->next;
+		(*head) = remove->next;
 		if (*head)
 			(*head)->prev = NULL;
 	}
@@ -67,7 +72,9 @@ void	remove_node(t_token **head, t_token **node)
 		remove->prev->next = remove->next;
 		remove->next->prev = remove->prev;
 	}
+	free (remove->content);
 	free (remove);
+	remove = NULL;
 	(*node) = (*head);
 }
 
@@ -84,7 +91,7 @@ int	remove_null(t_token **head)
 	while (current && current->next)
 	{
 		if ((current->type == IS_NULL || current->c_len == 0)
-			&& (current->prev->type != IS_SPACE
+			&& (!current->prev || current->prev->type != IS_SPACE
 				|| current->next->type != IS_SPACE))
 		{
 			next_node = current->next;
@@ -97,9 +104,9 @@ int	remove_null(t_token **head)
 	return (0);
 }
 
-int	join_tokens(t_token **tk, t_token *remove, t_token *start)
+int	join_tokens(t_token **tk, t_token *remove, t_token *start, char *aux)
 {
-	remove_quotes(tk);
+	remove_quotes(tk, -1);
 	if (remove_null(tk))
 		return (1);
 	start = *tk;
@@ -107,19 +114,20 @@ int	join_tokens(t_token **tk, t_token *remove, t_token *start)
 	{
 		if (iscmd_or_quotes((*tk)->type) && iscmd_or_quotes((*tk)->next->type))
 		{
-			(*tk)->content = ft_strjoin((*tk)->content, (*tk)->next->content);
+			aux = ft_strjoin((*tk)->content, (*tk)->next->content);
+			free((*tk)->content);
+			(*tk)->content = aux;
 			(*tk)->c_len = ft_strlen((*tk)->content);
 			remove = (*tk)->next;
 			(*tk)->next = (*tk)->next->next;
 			if ((*tk)->next)
 				(*tk)->next->prev = (*tk);
+			free(remove->content);
 			free (remove);
 			continue ;
 		}
-		if ((*tk)->next)
-			(*tk) = (*tk)->next;
 		else
-			break ;
+			(*tk) = (*tk)->next;
 	}
 	(*tk) = start;
 	return (0);

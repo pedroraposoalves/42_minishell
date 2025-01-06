@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/16 17:34:39 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:32:30 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	free_tmain(t_main *pgr, int exit_flag)
 	}
 	if (exit_flag)
 		free_double_array (pgr->cur_envp);
-	// else
-	// 	pgr->exit_status[0] = pgr->exit_status[1];
 }
 
 void	free_double_array(char **array)

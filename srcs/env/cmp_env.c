@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmp_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:50 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/09 18:25:32 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:10:16 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,25 @@ int	cmp_env(char *s1, char *s2)
 			return (0);
 		i++;
 	}
-	return (1);
+	if (s2[i] && ft_isalnum(s2[i]))
+		return (0);
+	return (i);
 }
 
 char	*remove_badenvp(char **str, int j)
 {
 	char	new_str[900];
 	int		index;
-	
-	if ((*str)[0] != '\"')
+
+	if ((*str)[0] != '\"' && j < 1 && !ft_strchr(str[0], '.'))
 	{
-		free((*str));		
+		free((*str));
 		return (ft_strdup(""));
 	}
 	index = -1;
 	while (++index < j)
 		new_str[index] = (*str)[index];
-	while ((*str)[j] != 32 && (*str)[j] != '"' && (*str)[j])
+	while ((*str)[j] != 32 && (*str)[j] != '.' && (*str)[j] != '"' && (*str)[j])
 		j++;
 	while ((*str)[j])
 	{

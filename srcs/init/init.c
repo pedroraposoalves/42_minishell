@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 10:21:05 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:17:03 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_exec	*create_exec_node(void)
 /** @brief alloc a node type t_redir and start cmd = NULL /
  *  fd = -1 / file = NULL
  */
-t_redir	*create_redir_node(void)
+t_redir	*create_redir_node(int type)
 {
 	t_redir	*redir;
 
@@ -94,6 +94,8 @@ t_redir	*create_redir_node(void)
 	redir->type = REDIR;
 	redir->next = NULL;
 	redir->file = NULL;
+	if (type)
+		redir->type = type;
 	return (redir);
 }
 

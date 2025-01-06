@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:40 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/16 17:34:58 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:31:51 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 	t_redir	*new_redir;
 	t_token	*aux;
 
-	new_redir = create_redir_node();
-	new_redir->type = type;
+	new_redir = create_redir_node(type);
 	while (start && start->type != PIPE)
 	{
 		if (start->type == CMD && new_redir->file)
@@ -72,32 +71,30 @@ void	*mult_redir(t_token *start, t_exec *exec_node, int type)
 	return (NULL);
 }
 
-t_redir	*redir_aux(t_token **start, t_exec *exec_node)
+t_redir	*redir_aux(t_token **s, t_exec *exec_node)
 {
 	t_redir	*redir_node;
 	t_token	*aux;
 	t_token	*start_cpy;
 
-	aux = (*start)->next;
+	aux = (*s)->next;
 	start_cpy = aux;
 	if (search_redir(&aux, 0))
-		redir_node = mult_redir(start_cpy, exec_node, (*start)->type);
+		redir_node = mult_redir(start_cpy, exec_node, (*s)->type);
 	else
 	{
-		redir_node = create_redir_node();
-		redir_node->type = (*start)->type;
+		redir_node = create_redir_node((*s)->type);
 		redir_node->next = exec_node;
-		while ((*start) && (*start)->type != PIPE)
+		while ((*s) && (*s)->type != PIPE)
 		{
-			if (((*start)->type == CMD || (*start)->type == S_QUOTES
-					|| (*start)->type == D_QUOTES) && redir_node->file)
-				exec_node->argv = add_word(exec_node->argv, (*start)->content);
-			else if ((*start)->type == CMD || (*start)->type == S_QUOTES
-				|| (*start)->type == D_QUOTES)
-				redir_node->file = ft_strdup((*start)->content);
-			if (!(*start)->next)
+			if (((*s)->type == CMD || (*s)->type == S_QUOTES
+					|| (*s)->type == D_QUOTES) && redir_node->file)
+				exec_node->argv = add_word(exec_node->argv, (*s)->content);
+			else if ((*s)->type == 3 || (*s)->type == 5 || (*s)->type == 6)
+				redir_node->file = ft_strdup((*s)->content);
+			if (!(*s)->next)
 				break ;
-			(*start) = (*start)->next;
+			(*s) = (*s)->next;
 		}
 	}
 	return (redir_node);

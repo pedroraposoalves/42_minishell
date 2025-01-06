@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/30 12:40:41 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:23:17 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	ft_redir(void *node, t_main *pgr)
 	else if (redir_node->type == APPEND)
 		fd = open(redir_node->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (redir_node->type == REDIR_MQ)
-	{
 		ft_infile(pgr, redir_node);
+	else if (redir_node->type == REDIR_MQ)
 		return ;
-	}
 	if (fd < 0)
 	{
 		print_error(SHELL_NAME, "cannot open file", NULL, NULL);
+		free_all(pgr, pgr->root, 1);
 		exit(1);
 	}
 	stdout_backup = dup(STDOUT_FILENO);
@@ -71,11 +71,10 @@ void	ft_redir(void *node, t_main *pgr)
 	close(stdout_backup);
 }
 
-void	ft_exec(void *node, t_main *pgr)
+void	ft_exec(void *node, t_main *pgr, int status)
 {
 	t_exec	*exec_node;
 	int		pid;
-	int		status;
 
 	exec_node = (t_exec *)node;
 	if (!exec_node->argv)
@@ -83,7 +82,6 @@ void	ft_exec(void *node, t_main *pgr)
 	if (isbuiltin(exec_node->argv[0]))
 	{
 		call_builtin(isbuiltin(exec_node->argv[0]), node, pgr, pgr->root);
-		/* g_signal = execute_builtin(exec_node->args); */
 		return ;
 	}
 	pid = fork();

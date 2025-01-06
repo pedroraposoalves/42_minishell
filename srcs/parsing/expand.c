@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/10 18:25:16 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:22:01 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ void	set_envp_value(char **cont, char **envp, int i, int wrd)
 			index = -1;
 			while (envp[++index] && cont[0][i])
 			{
-				if (cmp_env(envp[index], cont[0] + (i + 1)))
-				{
+				wrd = cmp_env(envp[index], cont[0] + (i + 1));
+				if (wrd)
 					change_content(envp[index] + (wrd + 1), &cont[0], &i, wrd);
+				if (wrd)
 					break ;
-				}
 				if (!envp[index + 1])
 					(*cont) = remove_badenvp(cont, i);
 			}

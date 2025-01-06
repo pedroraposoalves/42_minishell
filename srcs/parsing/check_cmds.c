@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2024/11/25 23:42:05 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:19:51 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,7 @@ int	check_cmds(char *cmd)
 			return (error);
 		i++;
 	}
+	if (check_dir_after_redir(cmd))
+		return (2);
 	return (error);
 }

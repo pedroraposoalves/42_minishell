@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/30 12:41:00 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:15:02 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ void	exec_tree(void *root, t_main *pgr)
 		return ;
 	type = *((int *)root);
 	if (type == CMD)
-	{
-		ft_exec(root, pgr);
-		/**/
-	}
+		ft_exec(root, pgr, 0);
 	else if (type == PIPE)
 		ft_pipe(root, pgr);
 	else
