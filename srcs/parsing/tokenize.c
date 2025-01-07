@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:28:43 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 22:00:00 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ int	get_token_amount(char *cmd)
 	return (amount);
 }
 
+/** @brief read command and split in different tokens
+ * @param pgr main structure
+ * @param cmd command
+ */
 void	tokenize(t_main *pgr, char *cmd)
 {
 	char	**tokens;
@@ -79,6 +83,12 @@ void	tokenize(t_main *pgr, char *cmd)
 	free_double_array(tokens);
 }
 
+/** @brief check all linked list, remove nulls and join tokens like l's'
+ * @param tk token linked list
+ * @param remove aux token to remove
+ * @param start variable to keep linked list first point
+ * @param aux auxiliar variable
+ * @return 0 if order successfully and 1 otherwise */
 int	order_tokens(t_main **pgr)
 {
 	t_token	*remove;

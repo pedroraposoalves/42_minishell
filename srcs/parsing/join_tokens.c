@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:27:59 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 21:59:19 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,14 @@ int	remove_null(t_token **head)
 	return (0);
 }
 
+/** @brief check and remove null tokens and join
+ * tokens like l 's'
+ * @param tk token linked list
+ * @param remove aux token to remove
+ * @param start variable to keep linked list first point
+ * @param aux auxiliar variable
+ * @return 0 if join or remove token and 1 if
+ * token is null and doesn't have next token*/
 int	join_tokens(t_token **tk, t_token *remove, t_token *start, char *aux)
 {
 	remove_quotes(tk, -1);

@@ -6,13 +6,16 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:19:51 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 21:58:07 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/** @brief check if the cmd init with a pipe */
+/** @brief check if the cmd init with a pipe
+ * @param cmd to verify
+ * @param error to save error
+ * @return 1 if cmd init with pipe and 0 otherwise*/
 int	check_init_pipe(char *cmd, int *error)
 {
 	int	i;
@@ -30,6 +33,10 @@ int	check_init_pipe(char *cmd, int *error)
 	return (0);
 }
 
+/**
+ * @brief check if have a command have ; or \ or more than two (> or <),
+ * @param cmd command to verify
+ * @return 3 if find ; or \, 2 if find more than two (> or <), 0 otherwise */
 int	finderr_aux(char *cmd)
 {
 	if (cmd[0] == ';' || cmd[0] == '\\')
@@ -72,7 +79,12 @@ int	find_exe(char *cmd, int *i, int *error)
 	return (0);
 }
 
-/** @brief Check if the quote is open*/
+/**
+ * @brief Check if the quote is open
+ * @param cmd Command to verify
+ * @param i First quote position
+ * @param error Var to update if quote opened
+ * @return 1 if quote open and 0 if not open */
 int	is_quote_open(char *cmd, int *i, int *error)
 {
 	int	j;
@@ -92,6 +104,10 @@ int	is_quote_open(char *cmd, int *i, int *error)
 	return (1);
 }
 
+/** @brief check if the cmd has open quotes,
+ * any sintax error, if starts with a pipe or two followed special characters or if a directory is defined after a redir
+ * @param cmd to verify
+ * @return 0 if command is ok, */
 int	check_cmds(char *cmd)
 {
 	int	i;

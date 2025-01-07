@@ -6,15 +6,18 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:16:06 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:29:10 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 22:00:28 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/** @brief Function check if a special caracter is followed by
- * other special caracter
- */
+/** @brief Function check if a special character is
+ * followed by another special character
+ * @param cmd to verify
+ * @param error to save error
+ * @return 2 a special character is followed by
+ * another special character and 0 otherwise*/
 int	check_isjoin(char *cmd, int *error)
 {
 	int	i;

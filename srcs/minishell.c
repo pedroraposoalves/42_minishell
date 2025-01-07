@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/07 17:53:13 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/07 21:56:25 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 			if (order_tokens(&pgr))
 				continue;
 			start = pgr->tokens;
-			//heredoc
+			//percorrer tokens e criar heredocs
 			pgr->root = start_parsing(start);
 			exec_tree(pgr->root, pgr);
 			free_tree(pgr->root);

@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 13:29:39 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/07 17:50:36 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/07 21:58:50 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/** @brief check if the directory is after the redir
+ * @param cmd to verify
+ * @return 0 if the directory is after the redir, 2 otherwise*/
 int	check_dir_after_redir(const char *cmd)
 {
 	int	i;
