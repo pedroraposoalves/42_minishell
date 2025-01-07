@@ -35,6 +35,8 @@ void	check_have_argument(int argc)
 
 void	print_list(t_main *pgr);
 
+void	print_tree(void *root, int left, int right);
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_main	*pgr;
@@ -59,9 +61,12 @@ int	main(int argc, char **argv, char **envp)
 			if (order_tokens(&pgr))
 				continue;
 			start = pgr->tokens;
-			print_list(start);
+			print_list(pgr);
 			//percorrer tokens e criar heredocs
 			pgr->root = start_parsing(start);
+			print_tree(pgr->root, 10, 10);
+			printf("Type: %d\n", ((t_redir*) pgr->root)->type);
+			printf("File: %s\n", ((t_redir*) pgr->root)->file);
 			exec_tree(pgr->root, pgr);
 			free_tree(pgr->root);
 			free_tmain(pgr, 0);
@@ -92,46 +97,46 @@ void	print_list(t_main *pgr)
 
 /* -------------------------------------------------------------------------- */
 /* ------------------------------- PRINT_TREE ------------------------------- */
-// void	print_tree(void *root, int left, int right)
-// {
-// 	int		type;
-// 	int		spacing;
-// 	t_exec	*cmd_node;
+void	print_tree(void *root, int left, int right)
+{
+	int		type;
+	int		spacing;
+	t_exec	*cmd_node;
 
-// 	if (!root)
-// 		return ;
-// 	spacing = 5;
-// 	type = *((int *)root);
-// 	if (type == CMD)
-// 	{
-// 		cmd_node = (t_exec *)root;
-// 		printf("%*sCMD: ", left, "");
-// 		for (int i = 0; cmd_node->argv && cmd_node->argv[i]; i++)
-// 			printf("%s ", cmd_node->argv[i]);
-// 		printf("\n");
-// 	}
-// 	else if (type == REDIR || type == REDIR_MQ || type == APPEND
-// 		|| type == HERE_DOC)
-// 	{
-// 		t_redir	*redir_node = (t_redir *)root;
-// 		printf("%*s%s %s %p\n", left, "", (redir_node->type == APPEND)? "APPEND" :
-// 			(redir_node->type == HERE_DOC)? "HERE_DOC":
-// 			(redir_node->type == REDIR_MQ)? "REDIR_MQ":
-// 			"REDIR" , redir_node->file, redir_node->file);
-// 		printf("%*s|\n", left + spacing, "");
-// 		print_tree(redir_node->next, left, right);
-// 	}
-// 	else if (type == PIPE)
-// 	{
-// 		t_pipe	*pipe_node = (t_pipe *)root;
+	if (!root)
+		return ;
+	spacing = 5;
+	type = *((int *)root);
+	if (type == CMD)
+	{
+		cmd_node = (t_exec *)root;
+		printf("%*sCMD: ", left, "");
+		for (int i = 0; cmd_node->argv && cmd_node->argv[i]; i++)
+			printf("%s ", cmd_node->argv[i]);
+		printf("\n");
+	}
+	else if (type == REDIR || type == REDIR_MQ || type == APPEND
+		|| type == HERE_DOC)
+	{
+		t_redir	*redir_node = (t_redir *)root;
+		printf("%*s%s %s %p\n", left, "", (redir_node->type == APPEND)? "APPEND" :
+			(redir_node->type == HERE_DOC)? "HERE_DOC":
+			(redir_node->type == REDIR_MQ)? "REDIR_MQ":
+			"REDIR" , redir_node->file, redir_node->file);
+		printf("%*s|\n", left + spacing, "");
+		print_tree(redir_node->next, left, right);
+	}
+	else if (type == PIPE)
+	{
+		t_pipe	*pipe_node = (t_pipe *)root;
 
-// 		printf("%*sPIPE\n", left, "");
-// 		printf("%*s/\n", left, "");
-// 		print_tree(pipe_node->left, left - spacing, right);
-// 		printf("%*s\\\n", left + spacing, "");
-// 		print_tree(pipe_node->right, left + spacing, right);
-// 	}
-// }
+		printf("%*sPIPE\n", left, "");
+		printf("%*s/\n", left, "");
+		print_tree(pipe_node->left, left - spacing, right);
+		printf("%*s\\\n", left + spacing, "");
+		print_tree(pipe_node->right, left + spacing, right);
+	}
+}
 // void	print_tree(void *root, int left, int right)
 // {
 // 	int		type;
