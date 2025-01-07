@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:07:25 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:13:56 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define HERE_DOC 8
 # define IS_NULL 9
 # define REDIR_MQ 10
+
+extern int	global_exit;
 
 # define SHELL_NAME "minishell: "
 
@@ -160,6 +162,10 @@ void	free_matrix(char **m);
 int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
+
+/* --------------------------------- SIGNALS -------------------------------- */
+
+void	setup_signals(void);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

@@ -30,6 +30,7 @@ ENV_DIR			= env
 EXEC_DIR		= exec
 INIT_DIR		= init
 PARS_DIR		= parsing
+SIGNALS_DIR		= signals
 UTILS_DIR		= utils
 _FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUILTINS_DIR)/unset $(BUILTINS_DIR)/exit $(BUILTINS_DIR)/cd $(BUILTINS_DIR)/export \
 				$(ENV_DIR)/env $(ENV_DIR)/cmp_env\
@@ -37,6 +38,7 @@ _FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUI
 				$(INIT_DIR)/init $(INIT_DIR)/create_nodes_tree \
 				$(PARS_DIR)/check_cmds $(PARS_DIR)/tokenize_aux $(PARS_DIR)/tokenize $(PARS_DIR)/utils $(PARS_DIR)/utils2 $(PARS_DIR)/expand $(PARS_DIR)/join_tokens $(PARS_DIR)/check_cmds_utils \
 				$(UTILS_DIR)/sort_char_tab $(UTILS_DIR)/utils_error $(UTILS_DIR)/matrix_handle $(UTILS_DIR)/string_utils $(UTILS_DIR)/free \
+				$(SIGNALS_DIR)/signals \
 
 OBJS			= $(_FILES:%=%.o)
 TARGET			= $(addprefix $(OBJ_DIR)/, $(OBJS))
@@ -66,6 +68,7 @@ $(OBJ_DIR)		:
 					mkdir -p $(OBJ_DIR)/$(ENV_DIR)
 					mkdir -p $(OBJ_DIR)/$(EXEC_DIR)
 					mkdir -p $(OBJ_DIR)/$(PARS_DIR)
+					mkdir -p $(OBJ_DIR)/$(SIGNALS_DIR)
 					mkdir -p $(OBJ_DIR)/$(UTILS_DIR)
 
 clean			:

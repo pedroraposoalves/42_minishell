@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2024/12/30 12:34:02 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:14:40 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*export_check_var(char *var, int flag_print_error)
 	if (isalpha(var[0]) || var[0] == '_')
 		return (var_name);
 	else if (flag_print_error)
-		print_error(SHELL_NAME, "not an identifier", var_name, NULL);
+		print_error(SHELL_NAME, "export", var,"not a valid identifier");
 	return (free(var_name), NULL);
 }
 

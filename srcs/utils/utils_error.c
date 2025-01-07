@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:56:15 by hepple            #+#    #+#             */
-/*   Updated: 2024/12/30 12:14:33 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:01:21 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,7 @@ int	print_error(char *s1, char *s2, char *s3, char *message)
 	if (s1)
 		ft_putstr_fd(s1, 2);
 	if (s2)
-	{
-		if (s1)
-			ft_putstr_fd(": ", 2);
 		ft_putstr_fd(s2, 2);
-	}
 	if (s3)
 	{
 		if (s1 || s2)

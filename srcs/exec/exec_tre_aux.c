@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:23:17 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/06 13:33:27 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_redir(void *node, t_main *pgr)
 		fd = open(redir_node->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (redir_node->type == REDIR_MQ)
 		ft_infile(pgr, redir_node);
-	else if (redir_node->type == REDIR_MQ)
+	if (redir_node->type == REDIR_MQ)
 		return ;
 	if (fd < 0)
 	{

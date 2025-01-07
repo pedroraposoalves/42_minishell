@@ -3,15 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/06 12:19:06 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:53:13 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	global_exit = 0;
+
+void	set_exit_status(t_main *pgr)
+{
+	pgr->exit_status[0] = pgr->exit_status[1];
+	if (global_exit != 0)
+		pgr->exit_status[0] = global_exit;
+	pgr->exit_status[1] = 0;
+	global_exit = 0;
+}
+
+void	check_have_argument(int argc)
+{
+	if (argc != 1)
+	{
+		print_error(SHELL_NAME, "The minishell should'nt have arguments!",
+			NULL, NULL);
+		exit (127);
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_main	*pgr;
+	char	*input;
+	t_token	*start;
+
+	(void) argv;
+	pgr = init_main(envp);
+	check_have_argument(argc);
+	while (1)
+	{
+		setup_signals();
+		input = readline(SHELL_NAME);
+		if (input)
+			add_history(input);
+		set_exit_status(pgr);
+		if (!(pgr->exit_status[1] = check_cmds(input)))
+		{
+			tokenize(pgr, input);
+			ft_expand(pgr);
+			start = pgr->tokens;
+			if (order_tokens(&pgr))
+				continue;
+			start = pgr->tokens;
+			//heredoc
+			pgr->root = start_parsing(start);
+			exec_tree(pgr->root, pgr);
+			free_tree(pgr->root);
+			free_tmain(pgr, 0);
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+
+/* ------------------------------- PRINT_LIST ------------------------------- */
 // void	print_list(t_main *pgr)
 // {
 // 	printf("----------------------------------------------------\n");
@@ -30,48 +86,6 @@
 // 	}
 // 	printf("----------------------------------------------------\n");
 // }
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_main	*pgr;
-	char	*input;
-	t_token	*start;
-
-	(void) argv;
-	pgr = init_main(envp);
-	if (argc != 1)
-		return (print_error(SHELL_NAME, \
-			"The minishell should not have arguments!", NULL, NULL), 127);
-	while (1)
-	{
-		input = readline(SHELL_NAME);
-		if (input)
-			add_history(input);
-		pgr->exit_status[0] = pgr->exit_status[1];
-		if (!(pgr->exit_status[1] = check_cmds(input)))
-		{
-			tokenize(pgr, input);
-			ft_expand(pgr);
-			start = pgr->tokens;
-			// print_list(pgr);
-			// pgr->tokens = start;
-			if (order_tokens(&pgr))
-				continue;
-			// print_list(pgr);/**/
-			// pgr->tokens = start;
-			// pgr->tokens = start;
-			start = pgr->tokens;
-			pgr->root = start_parsing(start);
-			exec_tree(pgr->root, pgr);
-			free_tree(pgr->root);
-			free_tmain(pgr, 0);
-		}
-	}
-	return (EXIT_SUCCESS);
-}
-
-/* ------------------------------- PRINT_LIST ------------------------------- */
-
 
 /* -------------------------------------------------------------------------- */
 /* ------------------------------- PRINT_TREE ------------------------------- */
@@ -134,7 +148,7 @@ int	main(int argc, char **argv, char **envp)
 // 		printf("\n");
 // 	}
 // 	else if (type == REDIR || type == REDIR_MQ || type == APPEND
-//		|| type == HERE_DOC)
+// 		|| type == HERE_DOC)
 // 	{
 // 		t_redir	*redir_node = (t_redir *)root;
 // 		printf("%*s%s %s\n", left, "", (redir_node->type == APPEND)? "APPEND" :

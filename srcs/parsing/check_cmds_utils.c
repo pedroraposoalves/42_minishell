@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 13:29:39 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:20:39 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:50:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_dir_after_redir(const char *cmd)
 			i++;
 			if (cmd[i] == '>' || cmd[i] == '<')
 				i++;
-			while (cmd[i] == 32)
+			while (cmd[i] == 32 || cmd[i] == 34 || cmd[i] == 39)
 				i++;
 			if (!cmd[i])
 			{
