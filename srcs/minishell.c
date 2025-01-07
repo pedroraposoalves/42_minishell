@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/07 21:56:25 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/07 22:13:09 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	check_have_argument(int argc)
 	}
 }
 
+void	print_list(t_main *pgr);
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_main	*pgr;
@@ -57,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 			if (order_tokens(&pgr))
 				continue;
 			start = pgr->tokens;
+			print_list(start);
 			//percorrer tokens e criar heredocs
 			pgr->root = start_parsing(start);
 			exec_tree(pgr->root, pgr);
@@ -68,24 +71,24 @@ int	main(int argc, char **argv, char **envp)
 }
 
 /* ------------------------------- PRINT_LIST ------------------------------- */
-// void	print_list(t_main *pgr)
-// {
-// 	printf("----------------------------------------------------\n");
-// 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
-// 		"id", "len token", "type");
-// 	printf("----------------------------------------------------\n");
-// 	for (int i = 0; i < pgr->token_amount; i++)
-// 	{
-// 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
-// 			pgr->tokens->content,
-// 			pgr->tokens->id,
-// 			pgr->tokens->c_len,
-// 			pgr->tokens->type);
+void	print_list(t_main *pgr)
+{
+	printf("----------------------------------------------------\n");
+	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
+		"id", "len token", "type");
+	printf("----------------------------------------------------\n");
+	for (int i = 0; i < pgr->token_amount; i++)
+	{
+		printf("| %-13s | %-8i | %-10i | %-8i |\n",
+			pgr->tokens->content,
+			pgr->tokens->id,
+			pgr->tokens->c_len,
+			pgr->tokens->type);
 
-// 		pgr->tokens = pgr->tokens->next;
-// 	}
-// 	printf("----------------------------------------------------\n");
-// }
+		pgr->tokens = pgr->tokens->next;
+	}
+	printf("----------------------------------------------------\n");
+}
 
 /* -------------------------------------------------------------------------- */
 /* ------------------------------- PRINT_TREE ------------------------------- */
