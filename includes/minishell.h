@@ -173,7 +173,7 @@ int		set_exit_signal(int exit_status);
 
 /* -----------------------------------DEBUG---------------------------------- */
 
-void	print_list(t_main *pgr);
+void	print_list(t_token *tokens);
 void	print_tree(void *root, int left, int right);
 
 #endif

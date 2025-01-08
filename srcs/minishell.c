@@ -33,10 +33,6 @@ void	check_have_argument(int argc)
 	}
 }
 
-void	print_list(t_main *pgr);
-
-void	print_tree(void *root, int left, int right);
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_main	*pgr;
@@ -61,11 +57,10 @@ int	main(int argc, char **argv, char **envp)
 			if (order_tokens(&pgr))
 				continue;
 			start = pgr->tokens;
-			print_list(pgr);
+			print_list(pgr->tokens);
 			//percorrer tokens e criar heredocs testar
 			here_doc_exec(pgr->tokens);
-			print_list(pgr);
-			print_list(pgr);
+			print_list(pgr->tokens);
 			pgr->root = start_parsing(start);
 			print_tree(pgr->root, 10, 10);
 			printf("Type: %d\n", ((t_redir*) pgr->root)->type);
@@ -79,16 +74,16 @@ int	main(int argc, char **argv, char **envp)
 }
 
 /* ------------------------------- PRINT_LIST ------------------------------- */
-void	print_list(t_main *pgr)
+void	print_list(t_token *tokens)
 {
 	t_token *tmp;
 
-	tmp = pgr->tokens;
+	tmp = tokens;
 	printf("----------------------------------------------------\n");
 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
 		"id", "len token", "type");
 	printf("----------------------------------------------------\n");
-	for (int i = 0; i < pgr->token_amount; i++)
+	while(tmp)
 	{
 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
 			tmp->content,

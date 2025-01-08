@@ -31,7 +31,7 @@
 /** @brief create and write here doc
  * @param dir dir and name of the file
  * @param delimiter */
-void	*here_doc_file(char *dir, char *delimiter)
+void	here_doc_file(char *dir, char *delimiter)
 {
 	int		fd;
 	int		flag;
@@ -52,7 +52,6 @@ void	*here_doc_file(char *dir, char *delimiter)
 	}
 	free(line);
 	close(fd);
-	exit(EXIT_SUCCESS);
 }
 
 void	here_doc_exec(t_token *list)
@@ -66,15 +65,17 @@ void	here_doc_exec(t_token *list)
 	tmp_list = list;
 	while (tmp_list)
 	{
+		printf("Here doc while %s\n", tmp_list->content);
 		if(tmp_list->type == HERE_DOC)
 		{
-			file = ft_strjoin("tmp/heredoc_", ft_itoa(i));
+			file = ft_strjoin("/tmp/heredoc_", ft_itoa(i));
 			here_doc_file(file, tmp_list->next->next->content);
+			free(tmp_list->next->next->content);
 			tmp_list->next->next->content = file;
 			tmp_list->type = REDIR;
-			free(file);
 			i++;
 		}
 		tmp_list = tmp_list->next;
 	}
+		printf("Here doc end\n");
 }
