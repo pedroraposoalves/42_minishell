@@ -113,6 +113,10 @@ char	*find_path(char *cmd, char **envp);
 int		isbuiltin(char *str);
 int		call_builtin(int number, t_exec *node, t_main *pgr, void *root);
 
+/* --------------------------------- HEREDOC -------------------------------- */
+
+void	here_doc_exec(t_token *list);
+
 /* ---------------------------------- INIT ---------------------------------- */
 
 void	*start_parsing(t_token *start);
@@ -148,6 +152,10 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux);
 int		order_tokens(t_main **pgr);
 int		check_dir_after_redir(const char *cmd);
 
+/* --------------------------------- SIGNALS -------------------------------- */
+
+void	setup_signals(void);
+
 /* -----------------------------------UTILS---------------------------------- */
 
 void	free_tmain(t_main *pgr, int exit_flag);
@@ -162,10 +170,6 @@ void	free_matrix(char **m);
 int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
-
-/* --------------------------------- SIGNALS -------------------------------- */
-
-void	setup_signals(void);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

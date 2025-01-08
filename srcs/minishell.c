@@ -62,7 +62,10 @@ int	main(int argc, char **argv, char **envp)
 				continue;
 			start = pgr->tokens;
 			print_list(pgr);
-			//percorrer tokens e criar heredocs
+			//percorrer tokens e criar heredocs testar
+			here_doc_exec(pgr->tokens);
+			print_list(pgr);
+			print_list(pgr);
 			pgr->root = start_parsing(start);
 			print_tree(pgr->root, 10, 10);
 			printf("Type: %d\n", ((t_redir*) pgr->root)->type);
@@ -78,6 +81,9 @@ int	main(int argc, char **argv, char **envp)
 /* ------------------------------- PRINT_LIST ------------------------------- */
 void	print_list(t_main *pgr)
 {
+	t_token *tmp;
+
+	tmp = pgr->tokens;
 	printf("----------------------------------------------------\n");
 	printf("| %-13s | %-8s | %-10s | %-8s |\n", "token",
 		"id", "len token", "type");
@@ -85,12 +91,12 @@ void	print_list(t_main *pgr)
 	for (int i = 0; i < pgr->token_amount; i++)
 	{
 		printf("| %-13s | %-8i | %-10i | %-8i |\n",
-			pgr->tokens->content,
-			pgr->tokens->id,
-			pgr->tokens->c_len,
-			pgr->tokens->type);
+			tmp->content,
+			tmp->id,
+			tmp->c_len,
+			tmp->type);
 
-		pgr->tokens = pgr->tokens->next;
+		tmp = tmp->next;
 	}
 	printf("----------------------------------------------------\n");
 }

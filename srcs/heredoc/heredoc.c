@@ -12,26 +12,26 @@
 
 #include "../../includes/minishell.h"
 
-/** @brief to handle with signal in here doc function
- * @param signal signal value*/
-static here_signal(int signal)
-{
-	if (signal == SIGINT)
-		exit(1);
-}
+// /** @brief to handle with signal in here doc function
+//  * @param signal signal value*/
+// static	here_signal(int signal)
+// {
+// 	if (signal == SIGINT)
+// 		exit(1);
+// }
 
-/** @brief to handle with signal in here doc function when is in the child
- * @param signal signal value*/
-static here_signal(int signal)
-{
-	if (signal == SIGINT)
-		ft_putchar_fd('\n', 2);
-}
+// /** @brief to handle with signal in here doc function when is in the child
+//  * @param signal signal value*/
+// static	here_signal(int signal)
+// {
+// 	if (signal == SIGINT)
+// 		ft_putchar_fd('\n', 2);
+// }
 
 /** @brief create and write here doc
  * @param dir dir and name of the file
  * @param delimiter */
-void *here_doc_file(char *dir, char *delimiter)
+void	*here_doc_file(char *dir, char *delimiter)
 {
 	int		fd;
 	int		flag;
@@ -47,10 +47,34 @@ void *here_doc_file(char *dir, char *delimiter)
 		if (flag == 0)
 			break ;
 		write(fd, line, ft_strlen(line));
-		write(fd, '\n', 1);
+		write(fd, "\n", 1);
 		free(line);
 	}
 	free(line);
 	close(fd);
 	exit(EXIT_SUCCESS);
+}
+
+void	here_doc_exec(t_token *list)
+{
+	int		i;
+	t_token	*tmp_list;
+	char	*file;
+
+
+	i = 0;
+	tmp_list = list;
+	while (tmp_list)
+	{
+		if(tmp_list->type == HERE_DOC)
+		{
+			file = ft_strjoin("tmp/heredoc_", ft_itoa(i));
+			here_doc_file(file, tmp_list->next->next->content);
+			tmp_list->next->next->content = file;
+			tmp_list->type = REDIR;
+			free(file);
+			i++;
+		}
+		tmp_list = tmp_list->next;
+	}
 }
