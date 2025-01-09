@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/07 21:56:25 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:06:45 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,35 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	pgr = init_main(envp);
 	check_have_argument(argc);
+	printf("%i\n", getpid());
 	while (1)
 	{
 		setup_signals();
 		input = readline(SHELL_NAME);
-		if (input)
-			add_history(input);
-		set_exit_status(pgr);
-		if (!(pgr->exit_status[1] = check_cmds(input)))
+		if (input && ft_strncmp(input, "", ft_strlen(input) != 0))
 		{
-			tokenize(pgr, input);
-			ft_expand(pgr);
-			start = pgr->tokens;
-			if (order_tokens(&pgr))
-				continue;
-			start = pgr->tokens;
-			//percorrer tokens e criar heredocs
-			pgr->root = start_parsing(start);
-			exec_tree(pgr->root, pgr);
-			free_tree(pgr->root);
-			free_tmain(pgr, 0);
+			add_history(input);
+			set_exit_status(pgr);
+			if (!(pgr->exit_status[1] = check_cmds(input)))
+			{
+				tokenize(pgr, input);
+				ft_expand(pgr);
+				start = pgr->tokens;
+				if (order_tokens(&pgr))
+					continue;
+				start = pgr->tokens;
+				pgr->root = start_parsing(start);
+				exec_tree(pgr->root, pgr);
+				free_tree(pgr->root);
+				free_tmain(pgr, 0);
+			}
 		}
+		if (!input)
+		{
+			puts("exit");
+			return (0);
+		}
+		free(input);
 	}
 	return (EXIT_SUCCESS);
 }

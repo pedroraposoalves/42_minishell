@@ -38,7 +38,7 @@ _FILES			= $(BUILTINS_DIR)/pwd $(BUILTINS_DIR)/bl_env $(BUILTINS_DIR)/echo $(BUI
 				$(INIT_DIR)/init $(INIT_DIR)/create_nodes_tree \
 				$(PARS_DIR)/check_cmds $(PARS_DIR)/tokenize_aux $(PARS_DIR)/tokenize $(PARS_DIR)/utils $(PARS_DIR)/utils2 $(PARS_DIR)/expand $(PARS_DIR)/join_tokens $(PARS_DIR)/check_cmds_utils \
 				$(UTILS_DIR)/sort_char_tab $(UTILS_DIR)/utils_error $(UTILS_DIR)/matrix_handle $(UTILS_DIR)/string_utils $(UTILS_DIR)/free \
-				$(SIGNALS_DIR)/signals \
+				$(SIGNALS_DIR)/signals $(SIGNALS_DIR)/signals_utils \
 
 OBJS			= $(_FILES:%=%.o)
 TARGET			= $(addprefix $(OBJ_DIR)/, $(OBJS))

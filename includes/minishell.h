@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/07 13:13:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:47:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*remove_badenvp(char **str, int j);
 
 /* ---------------------------------- EXEC ---------------------------------- */
 
-void	ft_redir(void *node, t_main *pgr);
+void	ft_redir(void *node, t_main *pgr, int fd);
 void	ft_exec(void *node, t_main *pgr, int status);
 void	exec_tree(void *root, t_main *pgr);
 int		ft_execve(t_exec *exec_node, char **envp);
@@ -162,10 +162,16 @@ void	free_matrix(char **m);
 int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
+t_main	*get_pgr(t_main *main_struct);
 
 /* --------------------------------- SIGNALS -------------------------------- */
 
+void	set_sigint(int signal);
 void	setup_signals(void);
+void	child_signals(void);
+void	ignore_signals(void);
+void	pipe_signals(void);
+void	signal_aux(int signal);
 
 /* -----------------------------------DEBUG---------------------------------- */
 
