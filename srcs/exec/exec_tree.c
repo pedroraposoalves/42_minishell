@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/08 18:37:35 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:51:06 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_pipe(void *node, t_main *pgr)
 	{
 		child_signals();
 		ft_pipe_child(p, pgr, pipe_node, 0);
-	}	
+	}
 	pid[1] = fork();
 	if (pid[1] == 0)
 		ft_pipe_child(p, pgr, pipe_node, 1);

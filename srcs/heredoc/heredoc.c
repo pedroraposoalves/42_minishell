@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 16:19:41 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:46:11 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ void	here_doc(t_main *pgr)
 			file = ft_strjoin("/tmp/heredoc_", ft_itoa(i));
 			pid = fork();
 			if (pid == 0)
-			{
 				here_doc_file(file, tmp_list, pgr->cur_envp);
-				exit(0);
-			}
 			waitpid(pid, &global_exit, 0);
 			i++;
 		}

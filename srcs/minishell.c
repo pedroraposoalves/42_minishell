@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 17:14:39 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:50:04 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(int argc, char **argv, char **envp)
 	check_have_argument(argc);
 	while (1)
 	{
-		setup_signals();
 		input = readline(SHELL_NAME);
 		if (input && ft_strncmp(input, "", ft_strlen(input) != 0))
 		{

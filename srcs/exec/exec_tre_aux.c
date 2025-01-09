@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/09 12:05:22 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:55:06 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 		exit(1);
 	}
 	stdout_backup = dup(STDOUT_FILENO);
+	(void) stdout_backup;
 	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	//close(fd);
 	exec_tree(redir_node->next, pgr);
 	dup2(stdout_backup, STDOUT_FILENO);
 	close(stdout_backup);
