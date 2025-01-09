@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/09 13:21:30 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:28:31 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ char	*find_path(char *cmd, char **envp);
 int		isbuiltin(char *str);
 int		call_builtin(int number, t_exec *node, t_main *pgr, void *root);
 
+/* --------------------------------- HEREDOC -------------------------------- */
+
+void	here_doc(t_main *pgr);
+
 /* ---------------------------------- INIT ---------------------------------- */
 
 void	*start_parsing(t_token *start);
@@ -148,6 +152,15 @@ t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux);
 int		order_tokens(t_main **pgr);
 int		check_dir_after_redir(const char *cmd);
 
+/* --------------------------------- SIGNALS -------------------------------- */
+
+void	set_sigint(int signal);
+void	setup_signals(void);
+void	child_signals(void);
+void	ignore_signals(void);
+void	pipe_signals(void);
+void	signal_aux(int signal);
+
 /* -----------------------------------UTILS---------------------------------- */
 
 void	free_tmain(t_main *pgr, int exit_flag);
@@ -164,22 +177,9 @@ int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
 t_main	*get_pgr(t_main *main_struct);
 
-/* --------------------------------- SIGNALS -------------------------------- */
-
-void	set_sigint(int signal);
-void	setup_signals(void);
-void	child_signals(void);
-void	ignore_signals(void);
-void	pipe_signals(void);
-void	signal_aux(int signal);
-
-/* -------------------------------- HERE_DOC -------------------------------- */
-
-int here_doc(t_main *pgr);
-
 /* -----------------------------------DEBUG---------------------------------- */
 
-void	print_list(t_main *pgr);
+void	print_list(t_token *tokens);
 void	print_tree(void *root, int left, int right);
 
 #endif

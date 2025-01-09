@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 13:29:39 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/09 12:19:12 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:17:47 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_dir_after_redir(const char *cmd)
 			i++;
 			if (cmd[i] == '>' || cmd[i] == '<')
 				i++;
-			while (cmd[i] == 32 || cmd[i] == 34 || cmd[i] == 39 || cmd[i] == 36)
+			while (cmd[i] == 32 || cmd[i] == 34 || cmd[i] == 36 || cmd[i] == 39)
 				i++;
 			if (!cmd[i])
 			{
