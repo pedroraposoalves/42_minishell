@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 13:33:27 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:25:50 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int	ft_infile(t_main *pgr, t_redir *redir_node)
 	return (1);
 }
 
-void	ft_redir(void *node, t_main *pgr)
+void	ft_redir(void *node, t_main *pgr, int fd)
 {
 	t_redir	*redir_node;
-	int		fd;
 	int		stdout_backup;
 
 	fd = 0;
@@ -73,17 +72,16 @@ void	ft_redir(void *node, t_main *pgr)
 
 void	ft_exec(void *node, t_main *pgr, int status)
 {
-	t_exec	*exec_node;
+	t_exec	*ex;
 	int		pid;
 
-	exec_node = (t_exec *)node;
-	if (!exec_node->argv)
+	ex = (t_exec *)node;
+	if (!ex->argv)
 		return ;
-	if (isbuiltin(exec_node->argv[0]))
-	{
-		call_builtin(isbuiltin(exec_node->argv[0]), node, pgr, pgr->root);
-		return ;
-	}
+	if (isbuiltin(ex->argv[0]))
+		return ((void)call_builtin(isbuiltin(ex->argv[0]), node,
+				pgr, pgr->root));
+	ignore_signals();
 	pid = fork();
 	if (pid < 0)
 	{
@@ -92,10 +90,12 @@ void	ft_exec(void *node, t_main *pgr, int status)
 	}
 	if (pid == 0)
 	{
-		status = ft_execve(exec_node, pgr->cur_envp);
+		child_signals();
+		status = ft_execve(ex, pgr->cur_envp);
 		free_all(pgr, pgr->root, 1);
 		exit(status);
 	}
 	waitpid(pid, &status, 0);
+	setup_signals();
 	pgr->exit_status[1] = set_exit_signal(status);
 }

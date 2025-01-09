@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils.c                                     :+:      :+:    :+:   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 15:42:16 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/08 18:09:02 by malves-b         ###   ########.fr       */
+/*   Created: 2025/01/08 15:36:42 by malves-b          #+#    #+#             */
+/*   Updated: 2025/01/08 16:48:19 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_str_char(char *s, char c)
+void	signal_aux(int signal)
 {
-	int	position;
+	t_main	*pgr;
 
-	position = 0;
-	if (!s)
-		return (-1);
-	while (s[position] != c && s[position] != '\0')
-		position++;
-	return (position);
-}
-
-t_main	*get_pgr(t_main *main_struct)
-{
-	static t_main	*pgr = NULL;
-
-	if (main_struct)
-		pgr = main_struct;
-	return (pgr);
+	(void)signal;
+	pgr = get_pgr(NULL);
+	free_all(pgr, pgr->root, 130);
+	exit(130);
 }
