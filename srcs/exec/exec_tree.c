@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:15:02 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:37:35 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	ft_pipe(void *node, t_main *pgr)
 	int		p[2];
 	int		pid[2];
 
+	pipe_signals();
+	sleep(3);
 	pipe_node = (t_pipe *)node;
 	if (pipe(p) < 0)
 	{
@@ -61,7 +63,10 @@ void	ft_pipe(void *node, t_main *pgr)
 	}
 	pid[0] = fork();
 	if (pid[0] == 0)
+	{
+		child_signals();
 		ft_pipe_child(p, pgr, pipe_node, 0);
+	}	
 	pid[1] = fork();
 	if (pid[1] == 0)
 		ft_pipe_child(p, pgr, pipe_node, 1);
@@ -72,6 +77,7 @@ void	exec_tree(void *root, t_main *pgr)
 {
 	int	type;
 
+	get_pgr(pgr);
 	if (!root)
 		return ;
 	type = *((int *)root);
@@ -80,5 +86,5 @@ void	exec_tree(void *root, t_main *pgr)
 	else if (type == PIPE)
 		ft_pipe(root, pgr);
 	else
-		ft_redir(root, pgr);
+		ft_redir(root, pgr, 0);
 }

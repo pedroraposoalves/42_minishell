@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/30 12:12:44 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:20:22 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	call_builtin(int number, t_exec *node, t_main *pgr, void *root)
 {
 	(void)pgr;
 	if (number == 1)
-		return (ft_cd(node->argv[1], pgr));
+		return (ft_cd(node->argv, pgr));
 	if (number == 2)
 		return (ft_echo(node->argv));
 	if (number == 3)

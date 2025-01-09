@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
 /*   Updated: 2025/01/09 16:11:27 by pemirand         ###   ########.fr       */
@@ -32,6 +32,8 @@ void	check_have_argument(int argc)
 		exit (127);
 	}
 }
+
+void	print_list(t_main *pgr);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -64,6 +66,11 @@ int	main(int argc, char **argv, char **envp)
 				free_tree(pgr->root);
 				free_tmain(pgr, 0);
 			}
+		}
+		if (!input)
+		{
+			puts("exit");
+			return (0);
 		}
 		free(input);
 	}

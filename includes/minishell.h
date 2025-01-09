@@ -85,7 +85,7 @@ typedef struct s_pipe
 
 /* -------------------------------- BUILTINS -------------------------------- */
 
-int		ft_cd(char *path, t_main *pgr);
+int		ft_cd(char **path, t_main *pgr);
 int		ft_env(t_main *pgr);
 int		update_pwd(t_main *pgr, char *old_cwd);
 int		ft_echo(char **argv);
@@ -105,7 +105,7 @@ char	*remove_badenvp(char **str, int j);
 
 /* ---------------------------------- EXEC ---------------------------------- */
 
-void	ft_redir(void *node, t_main *pgr);
+void	ft_redir(void *node, t_main *pgr, int fd);
 void	ft_exec(void *node, t_main *pgr, int status);
 void	exec_tree(void *root, t_main *pgr);
 int		ft_execve(t_exec *exec_node, char **envp);
@@ -154,7 +154,12 @@ int		check_dir_after_redir(const char *cmd);
 
 /* --------------------------------- SIGNALS -------------------------------- */
 
+void	set_sigint(int signal);
 void	setup_signals(void);
+void	child_signals(void);
+void	ignore_signals(void);
+void	pipe_signals(void);
+void	signal_aux(int signal);
 
 /* -----------------------------------UTILS---------------------------------- */
 
@@ -170,6 +175,7 @@ void	free_matrix(char **m);
 int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
+t_main	*get_pgr(t_main *main_struct);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

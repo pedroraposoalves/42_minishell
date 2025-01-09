@@ -6,11 +6,21 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 13:33:27 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:05:22 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/** @brief Function prints a error msg and exit program
+ * @param error_msg: print error
+ * @param exit_code: the exit code
+ */
+void	ft_exit_aux(char *error_msg, int exit_code)
+{
+	print_error(SHELL_NAME, error_msg, NULL, NULL);
+	exit (exit_code);
+}
 
 int	ft_infile(t_main *pgr, t_redir *redir_node)
 {
@@ -41,10 +51,9 @@ int	ft_infile(t_main *pgr, t_redir *redir_node)
 	return (1);
 }
 
-void	ft_redir(void *node, t_main *pgr)
+void	ft_redir(void *node, t_main *pgr, int fd)
 {
 	t_redir	*redir_node;
-	int		fd;
 	int		stdout_backup;
 
 	fd = 0;
@@ -71,31 +80,32 @@ void	ft_redir(void *node, t_main *pgr)
 	close(stdout_backup);
 }
 
+
 void	ft_exec(void *node, t_main *pgr, int status)
 {
-	t_exec	*exec_node;
+	t_exec	*ex;
 	int		pid;
 
-	exec_node = (t_exec *)node;
-	if (!exec_node->argv)
+	ex = (t_exec *)node;
+	if (!ex->argv)
 		return ;
-	if (isbuiltin(exec_node->argv[0]))
-	{
-		call_builtin(isbuiltin(exec_node->argv[0]), node, pgr, pgr->root);
+	if (isbuiltin(ex->argv[0]))
+		pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
+				pgr, pgr->root);
+	if (isbuiltin(ex->argv[0]))
 		return ;
-	}
+	ignore_signals();
 	pid = fork();
 	if (pid < 0)
-	{
-		print_error(SHELL_NAME, "fork failed", NULL, NULL);
-		exit(1);
-	}
+		ft_exit_aux("fork_failed", 1);
 	if (pid == 0)
 	{
-		status = ft_execve(exec_node, pgr->cur_envp);
+		child_signals();
+		status = ft_execve(ex, pgr->cur_envp);
 		free_all(pgr, pgr->root, 1);
 		exit(status);
 	}
 	waitpid(pid, &status, 0);
+	setup_signals();
 	pgr->exit_status[1] = set_exit_signal(status);
 }

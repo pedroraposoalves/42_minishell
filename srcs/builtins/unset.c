@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:01:27 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/21 22:54:55 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:07:27 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//quando uma variável não existe este ignora e passa à proxima, testar se o comportamento é o mesmo no linux
+//quando uma variável não existe este ignora e passa à proxima,
+//testar se o comportamento é o mesmo no linux
 
 int	ft_unset(t_main *pgr, char **argv)
 {
