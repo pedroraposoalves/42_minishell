@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:22:01 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:35:38 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,28 +114,29 @@ int	search_exp(char *content)
 	return (ret);
 }
 
-void	ft_expand(t_main *main)
+void    ft_expand(t_main *main)
 {
-	t_token	*start;
-
-	start = main->tokens;
-	while (main->tokens)
-	{
-		if (search_exp(main->tokens->content) && main->tokens->type != S_QUOTES)
-		{
-			if (search_exp(main->tokens->content) == 2)
-			{
-				get_return_last_cmd(&main->tokens->content,
-					main->exit_status[0], 0);
-			}
-			set_envp_value(&main->tokens->content, main->cur_envp, 0, 0);
-			main->tokens->c_len = ft_strlen(main->tokens->content);
-		}
-		if (main->tokens->next == NULL)
-			break ;
-		main->tokens = main->tokens->next;
-	}
-	main->tokens = start;
+    t_token *start;
+    start = main->tokens;
+    while (main->tokens)
+    {
+        if (search_exp(main->tokens->content) && main->tokens->type != S_QUOTES
+            && (main->tokens->prev->prev->type != HERE_DOC
+                && main->tokens->prev->type != HERE_DOC))
+        {
+            if (search_exp(main->tokens->content) == 2)
+            {
+                get_return_last_cmd(&main->tokens->content,
+                    main->exit_status[0], 0);
+            }
+            set_envp_value(&main->tokens->content, main->cur_envp, 0, 0);
+            main->tokens->c_len = ft_strlen(main->tokens->content);
+        }
+        if (main->tokens->next == NULL)
+            break ;
+        main->tokens = main->tokens->next;
+    }
+    main->tokens = start;
 }
 
 // int main(int argc, char *argv[])

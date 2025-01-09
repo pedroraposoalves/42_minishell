@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/08 17:17:54 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:11:27 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 				if (order_tokens(&pgr))
 					continue;
 				start = pgr->tokens;
-				here_doc(pgr->tokens);
+				here_doc(pgr);
 				pgr->root = start_parsing(start);
 				exec_tree(pgr->root, pgr);
 				free_tree(pgr->root);
