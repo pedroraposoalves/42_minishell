@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/07 22:13:09 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:17:54 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,26 @@ int	main(int argc, char **argv, char **envp)
 	{
 		setup_signals();
 		input = readline(SHELL_NAME);
-		if (input)
-			add_history(input);
-		set_exit_status(pgr);
-		if (!(pgr->exit_status[1] = check_cmds(input)))
+		if (input && ft_strncmp(input, "", ft_strlen(input) != 0))
 		{
-			tokenize(pgr, input);
-			ft_expand(pgr);
-			start = pgr->tokens;
-			if (order_tokens(&pgr))
-				continue;
-			start = pgr->tokens;
-			print_list(pgr->tokens);
-			//percorrer tokens e criar heredocs testar
-			here_doc_exec(pgr->tokens);
-			print_list(pgr->tokens);
-			pgr->root = start_parsing(start);
-			print_tree(pgr->root, 10, 10);
-			printf("Type: %d\n", ((t_redir*) pgr->root)->type);
-			printf("File: %s\n", ((t_redir*) pgr->root)->file);
-			exec_tree(pgr->root, pgr);
-			free_tree(pgr->root);
-			free_tmain(pgr, 0);
+			add_history(input);
+			set_exit_status(pgr);
+			if (!(pgr->exit_status[1] = check_cmds(input)))
+			{
+				tokenize(pgr, input);
+				ft_expand(pgr);
+				start = pgr->tokens;
+				if (order_tokens(&pgr))
+					continue;
+				start = pgr->tokens;
+				here_doc(pgr->tokens);
+				pgr->root = start_parsing(start);
+				exec_tree(pgr->root, pgr);
+				free_tree(pgr->root);
+				free_tmain(pgr, 0);
+			}
 		}
+		free(input);
 	}
 	return (EXIT_SUCCESS);
 }

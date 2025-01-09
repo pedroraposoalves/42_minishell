@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/07 13:13:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:29:08 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int		call_builtin(int number, t_exec *node, t_main *pgr, void *root);
 
 /* --------------------------------- HEREDOC -------------------------------- */
 
-void	here_doc_exec(t_token *list);
+int	here_doc(t_token *list);
 
 /* ---------------------------------- INIT ---------------------------------- */
 
