@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:16:32 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/21 22:54:26 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:55:50 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 //Neceessário testar com base no comportamento do cd no linux, quandfo pwd e oldpwd não existem na env
 
-int	ft_cd(char *path, t_main *pgr)
+int	ft_cd(char **path, t_main *pgr)
 {
 	char	*new_pwd;
 	char	cwd[PATH_MAX];
 
 	new_pwd = NULL;
-	if (!path)
+	
+	if (path[1] && path[2])
+	{
+		print_error(SHELL_NAME, "too many arguments", NULL, NULL);
+		return (1);
+	}
+	if (!path[1])
 	{
 		new_pwd = get_env_value("HOME", pgr) + 5;
 		if (!new_pwd)
 			return (print_error(SHELL_NAME, "cd", NULL, "HOME not set"), \
 				EXIT_FAILURE);
 	}
-	else if (ft_strncmp(path, "-", 1) == 0)
+	else if (ft_strncmp(path[1], "-", 1) == 0)
 	{
 		new_pwd = get_env_value("OLDPWD", pgr) + 7;
 		if (!new_pwd)
@@ -46,8 +52,8 @@ int	ft_cd(char *path, t_main *pgr)
 	}
 	else
 	{
-		if (chdir(path) == -1)
-			return (print_error_errno(SHELL_NAME, "cd", path), EXIT_FAILURE);
+		if (chdir(path[1]) == -1)
+			return (print_error_errno(SHELL_NAME, "cd", path[1]), EXIT_FAILURE);
 	}
 	if (update_pwd(pgr, cwd) == EXIT_FAILURE)
 		return (print_error(SHELL_NAME, "cd", NULL, "Env Update"), \
