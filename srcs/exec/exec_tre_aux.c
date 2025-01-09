@@ -6,11 +6,21 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/08 19:25:50 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:05:22 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/** @brief Function prints a error msg and exit program
+ * @param error_msg: print error
+ * @param exit_code: the exit code
+ */
+void	ft_exit_aux(char *error_msg, int exit_code)
+{
+	print_error(SHELL_NAME, error_msg, NULL, NULL);
+	exit (exit_code);
+}
 
 int	ft_infile(t_main *pgr, t_redir *redir_node)
 {
@@ -70,6 +80,7 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 	close(stdout_backup);
 }
 
+
 void	ft_exec(void *node, t_main *pgr, int status)
 {
 	t_exec	*ex;
@@ -79,15 +90,14 @@ void	ft_exec(void *node, t_main *pgr, int status)
 	if (!ex->argv)
 		return ;
 	if (isbuiltin(ex->argv[0]))
-		return ((void)call_builtin(isbuiltin(ex->argv[0]), node,
-				pgr, pgr->root));
+		pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
+				pgr, pgr->root);
+	if (isbuiltin(ex->argv[0]))
+		return ;
 	ignore_signals();
 	pid = fork();
 	if (pid < 0)
-	{
-		print_error(SHELL_NAME, "fork failed", NULL, NULL);
-		exit(1);
-	}
+		ft_exit_aux("fork_failed", 1);
 	if (pid == 0)
 	{
 		child_signals();

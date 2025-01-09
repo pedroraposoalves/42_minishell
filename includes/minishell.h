@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/08 16:47:36 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:21:30 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_pipe
 
 /* -------------------------------- BUILTINS -------------------------------- */
 
-int		ft_cd(char *path, t_main *pgr);
+int		ft_cd(char **path, t_main *pgr);
 int		ft_env(t_main *pgr);
 int		update_pwd(t_main *pgr, char *old_cwd);
 int		ft_echo(char **argv);
@@ -172,6 +172,10 @@ void	child_signals(void);
 void	ignore_signals(void);
 void	pipe_signals(void);
 void	signal_aux(int signal);
+
+/* -------------------------------- HERE_DOC -------------------------------- */
+
+int here_doc(t_main *pgr);
 
 /* -----------------------------------DEBUG---------------------------------- */
 
