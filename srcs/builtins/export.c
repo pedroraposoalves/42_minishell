@@ -6,24 +6,14 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 20:11:01 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 23:40:56 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
-*	Export -> Imprime de forma ordenada - no linux _ aparece depois das maiusculas e antes das minúsculas
-*	Export df ed _d 3r 5r d3 -> cria todas as variáveis, vazias e dá erro da 3r, mas retorna sucesso - check
-*	Export ff=dad=df -> cria variável ff = 'dad=df' - check
-*	Export ff+=dd -> adicona dd na variável já existente
-*	Export ff=-df -> adiciona -df na variável - check
-*	No env, não aparecem as vars vazias, no export sim
-*	linux, expor imprimri sempre as vars entre ""
-*/
 
 int		order_print_stack(char **stack);
 char	*export_check_var(char *var, int flag_print_error);
-char	*add_quotes(char *s, int len, int start, int end);
 int		ft_export_update_env(t_main *pgr, char *var_name, char *var);
 
 int	ft_export(t_main *pgr, char **argv)
@@ -43,7 +33,7 @@ int	ft_export(t_main *pgr, char **argv)
 		while (i++ < argc)
 		{
 			if (argv[i - 1][0] == '_' && argv[i - 1][1] == '=')
-				continue;
+				continue ;
 			var_name = export_check_var(argv[i - 1], err_print_flag);
 			if (var_name == NULL)
 				err_print_flag = 0;
@@ -68,7 +58,7 @@ char	*export_check_var(char *var, int flag_print_error)
 	if (isalpha(var[0]) || var[0] == '_')
 		return (var_name);
 	else if (flag_print_error)
-		print_error(SHELL_NAME, "export","not a valid identifier", var);
+		print_error(SHELL_NAME, "export", "not a valid identifier", var);
 	return (free(var_name), NULL);
 }
 
@@ -96,35 +86,32 @@ int	order_print_stack(char **stack)
 	return (EXIT_SUCCESS);
 }
 
-char	*add_quotes(char *s, int len, int start, int end)
+void	ft_export_update_env_append(t_main *pgr, char *var_name, char *var)
 {
-	char	*res;
-	int		i;
-	int		quotes;
+	char	*tmp1;
+	char	*tmp2;
 
-	i = 0;
-	quotes = 0;
-	res = (char *)malloc(sizeof(char) * (len + 2));
-	while (i < len + 2)
+	var_name[ft_strlen(var_name) - 1] = '\0';
+	tmp1 = get_env_value(var_name, pgr);
+	if (tmp1 == NULL)
 	{
-		if (i == start || i == end)
-		{
-			res[i] = '"';
-			quotes++;
-		}
-		else
-			res[i] = s[i - quotes];
-		i++;
+		append_env_value(var_name, pgr);
+		set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 2]);
 	}
-	res[i] = '\0';
-	return (res);
+	else
+	{
+		tmp1 = ft_substr(tmp1, ft_strlen(var_name) \
+				+ 1, ft_strlen(tmp1) - ft_strlen(var_name) - 1);
+		tmp2 = ft_strjoin(tmp1, &var[ft_strlen(var_name) + 2]);
+		set_env_value(var_name, pgr, tmp2);
+		free(tmp1);
+		free(tmp2);
+	}
 }
 
 int	ft_export_update_env(t_main *pgr, char *var_name, char *var)
 {
 	int		append_flag;
-	char	*tmp1;
-	char	*tmp2;
 
 	if (var_name == NULL)
 		return (EXIT_FAILURE);
@@ -141,23 +128,6 @@ int	ft_export_update_env(t_main *pgr, char *var_name, char *var)
 		}
 	}
 	else
-	{
-		var_name[ft_strlen(var_name) - 1] = '\0';
-		tmp1 = get_env_value(var_name, pgr);
-		if (tmp1 == NULL)
-		{
-			append_env_value(var_name, pgr);
-			set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 2]);
-		}
-		else
-		{
-			tmp1 = ft_substr(tmp1, ft_strlen(var_name) \
-					+ 1, ft_strlen(tmp1) - ft_strlen(var_name) - 1);
-			tmp2 = ft_strjoin(tmp1, &var[ft_strlen(var_name) + 2]);
-			set_env_value(var_name, pgr, tmp2);
-			free(tmp1);
-			free(tmp2);
-		}
-	}
+		ft_export_update_env_append(pgr, var_name, var);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:03:46 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 14:04:32 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 23:40:26 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	del_env_value(char *variable, t_main *pgr)
 		}
 		free(tmp);
 		if (!env[0] || !env[1])
-			break;
+			break ;
 		env++;
 	}
 	return (EXIT_SUCCESS);

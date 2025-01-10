@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 19:24:30 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 21:00:23 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int	ft_exit(t_main *pgr, int argc, char **argv, void *root)
 	{
 		exit_num = 2;
 		print_error(SHELL_NAME, "exit", argv[1], "numeric argument required");
-	} 
+	}
 	else if (argc > 2)
-		return (print_error(SHELL_NAME, "exit", NULL, "too many arguments"), EXIT_FAILURE);
+		return (print_error(SHELL_NAME, "exit", \
+			NULL, "too many arguments"), EXIT_FAILURE);
 	else if (argc > 1 && is_number == 0)
 		exit_num = ft_atoi(argv[1]);
 	free_all(pgr, root, 1);
