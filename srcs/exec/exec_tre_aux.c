@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 11:24:37 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:00:17 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 	dup2(stdout_backup, STDOUT_FILENO);
 	close(stdout_backup);
 }
-
 
 void	ft_exec(void *node, t_main *pgr, int status)
 {

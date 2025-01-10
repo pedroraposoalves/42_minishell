@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/09 12:18:13 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:53:58 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int	is_quote_open(char *cmd, int *i, int *error)
 }
 
 /** @brief check if the cmd has open quotes,
- * any sintax error, if starts with a pipe or two followed special characters or if a directory is defined after a redir
+ * any sintax error, if starts with a pipe or two followed special characters
+ * or if a directory is defined after a redir
  * @param cmd to verify
  * @return 0 if command is ok, */
 int	check_cmds(char *cmd)
