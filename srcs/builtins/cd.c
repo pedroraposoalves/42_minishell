@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:16:32 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 13:55:50 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 13:17:03 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,29 @@
 
 //Neceessário testar com base no comportamento do cd no linux, quandfo pwd e oldpwd não existem na env
 
-int	ft_cd(char **path, t_main *pgr)
+int	ft_cd(char **argv, t_main *pgr)
 {
 	char	*new_pwd;
 	char	cwd[PATH_MAX];
 
 	new_pwd = NULL;
-	
-	if (path[1] && path[2])
+	if (matrix_len(argv) > 2)
+		return(print_error(SHELL_NAME, "too many arguments", NULL, NULL),1);
+	if (!argv[1])
 	{
-		print_error(SHELL_NAME, "too many arguments", NULL, NULL);
-		return (1);
-	}
-	if (!path[1])
-	{
-		new_pwd = get_env_value("HOME", pgr) + 5;
+		new_pwd = get_env_value("HOME", pgr);
 		if (!new_pwd)
 			return (print_error(SHELL_NAME, "cd", NULL, "HOME not set"), \
 				EXIT_FAILURE);
+		new_pwd += 5;
 	}
-	else if (ft_strncmp(path[1], "-", 1) == 0)
+	else if (ft_strncmp(argv[1], "-", 1) == 0)
 	{
-		new_pwd = get_env_value("OLDPWD", pgr) + 7;
+		new_pwd = get_env_value("OLDPWD", pgr);
 		if (!new_pwd)
 			return (print_error(SHELL_NAME, "cd", NULL, "OLDPWD not set"), \
 				EXIT_FAILURE);
+		new_pwd += 7;
 		ft_putchar_fd('~', STDOUT_FILENO);
 		ft_putendl_fd(new_pwd, STDOUT_FILENO);
 	}
@@ -52,8 +50,8 @@ int	ft_cd(char **path, t_main *pgr)
 	}
 	else
 	{
-		if (chdir(path[1]) == -1)
-			return (print_error_errno(SHELL_NAME, "cd", path[1]), EXIT_FAILURE);
+		if (chdir(argv[1]) == -1)
+			return (print_error_errno(SHELL_NAME, "cd", argv[1]), EXIT_FAILURE);
 	}
 	if (update_pwd(pgr, cwd) == EXIT_FAILURE)
 		return (print_error(SHELL_NAME, "cd", NULL, "Env Update"), \
