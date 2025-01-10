@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/08 18:37:35 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 07:38:15 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	ft_pipe_child(int p[2], t_main *pgr, t_pipe *pipe_node, int pid)
 	{
 		dup2(p[1], STDOUT_FILENO);
 		close(p[0]);
-		close(p[1]);
 		exec_tree(pipe_node->left, pgr);
+		close(p[1]);
 	}
 	else
 	{
 		dup2(p[0], STDIN_FILENO);
-		close(p[0]);
 		close(p[1]);
 		exec_tree(pipe_node->right, pgr);
+		close(p[0]);
 	}
 	free_all(pgr, pgr->root, 1);
 	exit (0);
@@ -54,7 +54,7 @@ void	ft_pipe(void *node, t_main *pgr)
 	int		pid[2];
 
 	pipe_signals();
-	sleep(3);
+	//sleep(3);
 	pipe_node = (t_pipe *)node;
 	if (pipe(p) < 0)
 	{
@@ -66,7 +66,7 @@ void	ft_pipe(void *node, t_main *pgr)
 	{
 		child_signals();
 		ft_pipe_child(p, pgr, pipe_node, 0);
-	}	
+	}
 	pid[1] = fork();
 	if (pid[1] == 0)
 		ft_pipe_child(p, pgr, pipe_node, 1);
@@ -77,7 +77,6 @@ void	exec_tree(void *root, t_main *pgr)
 {
 	int	type;
 
-	get_pgr(pgr);
 	if (!root)
 		return ;
 	type = *((int *)root);
