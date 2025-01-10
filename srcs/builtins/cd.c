@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:16:32 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 17:14:01 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:16:19 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_cd(char **path, t_main *pgr)
 
 	new_pwd = NULL;
 	
-	if (path[1] && path[2])z
+	if (path[1] && path[2])
 	{
 		print_error(SHELL_NAME, "too many arguments", NULL, NULL);
 		return (1);

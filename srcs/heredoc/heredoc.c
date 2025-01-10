@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 16:19:41 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:50:27 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,17 @@ int	here_doc_file(char *file, t_token *token, char **envp)
 	while (1)
 	{
 		line = readline(">");
-		flag = strncmp(delimiter->content, line, delimiter_len);
-		if (flag == 0)
+		if (line == NULL)
+		{
+			printf("[EOF DETECTED] %s\n", line);
 			break ;
+		}
+		flag = ft_strncmp(delimiter->content, line, delimiter_len);
+		if (flag == 0)
+		{
+			write(fd, "\0", 1);
+			break ;
+		}
 		if (delimiter->type != D_QUOTES && delimiter->type != S_QUOTES)
 			set_envp_value(&line, envp, 0, 0);
 		write(fd, line, ft_strlen(line));
@@ -47,6 +55,7 @@ int	here_doc_file(char *file, t_token *token, char **envp)
 	delimiter->content = file;
 	token->type = REDIR_MQ;
 	exit (EXIT_SUCCESS);
+
 }
 
 void	here_doc(t_main *pgr)
@@ -67,6 +76,7 @@ void	here_doc(t_main *pgr)
 			if (pid == 0)
 			{
 				here_doc_file(file, tmp_list, pgr->cur_envp);
+				// free_all(pgr, pgr->root, 1);
 				exit(0);
 			}
 			waitpid(pid, &global_exit, 0);
