@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:01:27 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/09 14:07:27 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 21:02:01 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	ft_unset(t_main *pgr, char **argv)
 		return (EXIT_FAILURE);
 	while (*argv)
 	{
+		if (ft_strlen(*argv) == 1 && argv[0][0] == '_')
+		{
+			argv++;
+			continue ;
+		}
 		del_env_value(*argv, pgr);
 		argv++;
 	}

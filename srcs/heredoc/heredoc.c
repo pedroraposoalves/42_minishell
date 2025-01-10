@@ -6,25 +6,18 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 12:20:05 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:30:56 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/** @brief to handle with signal in here doc function
- * @param signal signal value*/
-static void	here_signal(int signal)
+t_token	*find_delimiter(t_token *token)
 {
-	if (signal == SIGINT)
-		exit(1);
-}
-/** @brief to handle with signal in here doc function when is in the child
- * @param signal signal value*/
-static void	here_child_signal(int signal)
-{
-	if (signal == SIGINT)
-		ft_putchar_fd('\n', 2);
+	if (token->next->type == IS_SPACE)
+		return (token->next->next);
+	else
+		return (token->next);
 }
 
 /** @brief create and write here doc
@@ -38,16 +31,11 @@ int	here_doc_file(char *file, t_token *token, char **envp)
 	char	*line;
 	t_token	*delimiter;
 
-	if (token->next->type == IS_SPACE)
-		delimiter = token->next->next;
-	else
-		delimiter = token->next;
+	delimiter = find_delimiter(token);
 	delimiter_len = ft_strlen(delimiter->content) + 1;
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 	while (1)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, here_signal);
 		line = readline(">");
 		flag = strncmp(delimiter->content, line, delimiter_len);
 		if (flag == 0)
@@ -66,13 +54,14 @@ int	here_doc_file(char *file, t_token *token, char **envp)
 void	here_doc_exec(char *file, t_token *list, t_main *pgr)
 {
 	pid_t	pid;
-	
+
 	pid = fork();
 	if (pid == 0)
 		here_doc_file(file, list, pgr->cur_envp);
 	waitpid(pid, &global_exit, 0);
-	if(WIFEXITED(global_exit))
-		if(WEXITSTATUS(global_exit) == EXIT_SUCCESS)
+	if (WIFEXITED(global_exit))
+	{
+		if (WEXITSTATUS(global_exit) == EXIT_SUCCESS)
 		{
 			list->type = REDIR_MQ;
 			if (list->next->type == IS_SPACE)
@@ -82,23 +71,29 @@ void	here_doc_exec(char *file, t_token *list, t_main *pgr)
 			free(list->content);
 			list->content = file;
 		}
+		else
+			free(file);
+	}
+	else
+		free(file);
 }
 
 void	here_doc(t_main *pgr)
 {
 	int		i;
+	char	*n;
 	t_token	*tmp_list;
 	char	*file;
 
-	signal(SIGQUIT, here_child_signal);
-	signal(SIGINT, here_child_signal);
 	i = 0;
 	tmp_list = pgr->tokens;
 	while (tmp_list)
 	{
 		if (tmp_list->type == HERE_DOC)
 		{
-			file = ft_strjoin("/tmp/heredoc_", ft_itoa(i));
+			n = ft_itoa(i);
+			file = ft_strjoin("/tmp/heredoc_", n);
+			free(n);
 			here_doc_exec(file, tmp_list, pgr);
 			i++;
 		}
