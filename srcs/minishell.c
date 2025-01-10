@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 13:59:30 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:55:47 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,10 @@ int	main(int argc, char **argv, char **envp)
 					free_tree(pgr->root);
 					free_tmain(pgr, 0);
 				}
-				else
-				{
-					pgr->root = start_parsing(start);
-					exec_tree(pgr->root, pgr);
-					free_tree(pgr->root);
-					free_tmain(pgr, 0);
-				}
+				pgr->root = start_parsing(start);
+				exec_tree(pgr->root, pgr);
+				free_tree(pgr->root);
+				free_tmain(pgr, 0);
 			}
 		}
 		free(input);

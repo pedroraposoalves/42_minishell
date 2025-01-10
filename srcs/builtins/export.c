@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/06 14:14:40 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:11:01 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ int	ft_export(t_main *pgr, char **argv)
 		order_print_stack(pgr->cur_envp);
 	else if (argc > 1 && argv)
 	{
-		while (i < argc)
+		while (i++ < argc)
 		{
-			var_name = export_check_var(argv[i], err_print_flag);
+			if (argv[i - 1][0] == '_' && argv[i - 1][1] == '=')
+				continue;
+			var_name = export_check_var(argv[i - 1], err_print_flag);
 			if (var_name == NULL)
 				err_print_flag = 0;
 			else
-				ft_export_update_env(pgr, var_name, argv[i]);
-			i++;
+				ft_export_update_env(pgr, var_name, argv[i - 1]);
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -67,7 +68,7 @@ char	*export_check_var(char *var, int flag_print_error)
 	if (isalpha(var[0]) || var[0] == '_')
 		return (var_name);
 	else if (flag_print_error)
-		print_error(SHELL_NAME, "export", var,"not a valid identifier");
+		print_error(SHELL_NAME, "export","not a valid identifier", var);
 	return (free(var_name), NULL);
 }
 
@@ -87,7 +88,10 @@ int	order_print_stack(char **stack)
 		return (EXIT_FAILURE);
 	s_len = 0;
 	while (dup_stack[s_len])
+	{
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		ft_putendl_fd(dup_stack[s_len++], STDOUT_FILENO);
+	}
 	free_matrix(dup_stack);
 	return (EXIT_SUCCESS);
 }
