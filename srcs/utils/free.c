@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:58:39 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/06 12:32:30 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:02:47 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	free_tree(void *root)
 	else if (type == REDIR || type == REDIR_MQ || type == APPEND
 		|| type == HERE_DOC)
 		free_redir_node(root);
-	else
+	else if (type == CMD)
 	{
 		exec = (t_exec *)root;
 		free_double_array(exec->argv);

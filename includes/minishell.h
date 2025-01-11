@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 23:39:48 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 23:53:06 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define IS_NULL 9
 # define REDIR_MQ 10
 
-extern int	global_exit;
+extern int	g_exit;
 
 # define SHELL_NAME "minishell: "
 
@@ -176,6 +176,9 @@ int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
 t_main	*get_pgr(t_main *main_struct);
+void	empty_cmd(t_main *pgr);
+void	set_exit_status(t_main *pgr);
+void	check_have_argument(int argc);
 
 /* -----------------------------------DEBUG---------------------------------- */
 
