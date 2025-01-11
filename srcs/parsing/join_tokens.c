@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:38:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/07 21:59:19 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:00:55 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	remove_quotes(t_token **head, int i)
 			len = ft_strlen(cur->content);
 			if (len > 1 && ((cur->content[0] == '\''
 						&& cur->content[len - 1] == '\'')
-					|| (cur->content[0] == '"'
-						&& cur->content[len - 1] == '"')))
+					|| (cur->content[0] == 34 && cur->content[len - 1] == 34)))
 			{
 				new_str = (char *)malloc(len - 1);
 				i = -1;

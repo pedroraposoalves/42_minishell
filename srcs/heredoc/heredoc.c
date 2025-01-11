@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 20:30:56 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/10 23:55:43 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	here_doc_exec(char *file, t_token *list, t_main *pgr)
 	pid = fork();
 	if (pid == 0)
 		here_doc_file(file, list, pgr->cur_envp);
-	waitpid(pid, &global_exit, 0);
-	if (WIFEXITED(global_exit))
+	waitpid(pid, &g_exit, 0);
+	if (WIFEXITED(g_exit))
 	{
-		if (WEXITSTATUS(global_exit) == EXIT_SUCCESS)
+		if (WEXITSTATUS(g_exit) == EXIT_SUCCESS)
 		{
 			list->type = REDIR_MQ;
 			if (list->next->type == IS_SPACE)

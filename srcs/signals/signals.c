@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:32:48 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/08 20:02:01 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:01:17 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	set_sigint(int signal)
 		rl_on_new_line();
 		print_error(NULL, NULL, NULL, NULL);
 		rl_redisplay();
-		global_exit = 130;
+		g_exit = 130;
 	}
 }
 
