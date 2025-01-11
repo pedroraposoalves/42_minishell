@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 20:12:59 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:20:16 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_pipe
 /* -------------------------------- BUILTINS -------------------------------- */
 
 int		ft_cd(char **path, t_main *pgr);
-int		ft_env(t_main *pgr);
+int		ft_env(t_main *pgr, char **argv);
 int		update_pwd(t_main *pgr, char *old_cwd);
 int		ft_echo(char **argv);
 int		ft_pwd(void);
@@ -176,7 +176,6 @@ int		ft_str_char(char *s, char c);
 int		matrix_len(char **m);
 int		set_exit_signal(int exit_status);
 t_main	*get_pgr(t_main *main_struct);
-
 void	empty_cmd(t_main *pgr);
 void	set_exit_status(t_main *pgr);
 void	check_have_argument(int argc);

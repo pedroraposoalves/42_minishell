@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/11 10:59:38 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 23:58:27 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	main(int argc, char **argv, char **envp)
 
 	start = NULL;
 	(void) argv;
-	check_have_argument(argc);
 	pgr = init_main(envp);
+	check_have_argument(argc);
 	while (1)
 	{
 		setup_signals();
