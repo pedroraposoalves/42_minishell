@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 23:53:06 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:20:16 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_pipe
 /* -------------------------------- BUILTINS -------------------------------- */
 
 int		ft_cd(char **path, t_main *pgr);
-int		ft_env(t_main *pgr);
+int		ft_env(t_main *pgr, char **argv);
 int		update_pwd(t_main *pgr, char *old_cwd);
 int		ft_echo(char **argv);
 int		ft_pwd(void);

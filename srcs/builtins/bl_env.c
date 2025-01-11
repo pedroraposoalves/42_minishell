@@ -6,16 +6,19 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:15:06 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/21 22:54:19 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:38:41 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_env(t_main *pgr)
+int	ft_env(t_main *pgr, char **argv)
 {
 	int	i;
 
+	if (matrix_len(argv) > 1)
+		return (print_error(SHELL_NAME, argv[1], NULL, \
+			"Ficheiro ou pasta inexistente"), 127);
 	if (!pgr->cur_envp)
 		return (print_error(SHELL_NAME, "env", NULL, "Env variable empty"), \
 			EXIT_FAILURE);

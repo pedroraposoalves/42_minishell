@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 23:40:56 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 01:09:14 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ char	*export_check_var(char *var, int flag_print_error)
 	if (isalpha(var[0]) || var[0] == '_')
 		return (var_name);
 	else if (flag_print_error)
+	{
+		g_exit = 1;
 		print_error(SHELL_NAME, "export", "not a valid identifier", var);
+	}
 	return (free(var_name), NULL);
 }
+
 
 int	order_print_stack(char **stack)
 {
@@ -126,6 +130,7 @@ int	ft_export_update_env(t_main *pgr, char *var_name, char *var)
 			append_env_value(var_name, pgr);
 			set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 1]);
 		}
+		free(var_name);
 	}
 	else
 		ft_export_update_env_append(pgr, var_name, var);
