@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 10:38:42 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 00:19:46 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	call_builtin(int number, t_exec *node, t_main *pgr, void *root)
 	if (number == 5)
 		return (ft_unset(pgr, node->argv));
 	if (number == 6)
-		return (ft_env(pgr));
+		return (ft_env(pgr, node->argv));
 	if (number == 7)
 		return (ft_exit(pgr, matrix_len(node->argv), node->argv, root));
 	return (0);
