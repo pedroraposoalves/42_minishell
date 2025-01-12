@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:50:46 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 23:50:51 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/11 14:43:17 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,26 @@ void	check_have_argument(int argc)
 		print_error(SHELL_NAME, "The minishell should'nt have arguments!",
 			NULL, NULL);
 		exit (127);
+	}
+}
+
+void	free_tokens(t_token *token)
+{
+	t_token	*tmp;
+
+	while (token)
+	{
+		tmp = token;
+		token = token->next;
+		if (tmp->content)
+		{
+			free (tmp->content);
+			tmp->content = NULL;
+		}
+		if (tmp)
+		{
+			free (tmp);
+			tmp = NULL;
+		}
 	}
 }

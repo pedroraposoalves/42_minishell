@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/11 00:20:16 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:40:46 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <limits.h>
 # include <string.h>
 # include "libft.h"
+# include <locale.h>
 
 # define PIPE 1
 # define REDIR 2
@@ -56,6 +57,7 @@ typedef struct s_main
 {
 	int				token_amount;
 	int				exit_status[2];
+	int				ctrld;
 	struct s_token	*tokens;
 	char			**cur_envp;
 	void			*root;
@@ -160,6 +162,8 @@ void	child_signals(void);
 void	ignore_signals(void);
 void	pipe_signals(void);
 void	signal_aux(int signal);
+void	set_heredoc_sig(void);
+void	setup_heredoc_signals(int signal);
 
 /* -----------------------------------UTILS---------------------------------- */
 
@@ -179,6 +183,8 @@ t_main	*get_pgr(t_main *main_struct);
 void	empty_cmd(t_main *pgr);
 void	set_exit_status(t_main *pgr);
 void	check_have_argument(int argc);
+void	free_tokens(t_token *token);
+t_main	*get_pgr(t_main *main_struct);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

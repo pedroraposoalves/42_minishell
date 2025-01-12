@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 23:58:27 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 17:06:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	main_support(t_main *pgr, char *input, t_token	*start)
 			return ;
 		start = pgr->tokens;
 		here_doc(pgr);
-		if (WEXITSTATUS(g_exit) == 1)
+		if (WEXITSTATUS(g_exit) != 0)
 		{
 			free_tree(pgr->root);
 			free_tmain(pgr, 0);
@@ -51,8 +51,8 @@ int	main(int argc, char **argv, char **envp)
 
 	start = NULL;
 	(void) argv;
-	pgr = init_main(envp);
 	check_have_argument(argc);
+	pgr = init_main(envp);
 	while (1)
 	{
 		setup_signals();

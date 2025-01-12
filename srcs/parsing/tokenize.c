@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:02:56 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/07 22:00:00 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 14:57:04 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int	order_tokens(t_main **pgr)
 		free_tmain((*pgr), 0);
 		return (1);
 	}
+	get_pgr(*pgr);
 	return (0);
 }

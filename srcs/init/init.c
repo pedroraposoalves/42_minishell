@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:03:27 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 16:56:06 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:41:02 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_main	*init_main(char **envp)
 	pgr = (t_main *)malloc(sizeof(t_main));
 	pgr->tokens = NULL;
 	pgr->root = NULL;
+	pgr->ctrld = 0;
 	pgr->cur_envp = NULL;
 	pgr->exit_status[0] = 0;
 	pgr->exit_status[1] = 0;

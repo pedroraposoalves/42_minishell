@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:35:55 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 23:59:59 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:46:33 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,11 @@ void	ft_expand(t_main *main)
 	start = main->tokens;
 	while (main->tokens)
 	{
-		if (search_exp(main->tokens->content) && main->tokens->type != S_QUOTES
-			&& (main->tokens->prev->prev->type != HERE_DOC
-				&& main->tokens->prev->type != HERE_DOC))
+		if (search_exp(main->tokens->content)
+			&& main->tokens->type != S_QUOTES
+			&& (!main->tokens->prev || !main->tokens->prev->prev
+				|| (main->tokens->prev->prev->type != HERE_DOC
+					&& main->tokens->prev->type != HERE_DOC)))
 		{
 			if (search_exp(main->tokens->content) == 2)
 			{
