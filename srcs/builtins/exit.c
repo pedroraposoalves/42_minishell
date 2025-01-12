@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 21:00:23 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:08:45 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	ft_exit(t_main *pgr, int argc, char **argv, void *root)
 	exit_num = 0;
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (argc == 1)
+	{
+		free_all(pgr, root, 1);
 		exit(EXIT_SUCCESS);
+	}
 	is_number = check_is_number(argv[1]);
 	if (argc > 1 && is_number < 0)
 	{

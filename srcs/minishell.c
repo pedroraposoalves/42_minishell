@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 23:58:27 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 17:14:41 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	main(int argc, char **argv, char **envp)
 
 	start = NULL;
 	(void) argv;
-	pgr = init_main(envp);
 	check_have_argument(argc);
+	pgr = init_main(envp);
 	while (1)
 	{
 		setup_signals();

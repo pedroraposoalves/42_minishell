@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/11 00:20:16 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/12 15:15:17 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ t_main	*get_pgr(t_main *main_struct);
 void	empty_cmd(t_main *pgr);
 void	set_exit_status(t_main *pgr);
 void	check_have_argument(int argc);
+int		ft_specialCharPos_export(char *s);
 
 /* -----------------------------------DEBUG---------------------------------- */
 
