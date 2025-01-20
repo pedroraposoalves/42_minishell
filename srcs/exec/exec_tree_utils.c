@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/11 00:19:46 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/19 22:47:47 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	isbuiltin(char *str)
 }
 
 /** @brief Find the absolute path of the command by the envp*/
-char	*find_path(char *cmd, char **envp)
+char	*find_path(char *cmd, t_main *pgr)
 {
 	char	**paths;
 	char	*path;
@@ -42,9 +42,7 @@ char	*find_path(char *cmd, char **envp)
 	char	*part_path;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = ft_split(get_env_value("PATH", pgr) + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
@@ -52,36 +50,36 @@ char	*find_path(char *cmd, char **envp)
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
 		if (access(path, F_OK) == 0)
+		{
+			free_double_array(paths);
 			return (path);
+		}
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_double_array(paths);
 	return (0);
 }
 
 /** @brief The function search the absolut path of the command and  */
-int	ft_execve(t_exec *exec_node, char **envp)
+int	ft_execve(t_exec *exec_node, t_main *pgr)
 {
 	char	*absolute_path;
 
 	if (!exec_node->argv || !exec_node->argv[0])
 		return (0);
-	absolute_path = find_path(exec_node->argv[0], envp);
+	absolute_path = find_path(exec_node->argv[0], pgr);
 	if (!exec_node->argv[0][0])
 		exit(EXIT_SUCCESS);
 	if (!absolute_path)
 	{
-		if (execve(exec_node->argv[0], exec_node->argv, envp) == -1)
+		if (execve(exec_node->argv[0], exec_node->argv, pgr->cur_envp) == -1)
 		{
 			print_error(SHELL_NAME, "command not found", NULL, NULL);
 			return (127);
 		}
 	}
-	else if (execve(absolute_path, exec_node->argv, envp) == -1)
+	else if (execve(absolute_path, exec_node->argv, pgr->cur_envp) == -1)
 	{
 		print_error(SHELL_NAME, NULL, "command not found", NULL);
 		return (127);

@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/11 01:09:14 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/15 21:13:13 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	ft_export(t_main *pgr, char **argv)
 	{
 		while (i++ < argc)
 		{
-			if (argv[i - 1][0] == '_' && argv[i - 1][1] == '=')
-				continue ;
 			var_name = export_check_var(argv[i - 1], err_print_flag);
 			if (var_name == NULL)
 				err_print_flag = 0;
@@ -55,7 +53,9 @@ char	*export_check_var(char *var, int flag_print_error)
 		return (NULL);
 	equal_pos = ft_str_char(var, '=');
 	var_name = ft_substr(var, 0, equal_pos);
-	if (isalpha(var[0]) || var[0] == '_')
+	if ((isalpha(var[0]) || var[0] == '_') && \
+		(ft_specialCharPos_export(var_name) == -1 || (var[equal_pos - 1] == '+' \
+		&& ft_specialCharPos_export(var_name) == equal_pos - 1)))
 		return (var_name);
 	else if (flag_print_error)
 	{
@@ -64,7 +64,6 @@ char	*export_check_var(char *var, int flag_print_error)
 	}
 	return (free(var_name), NULL);
 }
-
 
 int	order_print_stack(char **stack)
 {
@@ -100,13 +99,13 @@ void	ft_export_update_env_append(t_main *pgr, char *var_name, char *var)
 	if (tmp1 == NULL)
 	{
 		append_env_value(var_name, pgr);
-		set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 2]);
+		set_env_value(var_name, pgr, &var[ft_str_char(var, '=') + 1]);
 	}
 	else
 	{
 		tmp1 = ft_substr(tmp1, ft_strlen(var_name) \
 				+ 1, ft_strlen(tmp1) - ft_strlen(var_name) - 1);
-		tmp2 = ft_strjoin(tmp1, &var[ft_strlen(var_name) + 2]);
+		tmp2 = ft_strjoin(tmp1, &var[ft_str_char(var, '=') + 1]);
 		set_env_value(var_name, pgr, tmp2);
 		free(tmp1);
 		free(tmp2);
@@ -120,19 +119,21 @@ int	ft_export_update_env(t_main *pgr, char *var_name, char *var)
 	if (var_name == NULL)
 		return (EXIT_FAILURE);
 	append_flag = 0;
-	if (var_name[ft_strlen(var_name) - 1] == '+')
+	if (var[ft_str_char(var, '=') - 1] == '+')
 		append_flag = 1;
 	if (append_flag == 0)
 	{
-		if (set_env_value(var_name, pgr, \
-			&var[ft_strlen(var_name) + 1]) == EXIT_FAILURE)
+		if (ft_strlen(var_name) == ft_strlen(var))
+			append_env_value(var_name, pgr);
+		else if (set_env_value(var_name, pgr, \
+			&var[ft_str_char(var, '=') + 1]) == EXIT_FAILURE)
 		{
 			append_env_value(var_name, pgr);
-			set_env_value(var_name, pgr, &var[ft_strlen(var_name) + 1]);
+			set_env_value(var_name, pgr, &var[ft_str_char(var, '=') + 1]);
 		}
-		free(var_name);
 	}
 	else
 		ft_export_update_env_append(pgr, var_name, var);
+	free(var_name);
 	return (EXIT_SUCCESS);
 }

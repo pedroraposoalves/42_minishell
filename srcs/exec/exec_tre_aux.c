@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 11:24:37 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/19 21:31:20 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 	close(stdout_backup);
 }
 
-
 void	ft_exec(void *node, t_main *pgr, int status)
 {
 	t_exec	*ex;
@@ -101,7 +100,7 @@ void	ft_exec(void *node, t_main *pgr, int status)
 	if (pid == 0)
 	{
 		child_signals();
-		status = ft_execve(ex, pgr->cur_envp);
+		status = ft_execve(ex, pgr);
 		free_all(pgr, pgr->root, 1);
 		exit(status);
 	}

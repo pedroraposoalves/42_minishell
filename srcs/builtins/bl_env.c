@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:15:06 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/11 00:38:41 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/17 15:39:05 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ft_env(t_main *pgr, char **argv)
 	{
 		i = 0;
 		while (pgr->cur_envp[i])
-			ft_putendl_fd(pgr->cur_envp[i++], STDOUT_FILENO);
+		{
+			if (pgr->cur_envp[i][ft_str_char(pgr->cur_envp[i], '=')] == '=')
+				ft_putendl_fd(pgr->cur_envp[i], STDOUT_FILENO);
+			i++;
+		}
 	}
 	return (EXIT_SUCCESS);
 }

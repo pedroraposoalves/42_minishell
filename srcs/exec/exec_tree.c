@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 23:54:04 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/19 23:11:14 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,47 @@ void	ft_pipe(void *node, t_main *pgr)
 	end_pipe(pgr, p, pid);
 }
 
+void	ft_update_env_last_command(t_main *pgr, t_exec *node)
+{
+	char	*path;
+
+	if (*(pgr->exit_status) == EXIT_SUCCESS)
+	{
+		path = find_path(node->argv[0], pgr);
+		if (path)
+		{
+			if (set_env_value("_", pgr, path) == EXIT_FAILURE)
+			{
+				append_env_value("_", pgr);
+				set_env_value("_", pgr, path);
+			}
+			free(path);
+		}
+		else
+		{
+			if (set_env_value("_", pgr, node->argv[0]) == EXIT_FAILURE)
+			{
+				append_env_value("_", pgr);
+				set_env_value("_", pgr, node->argv[0]);
+			}
+		}
+	}
+}
+
 void	exec_tree(void *root, t_main *pgr)
 {
-	int	type;
+	int		type;
 
 	if (!root)
 		return ;
 	type = *((int *)root);
 	if (type == CMD)
+	{
+		/* Necessário guardar o comando anterior e atualizar antes do exec,
+		se falhar, voltar a alterar para o anterior */
 		ft_exec(root, pgr, 0);
+		ft_update_env_last_command(pgr, (t_exec *) root);
+	}
 	else if (type == PIPE)
 		ft_pipe(root, pgr);
 	else
