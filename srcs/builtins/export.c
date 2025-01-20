@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/12 17:24:10 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/15 21:13:13 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ char	*export_check_var(char *var, int flag_print_error)
 		return (NULL);
 	equal_pos = ft_str_char(var, '=');
 	var_name = ft_substr(var, 0, equal_pos);
-	if ((isalpha(var[0]) || var[0] == '_') && 
-		ft_specialCharPos_export(var_name) == -1)
+	if ((isalpha(var[0]) || var[0] == '_') && \
+		(ft_specialCharPos_export(var_name) == -1 || (var[equal_pos - 1] == '+' \
+		&& ft_specialCharPos_export(var_name) == equal_pos - 1)))
 		return (var_name);
 	else if (flag_print_error)
 	{
@@ -63,7 +64,6 @@ char	*export_check_var(char *var, int flag_print_error)
 	}
 	return (free(var_name), NULL);
 }
-
 
 int	order_print_stack(char **stack)
 {
@@ -123,15 +123,17 @@ int	ft_export_update_env(t_main *pgr, char *var_name, char *var)
 		append_flag = 1;
 	if (append_flag == 0)
 	{
-		if (set_env_value(var_name, pgr, \
+		if (ft_strlen(var_name) == ft_strlen(var))
+			append_env_value(var_name, pgr);
+		else if (set_env_value(var_name, pgr, \
 			&var[ft_str_char(var, '=') + 1]) == EXIT_FAILURE)
 		{
 			append_env_value(var_name, pgr);
 			set_env_value(var_name, pgr, &var[ft_str_char(var, '=') + 1]);
 		}
-		free(var_name);
 	}
 	else
 		ft_export_update_env_append(pgr, var_name, var);
+	free(var_name);
 	return (EXIT_SUCCESS);
 }

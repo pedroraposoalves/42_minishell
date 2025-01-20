@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/12 15:15:17 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/19 22:13:22 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ char	*remove_badenvp(char **str, int j);
 void	ft_redir(void *node, t_main *pgr, int fd);
 void	ft_exec(void *node, t_main *pgr, int status);
 void	exec_tree(void *root, t_main *pgr);
-int		ft_execve(t_exec *exec_node, char **envp);
-char	*find_path(char *cmd, char **envp);
+int		ft_execve(t_exec *exec_node, t_main *pgr);
+char	*find_path(char *cmd, t_main *pgr);
 int		isbuiltin(char *str);
 int		call_builtin(int number, t_exec *node, t_main *pgr, void *root);
 
