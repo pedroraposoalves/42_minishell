@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/19 22:13:22 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:41:14 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ void	child_signals(void);
 void	ignore_signals(void);
 void	pipe_signals(void);
 void	signal_aux(int signal);
+void	set_heredoc_sig(void);
+void	setup_heredoc_signals(int signal);
 
 /* -----------------------------------UTILS---------------------------------- */
 
@@ -179,7 +181,7 @@ t_main	*get_pgr(t_main *main_struct);
 void	empty_cmd(t_main *pgr);
 void	set_exit_status(t_main *pgr);
 void	check_have_argument(int argc);
-int		ft_specialCharPos_export(char *s);
+int		ft_specialcharpos_export(char *s);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

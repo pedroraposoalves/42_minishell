@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/19 23:11:14 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:35:45 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ void	exec_tree(void *root, t_main *pgr)
 	type = *((int *)root);
 	if (type == CMD)
 	{
-		/* Necessário guardar o comando anterior e atualizar antes do exec,
-		se falhar, voltar a alterar para o anterior */
 		ft_exec(root, pgr, 0);
 		ft_update_env_last_command(pgr, (t_exec *) root);
 	}

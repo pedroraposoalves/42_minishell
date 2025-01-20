@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bl_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:15:06 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/17 15:39:05 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:56:04 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_env(t_main *pgr, char **argv)
 
 	if (matrix_len(argv) > 1)
 		return (print_error(SHELL_NAME, argv[1], NULL, \
-			"Ficheiro ou pasta inexistente"), 127);
+			"No such file or directory"), 127);
 	if (!pgr->cur_envp)
 		return (print_error(SHELL_NAME, "env", NULL, "Env variable empty"), \
 			EXIT_FAILURE);

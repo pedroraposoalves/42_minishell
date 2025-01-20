@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmp_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:50 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/14 11:54:01 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:48:53 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	*remove_badenvp(char **str, int j)
 	index = -1;
 	while (++index < j)
 		new_str[index] = (*str)[index];
-	while ((*str)[j] != 32 && (*str)[j] != '.' && (*str)[j] != '"'  && (*str)[j] != '=' && (*str)[j])
+	while ((*str)[j] != 32 && (*str)[j] != '.' && (*str)[j] != '"' && (*str)[j]
+		!= '=' && (*str)[j])
 		j++;
 	while ((*str)[j])
 	{

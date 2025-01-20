@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/15 21:13:13 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:41:14 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*export_check_var(char *var, int flag_print_error)
 	equal_pos = ft_str_char(var, '=');
 	var_name = ft_substr(var, 0, equal_pos);
 	if ((isalpha(var[0]) || var[0] == '_') && \
-		(ft_specialCharPos_export(var_name) == -1 || (var[equal_pos - 1] == '+' \
-		&& ft_specialCharPos_export(var_name) == equal_pos - 1)))
+		(ft_specialcharpos_export(var_name) == -1 || (var[equal_pos - 1] == '+' \
+		&& ft_specialcharpos_export(var_name) == equal_pos - 1)))
 		return (var_name);
 	else if (flag_print_error)
 	{
