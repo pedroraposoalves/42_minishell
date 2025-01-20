@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/12 17:06:36 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:47:04 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	pgr = init_main(envp);
 	while (1)
 	{
+		pgr->root = NULL;
 		setup_signals();
 		input = readline(SHELL_NAME);
 		if (input && ft_strncmp(input, "", ft_strlen(input) != 0))

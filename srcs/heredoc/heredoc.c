@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/12 16:46:37 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:27:23 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ t_token	*find_delimiter(t_token *token)
 		return (token->next);
 }
 
-void	free_and_close_here_doc(char *line, int fd, char *delimiter)
+void	free_and_close_here_doc(char *line, int fd, char *delimiter, t_main *pgr)
 {
-	t_main	*pgr;
+	// t_main	*pgr;
 
-	pgr = NULL;
-	pgr = get_pgr(NULL);
+	// pgr = NULL;
+	// pgr = get_pgr(NULL);
 	close (fd);
 	if (!line)
 	{
@@ -33,7 +33,7 @@ void	free_and_close_here_doc(char *line, int fd, char *delimiter)
 	}
 	else
 		free (line);
-	if (pgr && pgr->cur_envp)
+	if (pgr)
 		free_all(pgr, pgr->root, 1);
 	exit(EXIT_SUCCESS);
 }
@@ -41,7 +41,7 @@ void	free_and_close_here_doc(char *line, int fd, char *delimiter)
 /** @brief create and write here doc
  * @param dir dir and name of the file
  * @param delimiter*/
-void	here_doc_file(char *file, t_token *token, char **envp)
+void	here_doc_file(char *file, t_token *token, char **envp, t_main *pgr)
 {
 	int		fd;
 	int		flag;
@@ -67,7 +67,7 @@ void	here_doc_file(char *file, t_token *token, char **envp)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	free_and_close_here_doc(line, fd, delimiter->content);
+	free_and_close_here_doc(line, fd, delimiter->content, pgr);
 }
 
 void	here_doc_exec(char *file, t_token *list, t_main *pgr)
@@ -77,7 +77,7 @@ void	here_doc_exec(char *file, t_token *list, t_main *pgr)
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
-		here_doc_file(file, list, pgr->cur_envp);
+		here_doc_file(file, list, pgr->cur_envp, pgr);
 	waitpid(pid, &g_exit, 0);
 	setup_signals();
 	if (WIFEXITED(g_exit))
