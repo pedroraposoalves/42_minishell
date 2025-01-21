@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:50 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/20 17:48:53 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:56:34 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*remove_badenvp(char **str, int j)
 	char	new_str[900];
 	int		index;
 
-	if ((*str)[0] != '\"' && j < 1 && !ft_strchr(str[0], '.'))
+	if ((*str)[0] != '\"' && j < 1 && !ft_strchr(str[0], '.')
+		&& !ft_strchr(str[0], '='))
 	{
 		free((*str));
 		return (ft_strdup(""));

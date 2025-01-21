@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2024/12/05 20:28:57 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:38:55 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_exec	*parse_exec(t_token **cur, int limit)
 			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
 				|| (*cur)->type == S_QUOTES)
 				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
+			if ((*cur)->type == IS_NULL)
+				exec_node->argv = add_word(exec_node->argv, "\0");
 			(*cur) = (*cur)->next;
 		}
 	}
