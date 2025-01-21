@@ -112,6 +112,6 @@ void	exec_tree(void *root, t_main *pgr)
 	}
 	else if (*((int *)root) == PIPE)
 		ft_pipe(root, pgr);
-	else
+	else if (!check_cmd_is_empty(root))
 		ft_redir(root, pgr, 0);
 }

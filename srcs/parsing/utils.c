@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:16:06 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/07 22:00:28 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 10:02:34 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	check_isjoin(char *cmd, int *error)
 					cmd, NULL), 2);
 			}
 		}
-		i++;
+		if (cmd[i])
+			i++;
 	}
 	return (0);
 }
