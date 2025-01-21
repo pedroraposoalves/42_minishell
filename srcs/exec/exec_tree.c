@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/20 22:08:21 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 10:55:56 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,51 +75,40 @@ void	ft_pipe(void *node, t_main *pgr)
 void	ft_update_env_last_command(t_main *pgr, t_exec *node)
 {
 	char	*path;
+	int		i;
 
-	if (*(pgr->exit_status) == EXIT_SUCCESS)
+	i = 0;
+	while (node->argv[i])
+		i++;
+	i--;
+	path = find_path(node->argv[i], pgr);
+	if (path)
 	{
-		path = find_path(node->argv[0], pgr);
-		if (path)
+		if (set_env_value("_", pgr, path) == EXIT_FAILURE)
 		{
-			if (set_env_value("_", pgr, path) == EXIT_FAILURE)
-			{
-				append_env_value("_", pgr);
-				set_env_value("_", pgr, path);
-			}
-			free(path);
+			append_env_value("_", pgr);
+			set_env_value("_", pgr, path);
 		}
-		else
+		free(path);
+	}
+	else
+	{
+		if (set_env_value("_", pgr, node->argv[i]) == EXIT_FAILURE)
 		{
-			if (set_env_value("_", pgr, node->argv[0]) == EXIT_FAILURE)
-			{
-				append_env_value("_", pgr);
-				set_env_value("_", pgr, node->argv[0]);
-			}
+			append_env_value("_", pgr);
+			set_env_value("_", pgr, node->argv[i]);
 		}
 	}
 }
 
 void	exec_tree(void *root, t_main *pgr)
 {
-	char	*last_cmd;
-
-	last_cmd = NULL;
 	if (!root)
 		return ;
 	if (*((int *)root) == CMD)
 	{
-		if (get_env_value("_", pgr))
-			last_cmd = ft_strdup(get_env_value("_", pgr));
 		ft_update_env_last_command(pgr, (t_exec *) root);
 		ft_exec(root, pgr, 0);
-		if (pgr->exit_status[1] != EXIT_SUCCESS)
-		{
-			if (last_cmd)
-				set_env_value("_", pgr, &last_cmd[2]);
-			else
-				del_env_value("_", pgr);
-		}
-		free(last_cmd);
 	}
 	else if (*((int *)root) == PIPE)
 		ft_pipe(root, pgr);
