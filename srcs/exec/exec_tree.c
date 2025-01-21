@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 10:55:56 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:42:26 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	ft_update_env_last_command(t_main *pgr, t_exec *node)
 	char	*path;
 	int		i;
 
-	i = 0;
-	while (node->argv[i])
-		i++;
+	if (!node->argv)
+		return ;
+	i = matrix_len(node->argv);
 	i--;
 	path = find_path(node->argv[i], pgr);
 	if (path)
