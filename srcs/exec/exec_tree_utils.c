@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 11:04:19 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:29:45 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*find_path(char *cmd, t_main *pgr)
 
 	path = get_env_value("PATH", pgr);
 	if (path == NULL)
-		return(0);
+		return (0);
 	paths = ft_split(path + 5, ':');
 	i = 0;
 	while (paths[i])

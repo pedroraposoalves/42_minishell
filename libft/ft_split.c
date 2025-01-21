@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:36:26 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/21 10:59:45 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:30:27 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**ft_split(char const *s, char c)
 	int		i;
 	int		len;
 	char	**res;
-	printf("Entrou %s\n", s);
+
 	if (!s)
 		return (NULL);
 	res = (char **)malloc(sizeof(char *) * (ft_count_words(s, c) + 1));

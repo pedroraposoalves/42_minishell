@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 11:20:03 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:59:05 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ int	check_cmd_is_empty(void *node)
 			return (check_cmd_is_empty(redir));
 		}
 	}
-}
-
-/** @brief Function prints a error msg and exit program
- * @param error_msg: print error
- * @param exit_code: the exit code
- */
-void	ft_exit_aux(char *error_msg, int exit_code)
-{
-	print_error(SHELL_NAME, error_msg, NULL, NULL);
-	exit (exit_code);
 }
 
 int	ft_infile(t_main *pgr, t_redir *redir_node)
@@ -107,23 +97,16 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 	close(stdout_backup);
 }
 
-void	ft_exec(void *node, t_main *pgr, int status)
+void	ft_fork_aux(int status, t_exec *ex, t_main *pgr)
 {
-	t_exec	*ex;
-	int		pid;
+	int	pid;
 
-	ex = (t_exec *)node;
-	if (!ex->argv)
-		return ;
-	if (isbuiltin(ex->argv[0]) && get_env_value("PATH", pgr))
-		pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
-				pgr, pgr->root);
-	if (isbuiltin(ex->argv[0]) && get_env_value("PATH", pgr))
-		return ;
-	ignore_signals();
 	pid = fork();
 	if (pid < 0)
-		ft_exit_aux("fork_failed", 1);
+	{
+		print_error(SHELL_NAME, "fork failed", NULL, NULL);
+		exit (1);
+	}
 	if (pid == 0)
 	{
 		child_signals();
@@ -132,6 +115,24 @@ void	ft_exec(void *node, t_main *pgr, int status)
 		exit(status);
 	}
 	waitpid(pid, &status, 0);
+}
+
+void	ft_exec(void *node, t_main *pgr, int status)
+{
+	t_exec	*ex;
+
+	ex = (t_exec *)node;
+	if (!ex->argv)
+		return ;
+	if ((isbuiltin(ex->argv[0]) && isbuiltin(ex->argv[0]) != 6) \
+		|| (isbuiltin(ex->argv[0]) == 6 && get_env_value("PATH", pgr)))
+	{
+		pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
+				pgr, pgr->root);
+		return ;
+	}
+	ignore_signals();
+	ft_fork_aux(status, ex, pgr);
 	setup_signals();
 	pgr->exit_status[1] = set_exit_signal(status);
 }

@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 10:57:34 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:22:56 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int		is_quote(char *cmd, int *i, int *amount);
 t_pipe	*parse_pipe(t_token **start, t_token **cur, t_token *ptr_aux);
 int		order_tokens(t_main **pgr);
 int		check_dir_after_redir(const char *cmd);
-int	check_cmd_is_empty(void *node);
+int		check_cmd_is_empty(void *node);
 
 /* --------------------------------- SIGNALS -------------------------------- */
 
