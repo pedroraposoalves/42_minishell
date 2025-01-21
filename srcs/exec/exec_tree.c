@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:45 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:00:59 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ void	exec_tree(void *root, t_main *pgr)
 	}
 	else if (type == PIPE)
 		ft_pipe(root, pgr);
-	else
+	else if (!check_cmd_is_empty(root))
 		ft_redir(root, pgr, 0);
 }

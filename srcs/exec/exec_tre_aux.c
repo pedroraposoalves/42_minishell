@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/19 21:31:20 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:20:03 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	check_cmd_is_empty(void *node)
+{
+	int		type;
+	t_redir	*redir;
+	t_exec	*exec;
+
+	redir = NULL;
+	exec = NULL;
+	while (1)
+	{
+		type = *((int *)node);
+		if (type == CMD)
+		{
+			exec = (t_exec *)node;
+			if (!exec->argv)
+				return (1);
+			return (0);
+		}
+		else
+		{
+			redir = (t_redir *)node;
+			redir = redir->next;
+			return (check_cmd_is_empty(redir));
+		}
+	}
+}
 
 /** @brief Function prints a error msg and exit program
  * @param error_msg: print error
@@ -88,10 +115,10 @@ void	ft_exec(void *node, t_main *pgr, int status)
 	ex = (t_exec *)node;
 	if (!ex->argv)
 		return ;
-	if (isbuiltin(ex->argv[0]))
+	if (isbuiltin(ex->argv[0]) && get_env_value("PATH", pgr))
 		pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
 				pgr, pgr->root);
-	if (isbuiltin(ex->argv[0]))
+	if (isbuiltin(ex->argv[0]) && get_env_value("PATH", pgr))
 		return ;
 	ignore_signals();
 	pid = fork();
