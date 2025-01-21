@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:16:32 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 23:32:43 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:05:12 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_cd_aux(char **argv, t_main *pgr, char *new_pwd)
 	}
 	else
 	{
-		if (chdir(argv[1]) == -1)
+		if (argv[1][0] != '\0' && chdir(argv[1]) == -1)
 			return (print_error_errno(SHELL_NAME, "cd", argv[1]), EXIT_FAILURE);
 	}
 	if (update_pwd(pgr, cwd) == EXIT_FAILURE)

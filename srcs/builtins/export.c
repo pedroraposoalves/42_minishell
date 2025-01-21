@@ -3,53 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/20 17:41:14 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:14:54 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 int		order_print_stack(char **stack);
-char	*export_check_var(char *var, int flag_print_error);
+char	*export_check_var(char *var);
 int		ft_export_update_env(t_main *pgr, char *var_name, char *var);
 
 int	ft_export(t_main *pgr, char **argv)
 {
 	int		i;
-	int		err_print_flag;
 	char	*var_name;
 	int		argc;
 
 	argc = matrix_len(argv);
 	i = 1;
-	err_print_flag = 1;
 	if (argc == 1 && argv)
 		order_print_stack(pgr->cur_envp);
 	else if (argc > 1 && argv)
 	{
 		while (i++ < argc)
 		{
-			var_name = export_check_var(argv[i - 1], err_print_flag);
-			if (var_name == NULL)
-				err_print_flag = 0;
-			else
+			var_name = export_check_var(argv[i - 1]);
+			if (var_name != NULL)
 				ft_export_update_env(pgr, var_name, argv[i - 1]);
 		}
 	}
 	return (EXIT_SUCCESS);
 }
 
-char	*export_check_var(char *var, int flag_print_error)
+char	*export_check_var(char *var)
 {
 	int		equal_pos;
 	int		var_len;
 	char	*var_name;
 
 	var_len = ft_strlen(var);
-	if (var_len <= 0)
+	if (var_len <= 0 && var[0]!='\0')
 		return (NULL);
 	equal_pos = ft_str_char(var, '=');
 	var_name = ft_substr(var, 0, equal_pos);
@@ -57,10 +53,10 @@ char	*export_check_var(char *var, int flag_print_error)
 		(ft_specialcharpos_export(var_name) == -1 || (var[equal_pos - 1] == '+' \
 		&& ft_specialcharpos_export(var_name) == equal_pos - 1)))
 		return (var_name);
-	else if (flag_print_error)
+	else
 	{
 		g_exit = 1;
-		print_error(SHELL_NAME, "export", "not a valid identifier", var);
+		print_error(SHELL_NAME, "export", var, "not a valid identifier");
 	}
 	return (free(var_name), NULL);
 }
