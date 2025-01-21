@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_nodes_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 13:38:55 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:24:35 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_exec	*parse_exec(t_token **cur, int limit)
 			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
 				|| (*cur)->type == S_QUOTES)
 				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
-			if ((*cur)->type == IS_NULL)
+			if ((*cur)->type == IS_NULL && (ft_strncmp(exec_node->argv[0], "cd", ft_strlen(exec_node->argv[0])) == 0
+				|| ft_strncmp(exec_node->argv[0], "export", ft_strlen(exec_node->argv[0])) == 0))
 				exec_node->argv = add_word(exec_node->argv, "\0");
 			(*cur) = (*cur)->next;
 		}
