@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/19 22:47:47 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:04:19 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ char	*find_path(char *cmd, t_main *pgr)
 	int		i;
 	char	*part_path;
 
-	i = 0;
-	paths = ft_split(get_env_value("PATH", pgr) + 5, ':');
+	path = get_env_value("PATH", pgr);
+	if (path == NULL)
+		return(0);
+	paths = ft_split(path + 5, ':');
 	i = 0;
 	while (paths[i])
 	{

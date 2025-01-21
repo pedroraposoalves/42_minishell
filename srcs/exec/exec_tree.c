@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 11:00:59 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 10:55:56 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,43 +75,42 @@ void	ft_pipe(void *node, t_main *pgr)
 void	ft_update_env_last_command(t_main *pgr, t_exec *node)
 {
 	char	*path;
+	int		i;
 
-	if (*(pgr->exit_status) == EXIT_SUCCESS)
+	i = 0;
+	while (node->argv[i])
+		i++;
+	i--;
+	path = find_path(node->argv[i], pgr);
+	if (path)
 	{
-		path = find_path(node->argv[0], pgr);
-		if (path)
+		if (set_env_value("_", pgr, path) == EXIT_FAILURE)
 		{
-			if (set_env_value("_", pgr, path) == EXIT_FAILURE)
-			{
-				append_env_value("_", pgr);
-				set_env_value("_", pgr, path);
-			}
-			free(path);
+			append_env_value("_", pgr);
+			set_env_value("_", pgr, path);
 		}
-		else
+		free(path);
+	}
+	else
+	{
+		if (set_env_value("_", pgr, node->argv[i]) == EXIT_FAILURE)
 		{
-			if (set_env_value("_", pgr, node->argv[0]) == EXIT_FAILURE)
-			{
-				append_env_value("_", pgr);
-				set_env_value("_", pgr, node->argv[0]);
-			}
+			append_env_value("_", pgr);
+			set_env_value("_", pgr, node->argv[i]);
 		}
 	}
 }
 
 void	exec_tree(void *root, t_main *pgr)
 {
-	int		type;
-
 	if (!root)
 		return ;
-	type = *((int *)root);
-	if (type == CMD)
+	if (*((int *)root) == CMD)
 	{
-		ft_exec(root, pgr, 0);
 		ft_update_env_last_command(pgr, (t_exec *) root);
+		ft_exec(root, pgr, 0);
 	}
-	else if (type == PIPE)
+	else if (*((int *)root) == PIPE)
 		ft_pipe(root, pgr);
 	else if (!check_cmd_is_empty(root))
 		ft_redir(root, pgr, 0);
