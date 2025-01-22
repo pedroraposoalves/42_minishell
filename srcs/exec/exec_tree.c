@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 10:55:56 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:44:10 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,9 @@ void	ft_update_env_last_command(t_main *pgr, t_exec *node)
 	char	*path;
 	int		i;
 
-	i = 0;
-	while (node->argv[i])
-		i++;
-	i--;
+	if (!node->argv || !node->argv[0])
+		return ;
+	i = matrix_len(node->argv) - 1;
 	path = find_path(node->argv[i], pgr);
 	if (path)
 	{

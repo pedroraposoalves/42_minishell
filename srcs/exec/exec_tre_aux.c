@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 14:41:16 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 19:09:56 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ int	check_cmd_is_empty(void *node)
 				return (1);
 			return (0);
 		}
-		else
+		else if (type == HERE_DOC)
 		{
 			redir = (t_redir *)node;
 			redir = redir->next;
 			return (check_cmd_is_empty(redir));
 		}
+		else
+			return (0);
 	}
 }
 
@@ -97,40 +99,43 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 	close(stdout_backup);
 }
 
-int ft_fork_aux(int status, t_exec *ex, t_main *pgr)
+int	ft_fork_aux(int status, t_exec *ex, t_main *pgr)
 {
-    int pid;
-    pid = fork();
-    if (pid < 0)
-    {
-        print_error(SHELL_NAME, "fork failed", NULL, NULL);
-        exit (1);
-    }
-    if (pid == 0)
-    {
-        child_signals();
-        status = ft_execve(ex, pgr);
-        free_all(pgr, pgr->root, 1);
-        exit(status);
-    }
-    waitpid(pid, &status, 0);
-    return (status);
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		print_error(SHELL_NAME, "fork failed", NULL, NULL);
+		exit (1);
+	}
+	if (pid == 0)
+	{
+		child_signals();
+		status = ft_execve(ex, pgr);
+		free_all(pgr, pgr->root, 1);
+		exit(status);
+	}
+	waitpid(pid, &status, 0);
+	return (status);
 }
-void    ft_exec(void *node, t_main *pgr, int status)
+
+void	ft_exec(void *node, t_main *pgr, int status)
 {
-    t_exec  *ex;
-    ex = (t_exec *)node;
-    if (!ex->argv)
-        return ;
-    if ((isbuiltin(ex->argv[0]) && isbuiltin(ex->argv[0]) != 6) \
-        || (isbuiltin(ex->argv[0]) == 6 && get_env_value("PATH", pgr)))
-    {
-        pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
-                pgr, pgr->root);
-        return ;
-    }
-    ignore_signals();
-    status = ft_fork_aux(status, ex, pgr);
-    setup_signals();
-    pgr->exit_status[1] = set_exit_signal(status);
+	t_exec	*ex;
+
+	ex = (t_exec *)node;
+	if (!ex->argv)
+		return ;
+	if ((isbuiltin(ex->argv[0]) && isbuiltin(ex->argv[0]) != 6) \
+		|| (isbuiltin(ex->argv[0]) == 6 && get_env_value("PATH", pgr)))
+	{
+		pgr->exit_status[1] = call_builtin(isbuiltin(ex->argv[0]), node,
+				pgr, pgr->root);
+		return ;
+	}
+	ignore_signals();
+	status = ft_fork_aux(status, ex, pgr);
+	setup_signals();
+	pgr->exit_status[1] = set_exit_signal(status);
 }

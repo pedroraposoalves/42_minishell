@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 13:29:39 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/09 12:17:47 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 09:56:39 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,31 @@ int	check_dir_after_redir(const char *cmd)
 				return (2);
 		}
 		i++;
+	}
+	return (0);
+}
+
+int	check_or_operator(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '|')
+		{
+			i++;
+			if (cmd[i] == '|')
+				return (print_error(SHELL_NAME, "invalid operator",
+						NULL, NULL), 100);
+			while (cmd[i] == 32)
+				i++;
+			if (cmd[i] == '|')
+				return (print_error(SHELL_NAME, \
+				"syntax error near unexpected token `|'", NULL, NULL), 2);
+		}
+		if (cmd[i])
+			i++;
 	}
 	return (0);
 }

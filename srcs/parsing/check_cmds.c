@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/10 23:59:16 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:01:11 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int	check_cmds(char *cmd)
 
 	i = 0;
 	error = 0;
+	if (check_or_operator(cmd))
+		return (2);
 	while (cmd[i])
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')

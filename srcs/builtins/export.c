@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:25:10 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/21 14:14:54 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 09:55:36 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*export_check_var(char *var)
 	char	*var_name;
 
 	var_len = ft_strlen(var);
-	if (var_len <= 0 && var[0]!='\0')
+	if (var_len <= 0 && var[0] != '\0')
 		return (NULL);
 	equal_pos = ft_str_char(var, '=');
 	var_name = ft_substr(var, 0, equal_pos);

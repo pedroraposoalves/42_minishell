@@ -6,7 +6,7 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:30:03 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 11:22:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/21 19:53:51 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <limits.h>
 # include <string.h>
 # include "libft.h"
+# include <sys/stat.h>
 
 # define PIPE 1
 # define REDIR 2
@@ -183,6 +184,7 @@ void	empty_cmd(t_main *pgr);
 void	set_exit_status(t_main *pgr);
 void	check_have_argument(int argc);
 int		ft_specialcharpos_export(char *s);
+int		check_or_operator(char *cmd);
 
 /* -----------------------------------DEBUG---------------------------------- */
 

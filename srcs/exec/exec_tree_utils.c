@@ -3,103 +3,134 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 14:43:14 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:33:12 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 /** @brief Check if the cmd is builtin*/
-int isbuiltin(char *str)
+int	isbuiltin(char *str)
 {
-    if (!ft_strncmp(str, "cd", 2) && ft_strlen(str) == 2)
-        return (1);
-    else if (!ft_strncmp(str, "echo", 4) && ft_strlen(str) == 4)
-        return (2);
-    else if (!ft_strncmp(str, "pwd", 3) && ft_strlen(str) == 3)
-        return (3);
-    else if (!ft_strncmp(str, "export", 6) && ft_strlen(str) == 6)
-        return (4);
-    else if (!ft_strncmp(str, "unset", 5) && ft_strlen(str) == 5)
-        return (5);
-    else if (!ft_strncmp(str, "env", 3) && ft_strlen(str) == 3)
-        return (6);
-    else if (!ft_strncmp(str, "exit", 4) && ft_strlen(str) == 4)
-        return (7);
-    else
-        return (0);
-}
-/** @brief Find the absolute path of the command by the envp*/
-char    *find_path(char *cmd, t_main *pgr)
-{
-    char    **paths;
-    char    *path;
-    int     i;
-    char    *part_path;
-    path = get_env_value("PATH", pgr);
-    if (path == NULL)
-        return(0);
-    paths = ft_split(path + 5, ':');
-    i = 0;
-    while (paths[i])
-    {
-        part_path = ft_strjoin(paths[i], "/");
-        path = ft_strjoin(part_path, cmd);
-        free(part_path);
-        if (access(path, F_OK) == 0)
-        {
-            free_double_array(paths);
-            return (path);
-        }
-        free(path);
-        i++;
-    }
-    free_double_array(paths);
-    return (0);
-}
-/** @brief The function search the absolut path of the command and  */
-int ft_execve(t_exec *exec_node, t_main *pgr)
-{
-    char    *absolute_path;
-    if (!exec_node->argv || !exec_node->argv[0])
-        return (0);
-    absolute_path = find_path(exec_node->argv[0], pgr);
-    if (!exec_node->argv[0][0])
-        exit(EXIT_SUCCESS);
-    if (!absolute_path)
-    {
-        if (execve(exec_node->argv[0], exec_node->argv, pgr->cur_envp) == -1)
-        {
-            print_error(SHELL_NAME, "command not found", NULL, NULL);
-            return (127);
-        }
-    }
-    else if (execve(absolute_path, exec_node->argv, pgr->cur_envp) == -1)
-    {
-        print_error(SHELL_NAME, NULL, "command not found", NULL);
-        return (127);
-    }
-    return (0);
-}
-int call_builtin(int number, t_exec *node, t_main *pgr, void *root)
-{
-    (void)pgr;
-    if (number == 1)
-        return (ft_cd(node->argv, pgr));
-    if (number == 2)
-        return (ft_echo(node->argv));
-    if (number == 3)
-        return (ft_pwd());
-    if (number == 4)
-        return (ft_export(pgr, node->argv));
-    if (number == 5)
-        return (ft_unset(pgr, node->argv));
-    if (number == 6)
-        return (ft_env(pgr, node->argv));
-    if (number == 7)
-        return (ft_exit(pgr, matrix_len(node->argv), node->argv, root));
-    return (0);
+	if (!ft_strncmp(str, "cd", 2) && ft_strlen(str) == 2)
+		return (1);
+	else if (!ft_strncmp(str, "echo", 4) && ft_strlen(str) == 4)
+		return (2);
+	else if (!ft_strncmp(str, "pwd", 3) && ft_strlen(str) == 3)
+		return (3);
+	else if (!ft_strncmp(str, "export", 6) && ft_strlen(str) == 6)
+		return (4);
+	else if (!ft_strncmp(str, "unset", 5) && ft_strlen(str) == 5)
+		return (5);
+	else if (!ft_strncmp(str, "env", 3) && ft_strlen(str) == 3)
+		return (6);
+	else if (!ft_strncmp(str, "exit", 4) && ft_strlen(str) == 4)
+		return (7);
+	else
+		return (0);
 }
 
+/** @brief Find the absolute path of the command by the envp*/
+char	*find_path(char *cmd, t_main *pgr)
+{
+	char	**paths;
+	char	*path;
+	int		i;
+	char	*part_path;
+
+	path = get_env_value("PATH", pgr);
+	if (path == NULL)
+		return (0);
+	paths = ft_split(path + 5, ':');
+	i = 0;
+	while (paths[i])
+	{
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, cmd);
+		free(part_path);
+		if (access(path, F_OK) == 0)
+		{
+			free_double_array(paths);
+			return (path);
+		}
+		free(path);
+		i++;
+	}
+	free_double_array(paths);
+	return (0);
+}
+
+int	isvalid_dir(char *pathname, char **args)
+{
+	struct stat	file;
+
+	if (!ft_strchr(pathname, '/'))
+		return (0);
+	if (stat(pathname, &file) == -1)
+	{
+		print_error_errno(SHELL_NAME, args[0], NULL);
+		return (127);
+	}
+	else if (S_ISDIR(file.st_mode) != 0 && *args[0])
+	{
+		print_error(SHELL_NAME, args[0], "Is a directory", NULL);
+		return (126);
+	}
+	else if (access(pathname, X_OK) == -1 && *args[0])
+	{
+		print_error_errno(SHELL_NAME, args[0], NULL);
+		return (126);
+	}
+	return (0);
+}
+
+/** @brief The function search the absolut path of the command and  */
+int	ft_execve(t_exec *ex_node, t_main *pgr)
+{
+	char	*absolute_path;
+	int		status;
+
+	status = 0;
+	if (!ex_node->argv || !ex_node->argv[0])
+		return (0);
+	status = isvalid_dir(ex_node->argv[0], ex_node->argv);
+	if (status)
+		return (status);
+	if (ft_strchr(ex_node->argv[0], '/') && !access(ex_node->argv[0], F_OK)
+		&& !access(ex_node->argv[0], X_OK))
+		absolute_path = ex_node->argv[0];
+	else
+		absolute_path = find_path(ex_node->argv[0], pgr);
+	if (!ex_node->argv[0][0])
+		exit(EXIT_SUCCESS);
+	if (!absolute_path)
+	{
+		print_error(NULL, ex_node->argv[0], "command not found", NULL);
+		return (127);
+	}
+	else if (execve(absolute_path, ex_node->argv, pgr->cur_envp) == -1)
+		return (print_error_errno (SHELL_NAME, NULL, NULL), 127);
+	return (0);
+}
+
+int	call_builtin(int number, t_exec *node, t_main *pgr, void *root)
+{
+	(void)pgr;
+	if (number == 1)
+		return (ft_cd(node->argv, pgr));
+	if (number == 2)
+		return (ft_echo(node->argv));
+	if (number == 3)
+		return (ft_pwd());
+	if (number == 4)
+		return (ft_export(pgr, node->argv));
+	if (number == 5)
+		return (ft_unset(pgr, node->argv));
+	if (number == 6)
+		return (ft_env(pgr, node->argv));
+	if (number == 7)
+		return (ft_exit(pgr, matrix_len(node->argv), node->argv, root));
+	return (0);
+}
