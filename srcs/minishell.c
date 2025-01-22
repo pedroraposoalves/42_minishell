@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:04:09 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/22 17:12:23 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:59:32 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,16 @@
 
 int	g_exit = 0;
 
-int	check_ambiguous(void *root)
-{
-	int	type;
-	int	res;
-
-	res = 0;
-	if (!root)
-		return (res);
-	type = *((int *)root);
-	if (type == REDIR || type == REDIR_MQ || type == APPEND
-		|| type == HERE_DOC)
-	{
-		res += check_ambiguous(((t_redir *)root)->next);
-		if ((type == REDIR || type == REDIR_MQ || type == APPEND) && \
-			((((t_redir *)root)->file == NULL) \
-			|| ft_strlen(((t_redir *)root)->file) == 0))
-		{
-			print_error(SHELL_NAME, NULL, NULL, "ambiguous redirect");
-			res += 1;
-		}
-	}
-	else if (type == PIPE)
-	{
-		res += check_ambiguous(((t_pipe *)root)->left);
-		res += check_ambiguous(((t_pipe *)root)->right);
-	}
-	return (res);
-}
-
 void	main_support(t_main *pgr, char *input, t_token	*start)
 {
+	add_history(input);
 	set_exit_status(pgr);
 	pgr->exit_status[1] = check_cmds(input);
 	if (!pgr->exit_status[1])
 	{
 		tokenize(pgr, input);
 		ft_expand(pgr);
+		start = pgr->tokens;
 		if (order_tokens(&pgr))
 			return ;
 		start = pgr->tokens;
@@ -63,8 +36,7 @@ void	main_support(t_main *pgr, char *input, t_token	*start)
 		else
 		{
 			pgr->root = start_parsing(start);
-			if (check_ambiguous(pgr->root) == 0)
-				exec_tree(pgr->root, pgr);
+			exec_tree(pgr->root, pgr);
 			free_tree(pgr->root);
 			free_tmain(pgr, 0);
 		}
@@ -87,10 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		setup_signals();
 		input = readline(SHELL_NAME);
 		if (input && ft_strncmp(input, "", ft_strlen(input) != 0))
-		{
-			add_history(input);
 			main_support(pgr, input, start);
-		}
 		if (!input)
 			empty_cmd(pgr);
 		free(input);

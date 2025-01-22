@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 13:22:57 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:50:46 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	isvalid_dir(char *pathname, char **args)
 		return (0);
 	if (stat(pathname, &file) == -1)
 	{
-		print_error_errno(SHELL_NAME, args[0], NULL);
+		print_error_errno("Command", args[0], NULL);
 		return (127);
 	}
 	else if (S_ISDIR(file.st_mode) != 0 && *args[0])
@@ -107,7 +107,7 @@ int	ft_execve(t_exec *ex_node, t_main *pgr)
 		exit(EXIT_SUCCESS);
 	if (!absolute_path)
 	{
-		print_error(SHELL_NAME, ex_node->argv[0], NULL, "command not found");
+		print_error("Command", ex_node->argv[0], NULL, "command not found");
 		return (127);
 	}
 	else if (execve(absolute_path, ex_node->argv, pgr->cur_envp) == -1)
