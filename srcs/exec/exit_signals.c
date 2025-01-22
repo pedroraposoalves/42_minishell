@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:48:42 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/08 19:58:27 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:52:37 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	set_exit_signal(int exit_status)
 	if (WIFSIGNALED(exit_status))
 	{
 		if (exit_status == 2)
-			printf("\n");
+			ft_putstr_fd("\n", 2);
 		else if (exit_status == 131)
 		{
-			printf("Quit (core dumped)\n");
+			ft_putstr_fd("Quit (core dumped)\n", 2);
 			return (exit_status);
 		}
 		return (exit_status + 128);

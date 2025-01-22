@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:50:46 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/10 23:50:51 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:05:20 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	empty_cmd(t_main *pgr)
 {
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 2);
 	free_double_array(pgr->cur_envp);
 	free (pgr);
 	exit(0);
@@ -33,8 +33,8 @@ void	check_have_argument(int argc)
 {
 	if (argc != 1)
 	{
-		print_error(SHELL_NAME, "The minishell should'nt have arguments!",
-			NULL, NULL);
+		print_error(SHELL_NAME,	NULL, NULL, 
+			"The minishell should'nt have arguments!");
 		exit (127);
 	}
 }

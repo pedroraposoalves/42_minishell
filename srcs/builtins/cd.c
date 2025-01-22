@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:16:32 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/21 14:05:12 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:58:35 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd(char **argv, t_main *pgr)
 
 	new_pwd = NULL;
 	if (matrix_len(argv) > 2)
-		return (print_error(SHELL_NAME, "too many arguments", NULL, NULL), 1);
+		return (print_error(SHELL_NAME, NULL, NULL, "too many arguments"), 1);
 	if (!argv[1])
 	{
 		new_pwd = get_env_value("HOME", pgr);

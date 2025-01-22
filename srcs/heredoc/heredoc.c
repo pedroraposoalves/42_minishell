@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/20 17:37:20 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:57:51 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	free_and_close_here_doc(char *line, int fd, char *del, t_main *pgr)
 	close (fd);
 	if (!line)
 	{
-		printf ("%s warning: here-document at line \
-		13 delimited by end-of-file (wanted %s')", SHELL_NAME, del);
+		ft_putstr_fd(SHELL_NAME, 2);
+		ft_putstr_fd(" warning: here-document at line \
+		13 delimited by end-of-file (wanted ", 2);
+		ft_putendl_fd("')", 2);
 	}
 	else
 		free (line);

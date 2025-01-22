@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:34 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 10:33:12 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:50:46 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ int	isvalid_dir(char *pathname, char **args)
 		return (0);
 	if (stat(pathname, &file) == -1)
 	{
-		print_error_errno(SHELL_NAME, args[0], NULL);
+		print_error_errno("Command", args[0], NULL);
 		return (127);
 	}
 	else if (S_ISDIR(file.st_mode) != 0 && *args[0])
 	{
-		print_error(SHELL_NAME, args[0], "Is a directory", NULL);
+		print_error(SHELL_NAME, args[0], NULL, "Is a directory");
 		return (126);
 	}
 	else if (access(pathname, X_OK) == -1 && *args[0])
@@ -107,11 +107,11 @@ int	ft_execve(t_exec *ex_node, t_main *pgr)
 		exit(EXIT_SUCCESS);
 	if (!absolute_path)
 	{
-		print_error(NULL, ex_node->argv[0], "command not found", NULL);
+		print_error("Command", ex_node->argv[0], NULL, "command not found");
 		return (127);
 	}
 	else if (execve(absolute_path, ex_node->argv, pgr->cur_envp) == -1)
-		return (print_error_errno (SHELL_NAME, NULL, NULL), 127);
+		return (print_error_errno (SHELL_NAME, ex_node->argv[0], NULL), 127);
 	return (0);
 }
 

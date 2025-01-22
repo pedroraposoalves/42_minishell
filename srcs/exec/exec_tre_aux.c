@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tre_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/21 19:09:56 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:49:32 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 		return ;
 	if (fd < 0)
 	{
-		print_error(SHELL_NAME, "cannot open file", NULL, NULL);
+		print_error(SHELL_NAME, NULL, NULL, "cannot open file");
 		free_all(pgr, pgr->root, 1);
 		exit(1);
 	}
@@ -106,7 +106,7 @@ int	ft_fork_aux(int status, t_exec *ex, t_main *pgr)
 	pid = fork();
 	if (pid < 0)
 	{
-		print_error(SHELL_NAME, "fork failed", NULL, NULL);
+		print_error(SHELL_NAME, NULL, NULL, "fork failed");
 		exit (1);
 	}
 	if (pid == 0)

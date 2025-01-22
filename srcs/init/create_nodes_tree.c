@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_nodes_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 11:56:18 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:13:32 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ t_exec	*parse_exec(t_token **cur, int limit)
 	{
 		while (*cur)
 		{
-			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
-				|| (*cur)->type == S_QUOTES)
+			if (((*cur)->type == CMD || (*cur)->type == D_QUOTES
+				|| (*cur)->type == S_QUOTES) && \
+				ft_strlen((*cur)->content) > 0)
 				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
 			if (exec_node->argv)
 			{

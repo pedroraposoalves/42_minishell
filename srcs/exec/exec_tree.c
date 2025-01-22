@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:42:58 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 11:57:10 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:56:06 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	end_pipe(t_main *pgr, int p[2], int pid[2])
 	if (WIFEXITED(pgr->exit_status[1]))
 		pgr->exit_status[1] = WEXITSTATUS(status[1]);
 	if (status[1] / 256 == 130 || status[0] / 256 == 130)
-		printf("\n");
+		ft_putstr_fd("\n", 2);
 	return (EXIT_SUCCESS);
 }
 
@@ -57,7 +57,7 @@ void	ft_pipe(void *node, t_main *pgr)
 	pipe_node = (t_pipe *)node;
 	if (pipe(p) < 0)
 	{
-		print_error(SHELL_NAME, "pipe failed", NULL, NULL);
+		print_error(SHELL_NAME, NULL, NULL, "pipe failed");
 		exit(1);
 	}
 	pid[0] = fork();

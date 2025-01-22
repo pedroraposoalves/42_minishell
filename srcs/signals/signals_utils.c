@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 15:36:42 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/20 17:38:24 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:59:01 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	setup_heredoc_signals(int signal)
 	{
 		close(STDIN_FILENO);
 		pgr = get_pgr(NULL);
-		printf("\n");
+		ft_putstr_fd("\n", 2);
 		if (pgr)
 			free_all(pgr, pgr->root, 1);
 		g_exit = 130;
