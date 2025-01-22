@@ -6,9 +6,10 @@
 /*   By: malves-b <malves-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 10:39:52 by malves-b         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:56:18 by malves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -37,18 +38,19 @@ t_exec	*parse_exec(t_token **cur, int limit)
 			if ((*cur)->type == CMD || (*cur)->type == D_QUOTES
 				|| (*cur)->type == S_QUOTES)
 				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
-			if ((*cur)->type == IS_NULL && (ft_strncmp(exec_node->argv[0], \
-				"cd", ft_strlen(exec_node->argv[0])) == 0
-					|| ft_strncmp(exec_node->argv[0], "export",
+			if (exec_node->argv)
+			{
+				if ((*cur)->type == IS_NULL && (ft_strncmp(exec_node->argv[0], \
+					"cd", ft_strlen(exec_node->argv[0])) == 0
+						|| ft_strncmp(exec_node->argv[0], "export",
 						ft_strlen(exec_node->argv[0])) == 0))
-				exec_node->argv = add_word(exec_node->argv, "\0");
+					exec_node->argv = add_word(exec_node->argv, "\0");
+			}
 			(*cur) = (*cur)->next;
 		}
 	}
 	else
-	{
 		exec_node = parse_exec_aux(cur, limit, exec_node);
-	}
 	return (exec_node);
 }
 
