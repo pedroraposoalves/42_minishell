@@ -6,10 +6,9 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:09:01 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 12:13:32 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:03:42 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -35,15 +34,15 @@ t_exec	*parse_exec(t_token **cur, int limit)
 	{
 		while (*cur)
 		{
-			if (((*cur)->type == CMD || (*cur)->type == D_QUOTES
-				|| (*cur)->type == S_QUOTES) && \
-				ft_strlen((*cur)->content) > 0)
+			if (((*cur)->type == CMD || (*cur)->type == D_QUOTES || \
+					(*cur)->type == S_QUOTES) \
+					&& ft_strlen((*cur)->content) > 0)
 				exec_node->argv = add_word(exec_node->argv, (*cur)->content);
 			if (exec_node->argv)
 			{
 				if ((*cur)->type == IS_NULL && (ft_strncmp(exec_node->argv[0], \
-					"cd", ft_strlen(exec_node->argv[0])) == 0
-						|| ft_strncmp(exec_node->argv[0], "export",
+						"cd", ft_strlen(exec_node->argv[0])) == 0 \
+						|| ft_strncmp(exec_node->argv[0], "export", \
 						ft_strlen(exec_node->argv[0])) == 0))
 					exec_node->argv = add_word(exec_node->argv, "\0");
 			}

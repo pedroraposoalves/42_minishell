@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:23:03 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/22 12:57:51 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:12:55 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_and_close_here_doc(char *line, int fd, char *del, t_main *pgr)
 		ft_putstr_fd(SHELL_NAME, 2);
 		ft_putstr_fd(" warning: here-document at line \
 		13 delimited by end-of-file (wanted ", 2);
+		ft_putstr_fd(del, 2);
 		ft_putendl_fd("')", 2);
 	}
 	else

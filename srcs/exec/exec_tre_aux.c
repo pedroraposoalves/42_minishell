@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:13:16 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 12:49:32 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:04:04 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,21 @@ int	ft_infile(t_main *pgr, t_redir *redir_node)
 	int	stdin_backup;
 
 	if (!redir_node->file)
-		return (0);
+		return (EXIT_FAILURE);
 	if (access(redir_node->file, F_OK) != 0)
-	{
-		print_error(SHELL_NAME, redir_node->file, NULL,
-			"No such file or directory");
-		return (0);
-	}
+		return (print_error(SHELL_NAME, redir_node->file, NULL,
+				"No such file or directory"), EXIT_FAILURE);
 	fd = open(redir_node->file, O_RDONLY);
 	if (fd == -1)
-	{
-		print_error(SHELL_NAME, redir_node->file, NULL, "Permission denied");
-		pgr->exit_status[1] = EXIT_FAILURE;
-		return (0);
-	}
+		return (print_error(SHELL_NAME, redir_node->file, \
+			NULL, "Permission denied"), EXIT_FAILURE);
 	stdin_backup = dup(STDIN_FILENO);
 	dup2(fd, STDIN_FILENO);
 	close (fd);
 	exec_tree(redir_node->next, pgr);
 	dup2(stdin_backup, STDIN_FILENO);
 	close (fd);
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 void	ft_redir(void *node, t_main *pgr, int fd)
@@ -82,7 +76,7 @@ void	ft_redir(void *node, t_main *pgr, int fd)
 	else if (redir_node->type == APPEND)
 		fd = open(redir_node->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (redir_node->type == REDIR_MQ)
-		ft_infile(pgr, redir_node);
+		pgr->exit_status[1] = ft_infile(pgr, redir_node);
 	if (redir_node->type == REDIR_MQ)
 		return ;
 	if (fd < 0)

@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:50:46 by pemirand          #+#    #+#             */
-/*   Updated: 2025/01/22 13:05:20 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:55:57 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	check_have_argument(int argc)
 {
 	if (argc != 1)
 	{
-		print_error(SHELL_NAME,	NULL, NULL, 
+		print_error(SHELL_NAME, NULL, NULL, \
 			"The minishell should'nt have arguments!");
 		exit (127);
 	}
