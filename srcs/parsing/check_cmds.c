@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:29:41 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 15:16:53 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:53:29 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	is_quote_open(char *cmd, int *i, int *error)
 		j++;
 	}
 	print_error(SHELL_NAME, "syntax error - the quote is open", NULL, NULL);
-	(*error) = 1;
+	(*error) = 2;
 	return (1);
 }
 
@@ -125,7 +125,7 @@ int	check_cmds(char *cmd)
 		else if (cmd[i] == '\\' || cmd[i] == ';')
 		{
 			print_error(SHELL_NAME, "syntax error", NULL, NULL);
-			error = 1;
+			error = 2;
 		}
 		else if (finderr_aux(cmd + i))
 			error = 2;

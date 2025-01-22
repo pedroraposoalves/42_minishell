@@ -6,9 +6,11 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:50 by malves-b          #+#    #+#             */
-/*   Updated: 2025/01/22 12:19:48 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:06:27 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 #include "../includes/minishell.h"
 
@@ -34,7 +36,8 @@ char	*remove_badenvp(char **str, int j)
 	int		index;
 
 	if ((*str)[0] != '\"' && j < 1 && !ft_strchr(str[0], '.')
-		&& !ft_strchr(str[0], '=') && !ft_strchr(str[0], '/'))
+		&& !ft_strchr(str[0], '=') && !ft_strchr(str[0], '/')
+		&& ft_strchr(&str[0][1], '$') == NULL)
 	{
 		free((*str));
 		return (ft_strdup(""));
@@ -42,8 +45,10 @@ char	*remove_badenvp(char **str, int j)
 	index = -1;
 	while (++index < j)
 		new_str[index] = (*str)[index];
+	if ((*str)[j] == '$')
+		j++;
 	while ((*str)[j] != 32 && (*str)[j] != '.' && (*str)[j] != '"' && (*str)[j]
-		!= '=' && (*str)[j] != '/' && (*str)[j])
+		!= '=' && (*str)[j] != '/' && (*str)[j] && (*str)[j] != '$')
 		j++;
 	while ((*str)[j])
 	{
@@ -51,6 +56,5 @@ char	*remove_badenvp(char **str, int j)
 		index++;
 	}
 	new_str[index] = '\0';
-	free ((*str));
-	return (ft_strdup(new_str));
+	return (free ((*str)), ft_strdup(new_str));
 }

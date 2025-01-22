@@ -6,7 +6,7 @@
 /*   By: pemirand <pemirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:30:27 by pemirand          #+#    #+#             */
-/*   Updated: 2024/11/21 22:54:33 by pemirand         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:43:12 by pemirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(char **argv)
 
 	i = 1;
 	nl_flag = 0;
-	while (argv[i] && ft_strncmp(argv[i], "-n", 2) == 0)
+	while (argv[i] && ft_strncmp(argv[i], "-n", ft_strlen(argv[i])) == 0)
 		i++;
 	if (i == 1)
 		nl_flag = 1;
